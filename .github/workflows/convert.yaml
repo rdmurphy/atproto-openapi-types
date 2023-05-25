@@ -1,6 +1,9 @@
 name: Convert Lexicons to OpenAPI
 
-on: [push]
+on:
+  push:
+  schedule:
+    - cron: "0 */6 * * *" # every 6 hours
 
 jobs:
   convert:
