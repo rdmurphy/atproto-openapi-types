@@ -9,6 +9,9 @@ jobs:
   convert:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,3 +38,9 @@ jobs:
 
       - name: Convert atproto/lexicons to OpenAPI spec
         run: deno task run
+
+      - name: Commit updates (if any)
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: spec/api.json updated
+          file_pattern: spec/api.json
