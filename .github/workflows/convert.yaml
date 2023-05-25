@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout this repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Checkout the bluesky-social/atproto repository
+      - name: Checkout bluesky-social/atproto repository
         uses: actions/checkout@v3
         with:
           repository: bluesky-social/atproto
