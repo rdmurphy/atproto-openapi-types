@@ -31,8 +31,13 @@ You'll need to use the OpenAPI generator of your choice. I've had luck with
 
 ### I want to generate the types locally
 
-You'll need to clone this repository and
+You'll need to checkout this repository and
 [make sure Deno is installed](https://deno.com/manual@v1.34.0/getting_started/installation).
+You'll also need to checkout a copy of the
+[`bluesky-social/atproto`](https://github.com/bluesky-social/atproto) repository
+**into** this repo's directory. (Maybe one day I'll get fancy and set up
+submodules... but not today.)
+
 Then, run the following command:
 
 ```sh
