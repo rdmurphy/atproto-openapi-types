@@ -79,7 +79,7 @@ const api: OpenAPIV3_1.Document = {
   },
   servers: [
     {
-      url: "https://bsky.social/xrpc",
+      url: "https://bsky.social/xrpc/",
     },
   ],
   tags: Array.from(tagNames).map((name) => ({ name })),

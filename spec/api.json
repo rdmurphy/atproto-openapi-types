@@ -9,7 +9,7 @@
   },
   "servers": [
     {
-      "url": "https://bsky.social/xrpc"
+      "url": "https://bsky.social/xrpc/"
     }
   ],
   "tags": [
