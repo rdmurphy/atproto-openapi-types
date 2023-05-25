@@ -1,0 +1,34 @@
+name: Convert Lexicons to OpenAPI
+
+on: [push]
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3
+
+      - name: Checkout the bluesky-social/atproto repository
+        uses: actions/checkout@v3
+        with:
+          repository: bluesky-social/atproto
+          path: atproto
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Check formatting
+        run: deno fmt --check
+
+      - name: Run linter
+        run: deno lint
+
+      - name: Cache dependencies
+        run: deno cache main.ts
+
+      - name: Convert atproto/lexicons to OpenAPI spec
+        run: deno task run
