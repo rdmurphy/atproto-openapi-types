@@ -50,8 +50,8 @@ deno task dev
 ## Existing implementations
 
 - [Bluesky-OpenAPI](https://github.com/trozzelle/Bluesky-OpenAPI): Another AT
-  Protocol to OpenAPI conversion by @trozzelle. It takes a slightly different
-  approach to naming the schemas you may prefer!
+  Protocol to OpenAPI conversion by [@trozzelle](https://github.com/trozzelle).
+  It takes a slightly different approach to naming the schemas you may prefer!
 
 ## License
 
