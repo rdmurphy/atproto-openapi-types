@@ -31,7 +31,7 @@ You'll need to use the OpenAPI generator of your choice. I've had luck with
 
 ### I want to generate the types locally
 
-You'll need to clone this rerository and
+You'll need to clone this repository and
 [make sure Deno is installed](https://deno.com/manual@v1.34.0/getting_started/installation).
 Then, run the following command:
 
