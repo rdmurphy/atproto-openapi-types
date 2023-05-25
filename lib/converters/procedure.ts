@@ -7,7 +7,7 @@ import { calculateTag } from "../utils.ts";
 export function convertProcedure(
   id: string,
   name: string,
-  procedure: LexXrpcProcedure
+  procedure: LexXrpcProcedure,
 ): OpenAPIV3_1.OperationObject<"POST"> {
   const post = {
     tags: [calculateTag(id)],
@@ -23,10 +23,9 @@ export function convertProcedure(
     if (input.schema) {
       const schema = input.schema;
 
-      mediaType.schema =
-        schema.type === "object"
-          ? convertObject(id, name, schema)
-          : convertProperty(id, name, schema);
+      mediaType.schema = schema.type === "object"
+        ? convertObject(id, name, schema)
+        : convertProperty(id, name, schema);
     }
 
     const requestBody: OpenAPIV3_1.RequestBodyObject = {
@@ -48,10 +47,9 @@ export function convertProcedure(
     if (output.schema) {
       const schema = output.schema;
 
-      mediaType.schema =
-        schema.type === "object"
-          ? convertObject(id, name, schema)
-          : convertProperty(id, name, schema);
+      mediaType.schema = schema.type === "object"
+        ? convertObject(id, name, schema)
+        : convertProperty(id, name, schema);
     }
 
     responses["200"] = {

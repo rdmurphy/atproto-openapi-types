@@ -7,5 +7,6 @@
   "tasks": {
     "dev": "deno run --allow-read=./ --allow-write=./spec/api.json --watch main.ts",
     "run": "deno run --allow-read=./ --allow-write=./spec/api.json main.ts"
-  }
+  },
+  "exclude": ["atproto"]
 }

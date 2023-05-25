@@ -6,7 +6,7 @@ import { convertObject } from "./object.ts";
 export function convertRecord(
   id: string,
   name: string,
-  record: LexRecord
+  record: LexRecord,
 ): OpenAPIV3_1.SchemaObject {
   return convertObject(id, name, record.record);
 }

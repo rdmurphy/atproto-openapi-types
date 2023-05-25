@@ -87,4 +87,4 @@ const api: OpenAPIV3_1.Document = {
   components,
 };
 
-Deno.writeTextFile("./spec/api.json", JSON.stringify(api, null, 2));
+Deno.writeTextFile("./spec/api.json", JSON.stringify(api, null, 2) + "\n");

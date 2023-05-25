@@ -7,7 +7,7 @@ import { calculateTag, isEmptyObject } from "../utils.ts";
 export function convertQuery(
   id: string,
   name: string,
-  query: LexXrpcQuery
+  query: LexXrpcQuery,
 ): OpenAPIV3_1.OperationObject {
   const get = {
     tags: [calculateTag(id)],
@@ -48,10 +48,9 @@ export function convertQuery(
     if (output.schema) {
       const schema = output.schema;
 
-      mediaType.schema =
-        schema.type === "object"
-          ? convertObject(id, name, schema)
-          : convertProperty(id, name, schema);
+      mediaType.schema = schema.type === "object"
+        ? convertObject(id, name, schema)
+        : convertProperty(id, name, schema);
     }
 
     responses["200"] = {

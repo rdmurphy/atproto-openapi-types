@@ -6,7 +6,7 @@ import { convertProperty } from "./object.ts";
 export function convertString(
   id: string,
   name: string,
-  string: LexString
+  string: LexString,
 ): OpenAPIV3_1.SchemaObject {
   return convertProperty(id, name, string);
 }

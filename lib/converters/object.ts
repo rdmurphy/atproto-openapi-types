@@ -13,7 +13,7 @@ import type { OpenAPIV3_1 } from "openapi-types";
 export function convertObject(
   id: string,
   name: string,
-  object: LexObject
+  object: LexObject,
 ): OpenAPIV3_1.SchemaObject {
   const properties = convertProperties(id, name, object.properties);
 
@@ -28,7 +28,7 @@ export function convertObject(
 function convertProperties(
   id: string,
   name: string,
-  properties: LexObject["properties"]
+  properties: LexObject["properties"],
 ) {
   if (!properties) return;
 
@@ -52,7 +52,7 @@ type LexObjectProperty =
 export function convertProperty(
   id: string,
   name: string,
-  property: LexObjectProperty
+  property: LexObjectProperty,
 ): OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject {
   const type = property.type;
 
