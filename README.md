@@ -16,7 +16,7 @@ languages.
 All you need is the `spec/api.json` file! You can reference it directly at this
 URL:
 
-[`https://raw.githubusercontent.com/rdmurphy/atproto-openapi-types/main/spec/api.json`]()
+[`https://raw.githubusercontent.com/rdmurphy/atproto-openapi-types/main/spec/api.json`](https://raw.githubusercontent.com/rdmurphy/atproto-openapi-types/main/spec/api.json)
 
 This file is regenerated every six hours
 [via a GitHub Action](.github/workflows/convert.yaml) to keep it up to date with
