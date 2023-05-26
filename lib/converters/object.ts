@@ -78,15 +78,19 @@ export function convertProperty(
         ...(property.format && {
           format: convertStringFormat(property.format),
         }),
-        ...(property.minLength && { minLength: property.minLength }),
-        ...(property.maxLength && { maxLength: property.maxLength }),
+        ...(property.minLength !== undefined && {
+          minLength: property.minLength,
+        }),
+        ...(property.maxLength !== undefined && {
+          maxLength: property.maxLength,
+        }),
         ...(property.knownValues && { enum: property.knownValues }),
       };
     case "integer":
       return {
         type: "integer",
-        ...(property.minimum && { minimum: property.minimum }),
-        ...(property.maximum && { maximum: property.maximum }),
+        ...(property.minimum !== undefined && { minimum: property.minimum }),
+        ...(property.maximum !== undefined && { maximum: property.maximum }),
         ...(property.default && { default: property.default }),
       };
     case "boolean":
@@ -100,14 +104,16 @@ export function convertProperty(
       return {
         type: "string",
         format: "binary",
-        ...(property.maxSize && { maxLength: property.maxSize }),
+        ...(property.maxSize !== undefined && { maxLength: property.maxSize }),
       };
     case "bytes":
       return {
         type: "string",
         format: "byte",
         ...(property.description && { description: property.description }),
-        ...(property.maxLength && { maxLength: property.maxLength }),
+        ...(property.maxLength !== undefined && {
+          maxLength: property.maxLength,
+        }),
       };
     case "cid-link":
       return {
@@ -128,7 +134,9 @@ export function convertProperty(
       return {
         type: "array",
         items: convertProperty(id, name, property.items),
-        ...(property.maxLength && { maxItems: property.maxLength }),
+        ...(property.maxLength !== undefined && {
+          maxItems: property.maxLength,
+        }),
       };
     case "token":
       return {
