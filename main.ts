@@ -74,8 +74,10 @@ for await (const entry of entries) {
 const api: OpenAPIV3_1.Document = {
   openapi: "3.1.0",
   info: {
-    title: "ATProto",
-    version: "0.0.1",
+    title: "AT Protocol XRPC API",
+    summary:
+      "An unofficial conversion of AT Protocol's lexicons to OpenAPI's schema format.",
+    version: "0.0.1", // This will be a living document for now, so no versioning yet
     license: {
       name: "MIT",
     },
@@ -83,11 +85,12 @@ const api: OpenAPIV3_1.Document = {
   servers: [
     {
       url: "https://bsky.social/xrpc/",
+      description: "AT Protocol XRPC server",
     },
   ],
-  tags: Array.from(tagNames).map((name) => ({ name })),
   paths,
   components,
+  tags: Array.from(tagNames).map((name) => ({ name })),
 };
 
 Deno.writeTextFile("./spec/api.json", JSON.stringify(api, null, 2) + "\n");
