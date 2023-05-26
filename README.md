@@ -52,6 +52,14 @@ file is updated:
 deno task dev
 ```
 
+## Known limitations
+
+It's currently not possible to represent the `subscription` type in OpenAPI. It
+appears the maintainers of the specification
+[have passed on the inclusion of any interfaces that are not strictly scoped to the HTTP protocol](https://github.com/OAI/OpenAPI-Specification/issues/55#issuecomment-1050102436).
+(WebSockets **are** opened via a HTTP request, but I digress.)
+[AsyncAPI](https://www.asyncapi.com/) may be a better fit for this use case.
+
 ## Existing implementations
 
 - [Bluesky-OpenAPI](https://github.com/trozzelle/Bluesky-OpenAPI): Another AT
