@@ -1,7 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "ATProto",
+    "title": "AT Protocol XRPC API",
+    "summary": "An unofficial conversion of AT Protocol's lexicons to OpenAPI's schema format.",
     "version": "0.0.1",
     "license": {
       "name": "MIT"
@@ -9,51 +10,8 @@
   },
   "servers": [
     {
-      "url": "https://bsky.social/xrpc/"
-    }
-  ],
-  "tags": [
-    {
-      "name": "app.bsky.actor"
-    },
-    {
-      "name": "app.bsky.embed"
-    },
-    {
-      "name": "app.bsky.feed"
-    },
-    {
-      "name": "app.bsky.graph"
-    },
-    {
-      "name": "app.bsky.notification"
-    },
-    {
-      "name": "app.bsky.richtext"
-    },
-    {
-      "name": "app.bsky.unspecced"
-    },
-    {
-      "name": "com.atproto.admin"
-    },
-    {
-      "name": "com.atproto.identity"
-    },
-    {
-      "name": "com.atproto.label"
-    },
-    {
-      "name": "com.atproto.moderation"
-    },
-    {
-      "name": "com.atproto.repo"
-    },
-    {
-      "name": "com.atproto.server"
-    },
-    {
-      "name": "com.atproto.sync"
+      "url": "https://bsky.social/xrpc/",
+      "description": "AT Protocol XRPC server"
     }
   ],
   "paths": {
@@ -8116,5 +8074,49 @@
         "scheme": "bearer"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "app.bsky.actor"
+    },
+    {
+      "name": "app.bsky.embed"
+    },
+    {
+      "name": "app.bsky.feed"
+    },
+    {
+      "name": "app.bsky.graph"
+    },
+    {
+      "name": "app.bsky.notification"
+    },
+    {
+      "name": "app.bsky.richtext"
+    },
+    {
+      "name": "app.bsky.unspecced"
+    },
+    {
+      "name": "com.atproto.admin"
+    },
+    {
+      "name": "com.atproto.identity"
+    },
+    {
+      "name": "com.atproto.label"
+    },
+    {
+      "name": "com.atproto.moderation"
+    },
+    {
+      "name": "com.atproto.repo"
+    },
+    {
+      "name": "com.atproto.server"
+    },
+    {
+      "name": "com.atproto.sync"
+    }
+  ]
 }
