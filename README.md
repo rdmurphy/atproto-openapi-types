@@ -22,7 +22,7 @@ URL:
 > while. I'll try my best to not move it but cannot pretend it won't happen
 > while this project is still young!
 
-This file is regenerated every six hours
+This file is regenerated every _two_ hours
 [via a GitHub Action](.github/workflows/convert.yaml) to keep it up to date with
 the latest changes to the AT Protocol. It sources the
 [`bluesky-social/atproto`](https://github.com/bluesky-social/atproto) repository
