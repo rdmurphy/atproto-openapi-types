@@ -18,6 +18,10 @@ URL:
 
 [`https://raw.githubusercontent.com/rdmurphy/atproto-openapi-types/main/spec/api.json`](https://raw.githubusercontent.com/rdmurphy/atproto-openapi-types/main/spec/api.json)
 
+> **Note:** The path to this file is subject to change, at least for a little
+> while. I'll try my best to not move it but cannot pretend it won't happen
+> while this project is still young!
+
 This file is regenerated every six hours
 [via a GitHub Action](.github/workflows/convert.yaml) to keep it up to date with
 the latest changes to the AT Protocol. It sources the
