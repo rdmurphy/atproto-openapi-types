@@ -60,10 +60,13 @@ for await (const entry of entries) {
         components.schemas![identifier] = convertString(id, name, def);
         break;
       case "subscription":
+        // No way to represent this in OpenAPI
         break;
       case "token":
         components.schemas![identifier] = convertToken(id, name, def);
         break;
+      default:
+        throw new Error(`Unknown type: ${def.type}`);
     }
   }
 }
