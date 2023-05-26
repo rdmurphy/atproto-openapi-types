@@ -3241,11 +3241,11 @@
           {
             "name": "handle",
             "in": "query",
-            "description": "The handle to resolve. If not supplied, will resolve the host's own handle.",
-            "required": false,
+            "description": "The handle to resolve.",
+            "required": true,
             "schema": {
               "type": "string",
-              "description": "The handle to resolve. If not supplied, will resolve the host's own handle.",
+              "description": "The handle to resolve.",
               "format": "handle"
             }
           }
