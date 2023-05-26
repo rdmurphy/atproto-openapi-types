@@ -1019,7 +1019,19 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "maximum": 1000,
+              "default": 6
+            }
+          },
+          {
+            "name": "parentHeight",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "default": 80
             }
           }
         ],
