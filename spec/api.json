@@ -1020,6 +1020,7 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "minimum": 0,
               "maximum": 1000,
               "default": 6
             }
@@ -1030,6 +1031,7 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "minimum": 0,
               "maximum": 1000,
               "default": 80
             }
@@ -6348,7 +6350,8 @@
             "type": "string"
           },
           "likeCount": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.generatorViewerState"
@@ -6589,10 +6592,12 @@
         ],
         "properties": {
           "start": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "end": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         }
       },
@@ -6930,10 +6935,12 @@
         ],
         "properties": {
           "byteStart": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "byteEnd": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         }
       },
