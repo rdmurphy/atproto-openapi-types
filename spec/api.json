@@ -2817,6 +2817,48 @@
         }
       }
     },
+    "/com.atproto.admin.rebaseRepo": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Administrative action to rebase an account's repo",
+        "operationId": "com.atproto.admin.rebaseRepo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "repo"
+                ],
+                "properties": {
+                  "repo": {
+                    "type": "string",
+                    "description": "The handle or DID of the repo.",
+                    "format": "at-identifier"
+                  },
+                  "swapCommit": {
+                    "type": "string",
+                    "description": "Compare and swap with the previous commit by cid.",
+                    "format": "cid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/com.atproto.admin.resolveModerationReports": {
       "post": {
         "tags": [
