@@ -12,7 +12,7 @@ import {
 
 import type { OpenAPIV3_1 } from "openapi-types";
 
-const entries = expandGlob("./atproto/lexicons/**/*.json");
+const entries = expandGlob("./lexicons/**/*.json");
 
 const paths: OpenAPIV3_1.PathsObject = {};
 const components: OpenAPIV3_1.ComponentsObject = {
