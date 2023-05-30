@@ -2686,6 +2686,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Reverse the order of the returned records? when true, returns reports in chronological order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Reverse the order of the returned records? when true, returns reports in chronological order"
+            }
           }
         ],
         "responses": {
