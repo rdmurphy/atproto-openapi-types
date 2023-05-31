@@ -45,14 +45,24 @@ for await (const entry of entries) {
       case "object":
         components.schemas![identifier] = convertObject(id, name, def);
         break;
-      case "procedure":
-        // @ts-ignore FIXME: Also confused about ArraySchemaObject
-        paths[`/${id}`] = { post: convertProcedure(id, name, def) };
+      case "procedure": {
+        const post = await convertProcedure(id, name, def);
+
+        if (post) {
+          // @ts-ignore FIXME: Also confused about ArraySchemaObject
+          paths[`/${id}`] = { post };
+        }
         break;
-      case "query":
-        // @ts-ignore FIXME: Also confused about ArraySchemaObject
-        paths[`/${id}`] = { get: convertQuery(id, name, def) };
+      }
+      case "query": {
+        const get = await convertQuery(id, name, def);
+
+        if (get) {
+          // @ts-ignore FIXME: Also confused about ArraySchemaObject
+          paths[`/${id}`] = { get };
+        }
         break;
+      }
       case "record":
         components.schemas![identifier] = convertRecord(id, name, def);
         break;

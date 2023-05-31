@@ -2,18 +2,26 @@ import type { LexXrpcProcedure } from "@atproto/lexicon";
 import type { OpenAPIV3_1 } from "openapi-types";
 
 import { convertObject, convertProperty } from "./object.ts";
-import { calculateTag } from "../utils.ts";
+import { calculateTag, checkEndpoint, Endpoint } from "../utils.ts";
 
-export function convertProcedure(
+export async function convertProcedure(
   id: string,
   name: string,
   procedure: LexXrpcProcedure,
-): OpenAPIV3_1.OperationObject<"POST"> {
+): Promise<OpenAPIV3_1.OperationObject<"POST"> | undefined> {
+  const endpointType = await checkEndpoint(id, "POST");
+
+  if (endpointType === Endpoint.DoesNotExist) {
+    return;
+  }
+
+  const needsAuthentication = endpointType === Endpoint.NeedsAuthentication;
+
   const post = {
     tags: [calculateTag(id)],
     ...(procedure.description && { summary: procedure.description }),
     operationId: id,
-    ...(authenticatedEndpoints.has(id) && { security: [{ Bearer: [] }] }),
+    ...(needsAuthentication && { security: [{ Bearer: [] }] }),
   } as OpenAPIV3_1.OperationObject<"POST">;
 
   if (procedure.input) {
@@ -68,7 +76,7 @@ export function convertProcedure(
     description: "Bad Request",
   };
 
-  if (authenticatedEndpoints.has(id)) {
+  if (needsAuthentication) {
     responses["401"] = {
       description: "Unauthorized",
     };
@@ -78,38 +86,3 @@ export function convertProcedure(
 
   return post;
 }
-
-/**
- * Building this by hand because this is documented ...no where?
- */
-const authenticatedEndpoints = new Set([
-  "app.bsky.actor.putPreferences",
-  "app.bsky.graph.muteActor",
-  "app.bsky.graph.muteActorList",
-  "app.bsky.graph.unmuteActor",
-  "app.bsky.graph.unmuteActorList",
-  "app.bsky.notification.updateSeen",
-  "com.atproto.admin.disableAccountInvites",
-  "com.atproto.admin.disableInviteCodes",
-  "com.atproto.admin.enableAccountInvites",
-  "com.atproto.admin.resolveModerationReports",
-  "com.atproto.admin.reverseModerationAction",
-  "com.atproto.admin.takeModerationAction",
-  "com.atproto.admin.updateAccountEmail",
-  "com.atproto.admin.updateAccountHandle",
-  "com.atproto.identity.updateHandle",
-  "com.atproto.moderation.createReport",
-  "com.atproto.repo.applyWrites",
-  "com.atproto.repo.createRecord",
-  "com.atproto.repo.deleteRecord",
-  "com.atproto.repo.putRecord",
-  "com.atproto.repo.rebaseRepo",
-  "com.atproto.repo.uploadBlob",
-  "com.atproto.server.createAppPassword",
-  "com.atproto.server.createInviteCode",
-  "com.atproto.server.createInviteCodes",
-  "com.atproto.server.deleteSession",
-  "com.atproto.server.refreshSession",
-  "com.atproto.server.requestAccountDelete",
-  "com.atproto.server.revokeAppPassword",
-]);

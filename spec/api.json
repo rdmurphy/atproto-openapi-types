@@ -790,74 +790,6 @@
         }
       }
     },
-    "/app.bsky.feed.getFeedSkeleton": {
-      "get": {
-        "tags": [
-          "app.bsky.feed"
-        ],
-        "summary": "A skeleton of a feed provided by a feed generator",
-        "operationId": "app.bsky.feed.getFeedSkeleton",
-        "parameters": [
-          {
-            "name": "feed",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "at-uri"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "default": 50
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "feed"
-                  ],
-                  "properties": {
-                    "cursor": {
-                      "type": "string"
-                    },
-                    "feed": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonFeedPost"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/app.bsky.feed.getLikes": {
       "get": {
         "tags": [
@@ -2834,6 +2766,11 @@
         ],
         "summary": "Administrative action to rebase an account's repo",
         "operationId": "com.atproto.admin.rebaseRepo",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -2865,6 +2802,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -3351,90 +3291,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/com.atproto.label.queryLabels": {
-      "get": {
-        "tags": [
-          "com.atproto.label"
-        ],
-        "summary": "Find labels relevant to the provided URI patterns.",
-        "operationId": "com.atproto.label.queryLabels",
-        "parameters": [
-          {
-            "name": "uriPatterns",
-            "in": "query",
-            "description": "List of AT URI patterns to match (boolean 'OR'). Each may be a prefix (ending with '*'; will match inclusive of the string leading to '*'), or a full URI",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "sources",
-            "in": "query",
-            "description": "Optional list of label sources (DIDs) to filter on",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "did"
-              }
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 250,
-              "default": 50
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "labels"
-                  ],
-                  "properties": {
-                    "cursor": {
-                      "type": "string"
-                    },
-                    "labels": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/com.atproto.label.defs.label"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -5509,58 +5365,6 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/com.atproto.sync.notifyOfUpdate": {
-      "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Notify a crawling service of a recent update. Often when a long break between updates causes the connection with the crawling service to break.",
-        "operationId": "com.atproto.sync.notifyOfUpdate",
-        "parameters": [
-          {
-            "name": "hostname",
-            "in": "query",
-            "description": "Hostname of the service that is notifying of update.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "Hostname of the service that is notifying of update."
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/com.atproto.sync.requestCrawl": {
-      "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Request a service to persistently crawl hosted repos.",
-        "operationId": "com.atproto.sync.requestCrawl",
-        "parameters": [
-          {
-            "name": "hostname",
-            "in": "query",
-            "description": "Hostname of the service that is requesting to be crawled.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "Hostname of the service that is requesting to be crawled."
-            }
-          }
-        ],
-        "responses": {
           "400": {
             "description": "Bad Request"
           }
