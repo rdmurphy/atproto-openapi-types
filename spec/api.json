@@ -7005,6 +7005,9 @@
           "reason": {
             "type": "string"
           },
+          "subjectRepoHandle": {
+            "type": "string"
+          },
           "subject": {
             "oneOf": [
               {
