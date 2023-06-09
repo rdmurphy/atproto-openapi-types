@@ -2579,6 +2579,18 @@
             }
           },
           {
+            "name": "reporters",
+            "in": "query",
+            "description": "Filter reports made by one or more DIDs",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "resolved",
             "in": "query",
             "required": false,
