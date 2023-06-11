@@ -6150,6 +6150,7 @@
         "required": [
           "uri",
           "cid",
+          "did",
           "creator",
           "displayName",
           "indexedAt"
