@@ -5798,6 +5798,9 @@
               },
               {
                 "$ref": "#/components/schemas/app.bsky.feed.defs.generatorView"
+              },
+              {
+                "$ref": "#/components/schemas/app.bsky.graph.defs.listView"
               }
             ]
           }
@@ -6379,6 +6382,14 @@
               }
             ]
           },
+          "langs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "language"
+            },
+            "maxItems": 3
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -6476,6 +6487,7 @@
         "type": "object",
         "required": [
           "uri",
+          "cid",
           "name",
           "purpose"
         ],
@@ -6483,6 +6495,10 @@
           "uri": {
             "type": "string",
             "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
           },
           "name": {
             "type": "string",
@@ -6508,6 +6524,7 @@
         "type": "object",
         "required": [
           "uri",
+          "cid",
           "creator",
           "name",
           "purpose",
@@ -6517,6 +6534,10 @@
           "uri": {
             "type": "string",
             "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
           },
           "creator": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileView"
