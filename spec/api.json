@@ -2603,6 +2603,17 @@
             }
           },
           {
+            "name": "actionedBy",
+            "in": "query",
+            "description": "Get all reports that were actioned by a specific moderator",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Get all reports that were actioned by a specific moderator",
+              "format": "did"
+            }
+          },
+          {
             "name": "reporters",
             "in": "query",
             "description": "Filter reports made by one or more DIDs",
