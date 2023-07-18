@@ -3060,6 +3060,64 @@
         }
       }
     },
+    "/com.atproto.admin.sendEmail": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Send email to a user's primary email address",
+        "operationId": "com.atproto.admin.sendEmail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "recipientDid",
+                  "content"
+                ],
+                "properties": {
+                  "recipientDid": {
+                    "type": "string",
+                    "format": "did"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "sent"
+                  ],
+                  "properties": {
+                    "sent": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/com.atproto.admin.takeModerationAction": {
       "post": {
         "tags": [
