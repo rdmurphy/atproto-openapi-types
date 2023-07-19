@@ -3067,6 +3067,11 @@
         ],
         "summary": "Send email to a user's primary email address",
         "operationId": "com.atproto.admin.sendEmail",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3114,6 +3119,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
