@@ -7663,7 +7663,7 @@
       "com.atproto.moderation.defs.reasonSexual": {
         "type": "string",
         "format": "token",
-        "description": "Unwanted or mis-labeled sexual content"
+        "description": "Unwanted or mislabeled sexual content"
       },
       "com.atproto.moderation.defs.reasonRude": {
         "type": "string",
