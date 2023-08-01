@@ -7444,7 +7444,6 @@
       },
       "com.atproto.admin.defs.moderation": {
         "type": "object",
-        "required": [],
         "properties": {
           "currentAction": {
             "$ref": "#/components/schemas/com.atproto.admin.defs.actionViewCurrent"
