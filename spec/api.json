@@ -2228,6 +2228,10 @@
                   "account": {
                     "type": "string",
                     "format": "did"
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "Additionally add a note describing why the invites were disabled"
                   }
                 }
               }
@@ -2321,6 +2325,10 @@
                   "account": {
                     "type": "string",
                     "format": "did"
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "Additionally add a note describing why the invites were enabled"
                   }
                 }
               }
@@ -7266,6 +7274,9 @@
           },
           "invitesDisabled": {
             "type": "boolean"
+          },
+          "inviteNote": {
+            "type": "string"
           }
         }
       },
@@ -7318,6 +7329,9 @@
           },
           "invitesDisabled": {
             "type": "boolean"
+          },
+          "inviteNote": {
+            "type": "string"
           }
         }
       },
