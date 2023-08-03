@@ -2053,6 +2053,44 @@
         }
       }
     },
+    "/app.bsky.unspecced.applyLabels": {
+      "post": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Allow a labeler to apply labels directly.",
+        "operationId": "app.bsky.unspecced.applyLabels",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "labels"
+                ],
+                "properties": {
+                  "labels": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/com.atproto.label.defs.label"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/app.bsky.unspecced.getPopular": {
       "get": {
         "tags": [
