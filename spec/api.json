@@ -2060,6 +2060,11 @@
         ],
         "summary": "Allow a labeler to apply labels directly.",
         "operationId": "app.bsky.unspecced.applyLabels",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -2087,6 +2092,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
