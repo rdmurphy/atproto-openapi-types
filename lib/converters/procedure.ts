@@ -72,13 +72,58 @@ export async function convertProcedure(
     };
   }
 
+  const possibleErrors = ["InvalidRequest"]; // assuming it's always possible
+
+  if (needsAuthentication) {
+    possibleErrors.push("ExpiredToken", "InvalidToken");
+  }
+
+  if (procedure.errors) {
+    for (const { name } of procedure.errors) {
+      possibleErrors.push(name);
+    }
+  }
+
   responses["400"] = {
     description: "Bad Request",
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          required: ["error", "message"],
+          properties: {
+            error: {
+              type: "string",
+              oneOf: possibleErrors.map((name) => ({ const: name })),
+            },
+            message: {
+              type: "string",
+            },
+          },
+        },
+      },
+    },
   };
 
   if (needsAuthentication) {
     responses["401"] = {
       description: "Unauthorized",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["error", "message"],
+            properties: {
+              error: {
+                const: "AuthMissing",
+              },
+              message: {
+                type: "string",
+              },
+            },
+          },
+        },
+      },
     };
   }
 
