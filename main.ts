@@ -89,7 +89,8 @@ const api: OpenAPIV3_1.Document = {
       "An unofficial conversion of AT Protocol's lexicons to OpenAPI's schema format.",
     version: "0.0.0", // This will be a living document for now, so no versioning yet
     license: {
-      name: "MIT",
+      name: "MIT License",
+      identifier: "MIT",
     },
   },
   servers: [
