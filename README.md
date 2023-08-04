@@ -11,7 +11,13 @@ languages.
 
 ## How to use
 
-### I just want the types
+### I want to see what it looks like
+
+[A Swagger UI instance prepopulated with the current version of the OpenAPI types is available to preview](https://rdmurphy.github.io/atproto-openapi-types/).
+You can create a session (use an app password!), input your authentication token
+and experiment with authenticated queries.
+
+### I want the types
 
 All you need is the `spec/api.json` file! You can reference it directly at this
 URL:
