@@ -986,6 +986,7 @@
             "required": false,
             "schema": {
               "type": "string",
+              "default": "posts_with_replies",
               "enum": [
                 "posts_with_replies",
                 "posts_no_replies",
@@ -4276,6 +4277,7 @@
             "required": false,
             "schema": {
               "type": "string",
+              "default": "recent",
               "enum": [
                 "recent",
                 "usage"
@@ -9812,6 +9814,13 @@
             "type": "string",
             "format": "binary",
             "maxLength": 1000000
+          },
+          "labels": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
+              }
+            ]
           }
         }
       },
@@ -10480,6 +10489,13 @@
             "format": "binary",
             "maxLength": 1000000
           },
+          "labels": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
+              }
+            ]
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -10572,6 +10588,13 @@
               "format": "language"
             },
             "maxItems": 3
+          },
+          "labels": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
+              }
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -10833,6 +10856,13 @@
             "type": "string",
             "format": "binary",
             "maxLength": 1000000
+          },
+          "labels": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
+              }
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -11664,6 +11694,36 @@
             "type": "string",
             "description": "timestamp when this label was created",
             "format": "date-time"
+          }
+        }
+      },
+      "com.atproto.label.defs.selfLabels": {
+        "type": "object",
+        "description": "Metadata tags on an atproto record, published by the author within the record.",
+        "required": [
+          "values"
+        ],
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.selfLabel"
+            },
+            "maxItems": 10
+          }
+        }
+      },
+      "com.atproto.label.defs.selfLabel": {
+        "type": "object",
+        "description": "Metadata tag on an atproto record, published by the author within the record. Note -- schemas should use #selfLabels, not #selfLabel.",
+        "required": [
+          "val"
+        ],
+        "properties": {
+          "val": {
+            "type": "string",
+            "description": "the short string name of the value or type of this label",
+            "maxLength": 128
           }
         }
       },
