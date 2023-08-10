@@ -10327,7 +10327,8 @@
         "type": "object",
         "required": [
           "uri",
-          "blocked"
+          "blocked",
+          "author"
         ],
         "properties": {
           "uri": {
@@ -10337,6 +10338,24 @@
           "blocked": {
             "type": "boolean",
             "default": true
+          },
+          "author": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
+          }
+        }
+      },
+      "app.bsky.feed.defs.blockedAuthor": {
+        "type": "object",
+        "required": [
+          "did"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "viewer": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.viewerState"
           }
         }
       },
