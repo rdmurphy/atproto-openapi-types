@@ -84,6 +84,7 @@ export function convertProperty(
         ...(property.maxLength !== undefined && {
           maxLength: property.maxLength,
         }),
+        ...(property.default && { default: property.default }),
         ...(property.knownValues && { enum: property.knownValues }),
       };
     case "integer":
