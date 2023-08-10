@@ -10054,24 +10054,38 @@
       "app.bsky.embed.record.viewNotFound": {
         "type": "object",
         "required": [
-          "uri"
+          "uri",
+          "notFound"
         ],
         "properties": {
           "uri": {
             "type": "string",
             "format": "at-uri"
+          },
+          "notFound": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
       "app.bsky.embed.record.viewBlocked": {
         "type": "object",
         "required": [
-          "uri"
+          "uri",
+          "blocked",
+          "author"
         ],
         "properties": {
           "uri": {
             "type": "string",
             "format": "at-uri"
+          },
+          "blocked": {
+            "type": "boolean",
+            "default": true
+          },
+          "author": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
           }
         }
       },
