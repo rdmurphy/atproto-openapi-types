@@ -5718,6 +5718,9 @@
                   "reason": {
                     "type": "string"
                   },
+                  "durationInHours": {
+                    "type": "integer"
+                  },
                   "createdBy": {
                     "type": "string",
                     "format": "did"
@@ -11068,6 +11071,9 @@
           "action": {
             "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
           },
+          "durationInHours": {
+            "type": "integer"
+          },
           "subject": {
             "oneOf": [
               {
@@ -11137,6 +11143,9 @@
           "action": {
             "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
           },
+          "durationInHours": {
+            "type": "integer"
+          },
           "subject": {
             "oneOf": [
               {
@@ -11205,6 +11214,9 @@
           },
           "action": {
             "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
+          },
+          "durationInHours": {
+            "type": "integer"
           }
         }
       },
