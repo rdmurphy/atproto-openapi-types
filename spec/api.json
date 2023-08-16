@@ -1219,11 +1219,6 @@
         ],
         "summary": "Get information about a specific feed offered by a feed generator, such as its online status",
         "operationId": "app.bsky.feed.getFeedGenerator",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "feed",
@@ -1278,36 +1273,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -1327,11 +1294,6 @@
         ],
         "summary": "Get information about a list of feed generators",
         "operationId": "app.bsky.feed.getFeedGenerators",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "feeds",
@@ -1384,12 +1346,6 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
                     },
@@ -1400,9 +1356,74 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getFeedSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "A skeleton of a feed provided by a feed generator",
+        "operationId": "app.bsky.feed.getFeedSkeleton",
+        "parameters": [
+          {
+            "name": "feed",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "at-uri"
+            }
           },
-          "401": {
-            "description": "Unauthorized",
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "feed"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "feed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonFeedPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -1413,7 +1434,15 @@
                   ],
                   "properties": {
                     "error": {
-                      "const": "AuthMissing"
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "UnknownFeed"
+                        }
+                      ]
                     },
                     "message": {
                       "type": "string"
@@ -1432,11 +1461,6 @@
           "app.bsky.feed"
         ],
         "operationId": "app.bsky.feed.getLikes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "uri",
@@ -1526,36 +1550,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -1574,11 +1570,6 @@
           "app.bsky.feed"
         ],
         "operationId": "app.bsky.feed.getPostThread",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "uri",
@@ -1659,37 +1650,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "NotFound"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -1709,11 +1672,6 @@
         ],
         "summary": "A view of an actor's feed.",
         "operationId": "app.bsky.feed.getPosts",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "uris",
@@ -1767,36 +1725,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -1815,11 +1745,6 @@
           "app.bsky.feed"
         ],
         "operationId": "app.bsky.feed.getRepostedBy",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "uri",
@@ -1909,36 +1834,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -1958,11 +1855,6 @@
         ],
         "summary": "A view of the user's home timeline.",
         "operationId": "app.bsky.feed.getTimeline",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "algorithm",
@@ -2033,36 +1925,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2082,11 +1946,6 @@
         ],
         "summary": "Who is the requester's account blocking?",
         "operationId": "app.bsky.graph.getBlocks",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -2149,36 +2008,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2198,11 +2029,6 @@
         ],
         "summary": "Who is following an actor?",
         "operationId": "app.bsky.graph.getFollowers",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "actor",
@@ -2278,36 +2104,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2327,11 +2125,6 @@
         ],
         "summary": "Who is an actor following?",
         "operationId": "app.bsky.graph.getFollows",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "actor",
@@ -2407,36 +2200,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2456,11 +2221,6 @@
         ],
         "summary": "Fetch a list of actors",
         "operationId": "app.bsky.graph.getList",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "list",
@@ -2536,36 +2296,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2585,11 +2317,6 @@
         ],
         "summary": "Which lists is the requester's account muting?",
         "operationId": "app.bsky.graph.getListMutes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -2652,36 +2379,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2701,11 +2400,6 @@
         ],
         "summary": "Fetch a list of lists that belong to an actor",
         "operationId": "app.bsky.graph.getLists",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "actor",
@@ -2777,36 +2471,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2826,11 +2492,6 @@
         ],
         "summary": "Who does the viewer mute?",
         "operationId": "app.bsky.graph.getMutes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -2893,36 +2554,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -2942,11 +2575,6 @@
         ],
         "summary": "Mute an actor by did or handle.",
         "operationId": "app.bsky.graph.muteActor",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -2986,36 +2614,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3035,11 +2635,6 @@
         ],
         "summary": "Mute a list of actors.",
         "operationId": "app.bsky.graph.muteActorList",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3079,36 +2674,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3128,11 +2695,6 @@
         ],
         "summary": "Unmute an actor by did or handle.",
         "operationId": "app.bsky.graph.unmuteActor",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3172,36 +2734,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3221,11 +2755,6 @@
         ],
         "summary": "Unmute a list of actors.",
         "operationId": "app.bsky.graph.unmuteActorList",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3265,36 +2794,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3313,11 +2814,6 @@
           "app.bsky.notification"
         ],
         "operationId": "app.bsky.notification.getUnreadCount",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "seenAt",
@@ -3364,36 +2860,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3412,11 +2880,6 @@
           "app.bsky.notification"
         ],
         "operationId": "app.bsky.notification.listNotifications",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -3488,36 +2951,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3537,11 +2972,6 @@
         ],
         "summary": "Notify server that the user has seen notifications.",
         "operationId": "app.bsky.notification.updateSeen",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3581,36 +3011,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3630,11 +3032,6 @@
         ],
         "summary": "Allow a labeler to apply labels directly.",
         "operationId": "app.bsky.unspecced.applyLabels",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -3676,36 +3073,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3725,11 +3094,6 @@
         ],
         "summary": "An unspecced view of globally popular items",
         "operationId": "app.bsky.unspecced.getPopular",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "includeNsfw",
@@ -3800,36 +3164,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -3849,11 +3185,6 @@
         ],
         "summary": "An unspecced view of globally popular feed generators",
         "operationId": "app.bsky.unspecced.getPopularFeedGenerators",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -3924,12 +3255,6 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
                     },
@@ -3940,9 +3265,65 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/app.bsky.unspecced.getTimelineSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "A skeleton of a timeline - UNSPECCED & WILL GO AWAY SOON",
+        "operationId": "app.bsky.unspecced.getTimelineSkeleton",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
           },
-          "401": {
-            "description": "Unauthorized",
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "feed"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "feed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonFeedPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -3953,7 +3334,15 @@
                   ],
                   "properties": {
                     "error": {
-                      "const": "AuthMissing"
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "UnknownFeed"
+                        }
+                      ]
                     },
                     "message": {
                       "type": "string"
@@ -3973,11 +3362,6 @@
         ],
         "summary": "Disable an account from receiving new invite codes, but does not invalidate existing codes",
         "operationId": "com.atproto.admin.disableAccountInvites",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -4021,36 +3405,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4070,11 +3426,6 @@
         ],
         "summary": "Disable some set of codes and/or all codes associated with a set of users",
         "operationId": "com.atproto.admin.disableInviteCodes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -4119,36 +3470,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4168,11 +3491,6 @@
         ],
         "summary": "Re-enable an accounts ability to receive invite codes",
         "operationId": "com.atproto.admin.enableAccountInvites",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -4216,36 +3534,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4265,11 +3555,6 @@
         ],
         "summary": "Admin view of invite codes",
         "operationId": "com.atproto.admin.getInviteCodes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "sort",
@@ -4345,36 +3630,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4394,11 +3651,6 @@
         ],
         "summary": "View details about a moderation action.",
         "operationId": "com.atproto.admin.getModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -4436,36 +3688,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4485,11 +3709,6 @@
         ],
         "summary": "List moderation actions related to a subject.",
         "operationId": "com.atproto.admin.getModerationActions",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "subject",
@@ -4560,36 +3779,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4609,11 +3800,6 @@
         ],
         "summary": "View details about a moderation report.",
         "operationId": "com.atproto.admin.getModerationReport",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -4651,36 +3837,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4700,11 +3858,6 @@
         ],
         "summary": "List moderation reports related to a subject.",
         "operationId": "com.atproto.admin.getModerationReports",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "subject",
@@ -4841,36 +3994,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4890,11 +4015,6 @@
         ],
         "summary": "View details about a record.",
         "operationId": "com.atproto.admin.getRecord",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "uri",
@@ -4944,37 +4064,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "RecordNotFound"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4994,11 +4086,6 @@
         ],
         "summary": "View details about a repository.",
         "operationId": "com.atproto.admin.getRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "did",
@@ -5039,37 +4126,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "RepoNotFound"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5089,11 +4148,6 @@
         ],
         "summary": "Administrative action to rebase an account's repo",
         "operationId": "com.atproto.admin.rebaseRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5141,40 +4195,12 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         },
                         {
                           "const": "ConcurrentWrites"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5194,11 +4220,6 @@
         ],
         "summary": "Resolve moderation reports by an action.",
         "operationId": "com.atproto.admin.resolveModerationReports",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5256,36 +4277,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5305,11 +4298,6 @@
         ],
         "summary": "Reverse a moderation action.",
         "operationId": "com.atproto.admin.reverseModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5364,36 +4352,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5413,11 +4373,6 @@
         ],
         "summary": "Find repositories based on a search term.",
         "operationId": "com.atproto.admin.searchRepos",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "term",
@@ -5496,36 +4451,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5545,11 +4472,6 @@
         ],
         "summary": "Send email to a user's primary email address",
         "operationId": "com.atproto.admin.sendEmail",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5611,36 +4533,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5660,11 +4554,6 @@
         ],
         "summary": "Take a moderation action on a repo.",
         "operationId": "com.atproto.admin.takeModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5759,37 +4648,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "SubjectHasAction"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5809,11 +4670,6 @@
         ],
         "summary": "Administrative action to update an account's email",
         "operationId": "com.atproto.admin.updateAccountEmail",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5858,36 +4714,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5907,11 +4735,6 @@
         ],
         "summary": "Administrative action to update an account's handle",
         "operationId": "com.atproto.admin.updateAccountHandle",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5956,36 +4779,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6075,11 +4870,6 @@
         ],
         "summary": "Updates the handle of the account",
         "operationId": "com.atproto.identity.updateHandle",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6119,12 +4909,6 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
                     },
@@ -6135,9 +4919,90 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/com.atproto.label.queryLabels": {
+      "get": {
+        "tags": [
+          "com.atproto.label"
+        ],
+        "summary": "Find labels relevant to the provided URI patterns.",
+        "operationId": "com.atproto.label.queryLabels",
+        "parameters": [
+          {
+            "name": "uriPatterns",
+            "in": "query",
+            "description": "List of AT URI patterns to match (boolean 'OR'). Each may be a prefix (ending with '*'; will match inclusive of the string leading to '*'), or a full URI",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           },
-          "401": {
-            "description": "Unauthorized",
+          {
+            "name": "sources",
+            "in": "query",
+            "description": "Optional list of label sources (DIDs) to filter on",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "did"
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 250,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "labels"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "labels": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/com.atproto.label.defs.label"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -6148,7 +5013,12 @@
                   ],
                   "properties": {
                     "error": {
-                      "const": "AuthMissing"
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        }
+                      ]
                     },
                     "message": {
                       "type": "string"
@@ -6168,11 +5038,6 @@
         ],
         "summary": "Report a repo or a record.",
         "operationId": "com.atproto.moderation.createReport",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6268,36 +5133,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6317,11 +5154,6 @@
         ],
         "summary": "Apply a batch transaction of creates, updates, and deletes.",
         "operationId": "com.atproto.repo.applyWrites",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6390,37 +5222,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6440,11 +5244,6 @@
         ],
         "summary": "Create a new record.",
         "operationId": "com.atproto.repo.createRecord",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6531,37 +5330,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6581,11 +5352,6 @@
         ],
         "summary": "Delete a record, or ensure it doesn't exist.",
         "operationId": "com.atproto.repo.deleteRecord",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6649,37 +5415,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7032,11 +5770,6 @@
         ],
         "summary": "Write a record, creating or updating it as needed.",
         "operationId": "com.atproto.repo.putRecord",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7129,37 +5862,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7179,11 +5884,6 @@
         ],
         "summary": "Simple rebase of repo that deletes history",
         "operationId": "com.atproto.repo.rebaseRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7231,40 +5931,12 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         },
                         {
                           "const": "ConcurrentWrites"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7284,11 +5956,6 @@
         ],
         "summary": "Upload a new blob to be added to repo in a later request.",
         "operationId": "com.atproto.repo.uploadBlob",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7331,36 +5998,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7508,11 +6147,6 @@
         ],
         "summary": "Create an app-specific password.",
         "operationId": "com.atproto.server.createAppPassword",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7560,37 +6194,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "AccountTakedown"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7610,11 +6216,6 @@
         ],
         "summary": "Create an invite code.",
         "operationId": "com.atproto.server.createInviteCode",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7672,36 +6273,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7721,11 +6294,6 @@
         ],
         "summary": "Create an invite code.",
         "operationId": "com.atproto.server.createInviteCodes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7794,36 +6362,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -8016,11 +6556,6 @@
         ],
         "summary": "Delete the current session.",
         "operationId": "com.atproto.server.deleteSession",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -8041,36 +6576,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
