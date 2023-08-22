@@ -939,6 +939,104 @@
         }
       }
     },
+    "/app.bsky.feed.getActorLikes": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "A view of the posts liked by an actor.",
+        "operationId": "app.bsky.feed.getActorLikes",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "at-identifier"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "feed"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "feed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.feedViewPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "BlockedActor"
+                        },
+                        {
+                          "const": "BlockedByActor"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.feed.getAuthorFeed": {
       "get": {
         "tags": [
@@ -12241,6 +12339,7 @@
       },
       "com.atproto.sync.subscribeRepos.repoOp": {
         "type": "object",
+        "description": "A repo operation, ie a write of a single record. For creates and updates, cid is the record's CID as of this operation. For deletes, it's null.",
         "required": [
           "action",
           "path",
