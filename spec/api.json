@@ -946,6 +946,11 @@
         ],
         "summary": "A view of the posts liked by an actor.",
         "operationId": "app.bsky.feed.getActorLikes",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "actor",
@@ -1019,12 +1024,40 @@
                           "const": "InvalidRequest"
                         },
                         {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
                           "const": "BlockedActor"
                         },
                         {
                           "const": "BlockedByActor"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
