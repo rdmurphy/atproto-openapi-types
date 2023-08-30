@@ -5330,11 +5330,6 @@
         ],
         "summary": "Administrative action to rebase an account's repo",
         "operationId": "com.atproto.admin.rebaseRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5382,40 +5377,12 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         },
                         {
                           "const": "ConcurrentWrites"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -7420,11 +7387,6 @@
         ],
         "summary": "Simple rebase of repo that deletes history",
         "operationId": "com.atproto.repo.rebaseRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -7472,40 +7434,12 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         },
                         {
                           "const": "ConcurrentWrites"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -9239,7 +9173,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the repo state.",
+        "summary": "DEPRECATED - please use com.atproto.sync.getRepo instead",
         "operationId": "com.atproto.sync.getCheckout",
         "parameters": [
           {
@@ -9251,17 +9185,6 @@
               "type": "string",
               "description": "The DID of the repo.",
               "format": "did"
-            }
-          },
-          {
-            "name": "commit",
-            "in": "query",
-            "description": "The commit to get the checkout from. Defaults to current HEAD.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "The commit to get the checkout from. Defaults to current HEAD.",
-              "format": "cid"
             }
           }
         ],
@@ -9402,7 +9325,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the current HEAD CID of a repo.",
+        "summary": "DEPRECATED - please use com.atproto.sync.getLatestCommit instead",
         "operationId": "com.atproto.sync.getHead",
         "parameters": [
           {
@@ -9456,6 +9379,83 @@
                         },
                         {
                           "const": "HeadNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.sync.getLatestCommit": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Gets the current commit CID & revision of the repo.",
+        "operationId": "com.atproto.sync.getLatestCommit",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "description": "The DID of the repo.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The DID of the repo.",
+              "format": "did"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "cid",
+                    "rev"
+                  ],
+                  "properties": {
+                    "cid": {
+                      "type": "string",
+                      "format": "cid"
+                    },
+                    "rev": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "RepoNotFound"
                         }
                       ]
                     },
@@ -9560,7 +9560,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the repo state.",
+        "summary": "Gets the did's repo, optionally catching up from a specific revision.",
         "operationId": "com.atproto.sync.getRepo",
         "parameters": [
           {
@@ -9575,24 +9575,13 @@
             }
           },
           {
-            "name": "earliest",
+            "name": "since",
             "in": "query",
-            "description": "The earliest commit in the commit range (not inclusive)",
+            "description": "The revision of the repo to catch up from.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "The earliest commit in the commit range (not inclusive)",
-              "format": "cid"
-            }
-          },
-          {
-            "name": "latest",
-            "in": "query",
-            "description": "The latest commit in the commit range (inclusive)",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "The latest commit in the commit range (inclusive)",
+              "description": "The revision of the repo to catch up from.",
               "format": "cid"
             }
           }
@@ -9639,7 +9628,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List blob cids for some range of commits",
+        "summary": "List blob cids since some revision",
         "operationId": "com.atproto.sync.listBlobs",
         "parameters": [
           {
@@ -9654,25 +9643,33 @@
             }
           },
           {
-            "name": "latest",
+            "name": "since",
             "in": "query",
-            "description": "The most recent commit",
+            "description": "Optional revision of the repo to list blobs since",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "The most recent commit",
+              "description": "Optional revision of the repo to list blobs since",
               "format": "cid"
             }
           },
           {
-            "name": "earliest",
+            "name": "limit",
             "in": "query",
-            "description": "The earliest commit to start from",
             "required": false,
             "schema": {
-              "type": "string",
-              "description": "The earliest commit to start from",
-              "format": "cid"
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 500
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -9687,6 +9684,9 @@
                     "cids"
                   ],
                   "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
                     "cids": {
                       "type": "array",
                       "items": {
@@ -9800,6 +9800,99 @@
                           "const": "InvalidRequest"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.temp.upgradeRepoVersion": {
+      "post": {
+        "tags": [
+          "com.atproto.temp"
+        ],
+        "summary": "Upgrade a repo to v3",
+        "operationId": "com.atproto.temp.upgradeRepoVersion",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "did"
+                ],
+                "properties": {
+                  "did": {
+                    "type": "string",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12337,7 +12430,8 @@
           "tooBig",
           "repo",
           "commit",
-          "prev",
+          "rev",
+          "since",
           "blocks",
           "ops",
           "blobs",
@@ -12364,6 +12458,14 @@
           "prev": {
             "type": "string",
             "format": "cid-link"
+          },
+          "rev": {
+            "type": "string",
+            "description": "The rev of the emitted commit"
+          },
+          "since": {
+            "type": "string",
+            "description": "The rev of the last emitted commit from this repo"
           },
           "blocks": {
             "type": "string",
@@ -12556,6 +12658,9 @@
     },
     {
       "name": "com.atproto.sync"
+    },
+    {
+      "name": "com.atproto.temp"
     }
   ]
 }
