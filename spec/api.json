@@ -9837,6 +9837,9 @@
                   "did": {
                     "type": "string",
                     "format": "did"
+                  },
+                  "force": {
+                    "type": "boolean"
                   }
                 }
               }
