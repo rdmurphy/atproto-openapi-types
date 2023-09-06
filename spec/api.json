@@ -10379,6 +10379,27 @@
           },
           "alt": {
             "type": "string"
+          },
+          "aspectRatio": {
+            "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
+          }
+        }
+      },
+      "app.bsky.embed.images.aspectRatio": {
+        "type": "object",
+        "description": "width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.",
+        "required": [
+          "width",
+          "height"
+        ],
+        "properties": {
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
           }
         }
       },
@@ -10413,6 +10434,9 @@
           },
           "alt": {
             "type": "string"
+          },
+          "aspectRatio": {
+            "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
           }
         }
       },
