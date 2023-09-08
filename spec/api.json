@@ -10192,6 +10192,9 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.savedFeedsPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.personalDetailsPref"
             }
           ]
         }
@@ -10247,6 +10250,16 @@
               "type": "string",
               "format": "at-uri"
             }
+          }
+        }
+      },
+      "app.bsky.actor.defs.personalDetailsPref": {
+        "type": "object",
+        "properties": {
+          "birthDate": {
+            "type": "string",
+            "description": "The birth date of the owner of the account.",
+            "format": "date-time"
           }
         }
       },
