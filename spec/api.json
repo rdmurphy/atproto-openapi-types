@@ -2825,6 +2825,122 @@
         }
       }
     },
+    "/app.bsky.graph.getListBlocks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Which lists is the requester's account blocking?",
+        "operationId": "app.bsky.graph.getListBlocks",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "lists"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "lists": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.graph.defs.listView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.getListMutes": {
       "get": {
         "tags": [
@@ -9697,8 +9813,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "description": "The revision of the repo to catch up from.",
-              "format": "cid"
+              "description": "The revision of the repo to catch up from."
             }
           }
         ],
@@ -9765,8 +9880,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "description": "Optional revision of the repo to list blobs since",
-              "format": "cid"
+              "description": "Optional revision of the repo to list blobs since"
             }
           },
           {
@@ -11332,6 +11446,10 @@
         "properties": {
           "muted": {
             "type": "boolean"
+          },
+          "blocked": {
+            "type": "string",
+            "format": "at-uri"
           }
         }
       },
@@ -11389,6 +11507,23 @@
                 "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
               }
             ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.graph.listblock": {
+        "type": "object",
+        "required": [
+          "subject",
+          "createdAt"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "at-uri"
           },
           "createdAt": {
             "type": "string",
