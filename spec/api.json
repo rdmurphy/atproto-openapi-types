@@ -1699,6 +1699,134 @@
         }
       }
     },
+    "/app.bsky.feed.getListFeed": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "A view of a recent posts from actors in a list",
+        "operationId": "app.bsky.feed.getListFeed",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "list",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "at-uri"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "feed"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "feed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.feedViewPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "UnknownList"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.feed.getPostThread": {
       "get": {
         "tags": [
@@ -11503,6 +11631,9 @@
         "oneOf": [
           {
             "$ref": "#/components/schemas/app.bsky.graph.defs.modlist"
+          },
+          {
+            "$ref": "#/components/schemas/app.bsky.graph.defs.curatelist"
           }
         ]
       },
@@ -11510,6 +11641,11 @@
         "type": "string",
         "format": "token",
         "description": "A list of actors to apply an aggregate moderation action (mute/block) on"
+      },
+      "app.bsky.graph.defs.curatelist": {
+        "type": "string",
+        "format": "token",
+        "description": "A list of actors used for curation purposes such as list feeds or interaction gating"
       },
       "app.bsky.graph.defs.listViewerState": {
         "type": "object",
