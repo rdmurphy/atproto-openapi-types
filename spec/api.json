@@ -10997,6 +10997,9 @@
             "items": {
               "$ref": "#/components/schemas/com.atproto.label.defs.label"
             }
+          },
+          "threadgate": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.threadgateView"
           }
         }
       },
@@ -11122,6 +11125,9 @@
                 }
               ]
             }
+          },
+          "viewer": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.viewerThreadState"
           }
         }
       },
@@ -11175,6 +11181,14 @@
           },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.viewerState"
+          }
+        }
+      },
+      "app.bsky.feed.defs.viewerThreadState": {
+        "type": "object",
+        "properties": {
+          "canReply": {
+            "type": "boolean"
           }
         }
       },
@@ -11270,6 +11284,26 @@
           "repost": {
             "type": "string",
             "format": "at-uri"
+          }
+        }
+      },
+      "app.bsky.feed.defs.threadgateView": {
+        "type": "object",
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "record": {},
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.graph.defs.listViewBasic"
+            }
           }
         }
       },
@@ -11507,6 +11541,61 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.feed.threadgate": {
+        "type": "object",
+        "required": [
+          "post",
+          "createdAt"
+        ],
+        "properties": {
+          "post": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "allow": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.mentionRule"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.followingRule"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.listRule"
+                }
+              ]
+            },
+            "maxItems": 5
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.feed.threadgate.mentionRule": {
+        "type": "object",
+        "description": "Allow replies from actors mentioned in your post."
+      },
+      "app.bsky.feed.threadgate.followingRule": {
+        "type": "object",
+        "description": "Allow replies from actors you follow."
+      },
+      "app.bsky.feed.threadgate.listRule": {
+        "type": "object",
+        "description": "Allow replies from actors on a list.",
+        "required": [
+          "list"
+        ],
+        "properties": {
+          "list": {
+            "type": "string",
+            "format": "at-uri"
           }
         }
       },
