@@ -11580,11 +11580,13 @@
       },
       "app.bsky.feed.threadgate.mentionRule": {
         "type": "object",
-        "description": "Allow replies from actors mentioned in your post."
+        "description": "Allow replies from actors mentioned in your post.",
+        "properties": {}
       },
       "app.bsky.feed.threadgate.followingRule": {
         "type": "object",
-        "description": "Allow replies from actors you follow."
+        "description": "Allow replies from actors you follow.",
+        "properties": {}
       },
       "app.bsky.feed.threadgate.listRule": {
         "type": "object",
