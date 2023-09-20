@@ -10507,6 +10507,12 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.personalDetailsPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.feedViewPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.threadViewPref"
             }
           ]
         }
@@ -10572,6 +10578,56 @@
             "type": "string",
             "description": "The birth date of the owner of the account.",
             "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.actor.defs.feedViewPref": {
+        "type": "object",
+        "required": [
+          "feed"
+        ],
+        "properties": {
+          "feed": {
+            "type": "string",
+            "description": "The URI of the feed, or an identifier which describes the feed."
+          },
+          "hideReplies": {
+            "type": "boolean",
+            "description": "Hide replies in the feed."
+          },
+          "hideRepliesByUnfollowed": {
+            "type": "boolean",
+            "description": "Hide replies in the feed if they are not by followed users."
+          },
+          "hideRepliesByLikeCount": {
+            "type": "integer"
+          },
+          "hideReposts": {
+            "type": "boolean",
+            "description": "Hide reposts in the feed."
+          },
+          "hideQuotePosts": {
+            "type": "boolean",
+            "description": "Hide quote posts in the feed."
+          }
+        }
+      },
+      "app.bsky.actor.defs.threadViewPref": {
+        "type": "object",
+        "properties": {
+          "sort": {
+            "type": "string",
+            "description": "Sorting mode.",
+            "enum": [
+              "oldest",
+              "newest",
+              "most-likes",
+              "random"
+            ]
+          },
+          "prioritizeFollowedUsers": {
+            "type": "boolean",
+            "description": "Show followed users at the top of all replies."
           }
         }
       },
