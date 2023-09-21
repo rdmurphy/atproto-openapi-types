@@ -4427,7 +4427,7 @@
         "tags": [
           "app.bsky.unspecced"
         ],
-        "summary": "An unspecced view of globally popular items",
+        "summary": "DEPRECATED: will be removed soon, please find a feed generator alternative",
         "operationId": "app.bsky.unspecced.getPopular",
         "security": [
           {
