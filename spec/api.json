@@ -11457,6 +11457,14 @@
               }
             ]
           },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 640
+            },
+            "maxItems": 8
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -11913,6 +11921,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/app.bsky.richtext.facet.link"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.richtext.facet.tag"
                 }
               ]
             }
@@ -11942,6 +11953,19 @@
           "uri": {
             "type": "string",
             "format": "uri"
+          }
+        }
+      },
+      "app.bsky.richtext.facet.tag": {
+        "type": "object",
+        "description": "A hashtag.",
+        "required": [
+          "tag"
+        ],
+        "properties": {
+          "tag": {
+            "type": "string",
+            "maxLength": 640
           }
         }
       },
