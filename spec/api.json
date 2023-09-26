@@ -515,7 +515,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actors matching search criteria.",
+        "summary": "Find actors (profiles) matching search criteria.",
         "operationId": "app.bsky.actor.searchActors",
         "security": [
           {
@@ -526,9 +526,21 @@
           {
             "name": "term",
             "in": "query",
+            "description": "DEPRECATED: use 'q' instead",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "DEPRECATED: use 'q' instead"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
             }
           },
           {
@@ -539,7 +551,7 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 100,
-              "default": 50
+              "default": 25
             }
           },
           {
@@ -650,9 +662,21 @@
           {
             "name": "term",
             "in": "query",
+            "description": "DEPRECATED: use 'q' instead",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "DEPRECATED: use 'q' instead"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query prefix; not a full query string",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "search query prefix; not a full query string"
             }
           },
           {
@@ -663,7 +687,7 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 100,
-              "default": 50
+              "default": 10
             }
           }
         ],
@@ -2371,6 +2395,107 @@
                   "properties": {
                     "error": {
                       "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.searchPosts": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Find posts matching search criteria",
+        "operationId": "app.bsky.feed.searchPosts",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "posts"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hitsTotal": {
+                      "type": "integer"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "BadQueryString"
+                        }
+                      ]
                     },
                     "message": {
                       "type": "string"
@@ -4267,11 +4392,6 @@
         ],
         "summary": "Allow a labeler to apply labels directly.",
         "operationId": "app.bsky.unspecced.applyLabels",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -4313,36 +4433,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -4591,6 +4683,218 @@
                   "properties": {
                     "error": {
                       "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.unspecced.searchActorsSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Backend Actors (profile) search, returning only skeleton",
+        "operationId": "app.bsky.unspecced.searchActorsSkeleton",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended. For typeahead search, only simple term match is supported, not full syntax",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended. For typeahead search, only simple term match is supported, not full syntax"
+            }
+          },
+          {
+            "name": "typeahead",
+            "in": "query",
+            "description": "if true, acts as fast/simple 'typeahead' query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "if true, acts as fast/simple 'typeahead' query"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "actors"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hitsTotal": {
+                      "type": "integer"
+                    },
+                    "actors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.unspecced.defs.skeletonSearchActor"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "BadQueryString"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.unspecced.searchPostsSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Backend Posts search, returning only skeleton",
+        "operationId": "app.bsky.unspecced.searchPostsSkeleton",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "posts"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hitsTotal": {
+                      "type": "integer"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.unspecced.defs.skeletonSearchPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "BadQueryString"
+                        }
+                      ]
                     },
                     "message": {
                       "type": "string"
@@ -6025,6 +6329,16 @@
         "parameters": [
           {
             "name": "term",
+            "in": "query",
+            "description": "DEPRECATED: use 'q' instead",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "DEPRECATED: use 'q' instead"
+            }
+          },
+          {
+            "name": "q",
             "in": "query",
             "required": false,
             "schema": {
@@ -11984,6 +12298,30 @@
           "byteEnd": {
             "type": "integer",
             "minimum": 0
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.skeletonSearchPost": {
+        "type": "object",
+        "required": [
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.skeletonSearchActor": {
+        "type": "object",
+        "required": [
+          "did"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
           }
         }
       },
