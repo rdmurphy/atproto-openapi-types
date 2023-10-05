@@ -13417,7 +13417,8 @@
         "type": "object",
         "required": [
           "did",
-          "head"
+          "head",
+          "rev"
         ],
         "properties": {
           "did": {
@@ -13427,6 +13428,9 @@
           "head": {
             "type": "string",
             "format": "cid"
+          },
+          "rev": {
+            "type": "string"
           }
         }
       },
