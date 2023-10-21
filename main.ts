@@ -96,7 +96,11 @@ const api: OpenAPIV3_1.Document = {
   servers: [
     {
       url: "https://bsky.social/xrpc/",
-      description: "AT Protocol XRPC server",
+      description: "AT Protocol PDS XRPC server",
+    },
+    {
+      url: "https://api.bsky.app/xrpc/",
+      description: "AT Protocol AppView XRPC server",
     },
   ],
   paths,
