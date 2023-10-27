@@ -8132,7 +8132,8 @@
                     "did": {
                       "type": "string",
                       "format": "did"
-                    }
+                    },
+                    "didDoc": {}
                   }
                 }
               }
@@ -8582,6 +8583,7 @@
                       "type": "string",
                       "format": "did"
                     },
+                    "didDoc": {},
                     "email": {
                       "type": "string"
                     },
@@ -9189,7 +9191,8 @@
                     "did": {
                       "type": "string",
                       "format": "did"
-                    }
+                    },
+                    "didDoc": {}
                   }
                 }
               }
