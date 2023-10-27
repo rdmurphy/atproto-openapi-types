@@ -10866,6 +10866,9 @@
             "type": "string",
             "format": "at-uri"
           },
+          "blockingByList": {
+            "$ref": "#/components/schemas/app.bsky.graph.defs.listViewBasic"
+          },
           "following": {
             "type": "string",
             "format": "at-uri"
