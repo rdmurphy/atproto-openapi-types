@@ -6836,7 +6836,8 @@
                       "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
                     },
                     "reason": {
-                      "type": "string"
+                      "type": "string",
+                      "maxLength": 20000
                     },
                     "subject": {
                       "oneOf": [
