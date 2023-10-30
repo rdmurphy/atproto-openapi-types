@@ -4890,6 +4890,98 @@
         }
       }
     },
+    "/com.atproto.admin.getAccountInfo": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "View details about an account.",
+        "operationId": "com.atproto.admin.getAccountInfo",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "did"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.atproto.admin.defs.accountView"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.admin.getInviteCodes": {
       "get": {
         "tags": [
@@ -5714,6 +5806,137 @@
         }
       }
     },
+    "/com.atproto.admin.getSubjectStatus": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Fetch the service-specific the admin status of a subject (account, record, or blob)",
+        "operationId": "com.atproto.admin.getSubjectStatus",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "at-uri"
+            }
+          },
+          {
+            "name": "blob",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "cid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subject"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/com.atproto.admin.defs.repoRef"
+                        },
+                        {
+                          "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+                        },
+                        {
+                          "$ref": "#/components/schemas/com.atproto.admin.defs.repoBlobRef"
+                        }
+                      ]
+                    },
+                    "takedown": {
+                      "$ref": "#/components/schemas/com.atproto.admin.defs.statusAttr"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.admin.rebaseRepo": {
       "post": {
         "tags": [
@@ -6030,14 +6253,6 @@
           },
           {
             "name": "q",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "invitedBy",
             "in": "query",
             "required": false,
             "schema": {
@@ -6548,6 +6763,139 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.updateSubjectStatus": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Update the service-specific admin status of a subject (account, record, or blob)",
+        "operationId": "com.atproto.admin.updateSubjectStatus",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "subject"
+                ],
+                "properties": {
+                  "subject": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.repoRef"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.repoBlobRef"
+                      }
+                    ]
+                  },
+                  "takedown": {
+                    "$ref": "#/components/schemas/com.atproto.admin.defs.statusAttr"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subject"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/com.atproto.admin.defs.repoRef"
+                        },
+                        {
+                          "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+                        },
+                        {
+                          "$ref": "#/components/schemas/com.atproto.admin.defs.repoBlobRef"
+                        }
+                      ]
+                    },
+                    "takedown": {
+                      "$ref": "#/components/schemas/com.atproto.admin.defs.statusAttr"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -9556,63 +9904,6 @@
         }
       }
     },
-    "/com.atproto.server.reserveSigningKey": {
-      "post": {
-        "tags": [
-          "com.atproto.server"
-        ],
-        "summary": "Reserve a repo signing key for account creation.",
-        "operationId": "com.atproto.server.reserveSigningKey",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "signingKey"
-                  ],
-                  "properties": {
-                    "signingKey": {
-                      "type": "string",
-                      "description": "Public signing key in the form of a did:key."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "oneOf": [
-                        {
-                          "const": "InvalidRequest"
-                        }
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/com.atproto.server.resetPassword": {
       "post": {
         "tags": [
@@ -12466,6 +12757,20 @@
           }
         }
       },
+      "com.atproto.admin.defs.statusAttr": {
+        "type": "object",
+        "required": [
+          "applied"
+        ],
+        "properties": {
+          "applied": {
+            "type": "boolean"
+          },
+          "ref": {
+            "type": "string"
+          }
+        }
+      },
       "com.atproto.admin.defs.actionView": {
         "type": "object",
         "required": [
@@ -12890,6 +13195,46 @@
           }
         }
       },
+      "com.atproto.admin.defs.accountView": {
+        "type": "object",
+        "required": [
+          "did",
+          "handle",
+          "indexedAt"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "handle": {
+            "type": "string",
+            "format": "handle"
+          },
+          "email": {
+            "type": "string"
+          },
+          "indexedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "invitedBy": {
+            "$ref": "#/components/schemas/com.atproto.server.defs.inviteCode"
+          },
+          "invites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.server.defs.inviteCode"
+            }
+          },
+          "invitesDisabled": {
+            "type": "boolean"
+          },
+          "inviteNote": {
+            "type": "string"
+          }
+        }
+      },
       "com.atproto.admin.defs.repoViewNotFound": {
         "type": "object",
         "required": [
@@ -12911,6 +13256,27 @@
           "did": {
             "type": "string",
             "format": "did"
+          }
+        }
+      },
+      "com.atproto.admin.defs.repoBlobRef": {
+        "type": "object",
+        "required": [
+          "did",
+          "cid"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "recordUri": {
+            "type": "string",
+            "format": "at-uri"
           }
         }
       },
