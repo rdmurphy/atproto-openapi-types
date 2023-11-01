@@ -8420,9 +8420,7 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "handle",
-                  "email",
-                  "password"
+                  "handle"
                 ],
                 "properties": {
                   "email": {
