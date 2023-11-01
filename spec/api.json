@@ -8445,10 +8445,7 @@
                   "recoveryKey": {
                     "type": "string"
                   },
-                  "plcOp": {
-                    "type": "string",
-                    "format": "byte"
-                  }
+                  "plcOp": {}
                 }
               }
             }
