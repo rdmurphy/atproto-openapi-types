@@ -9900,6 +9900,79 @@
         }
       }
     },
+    "/com.atproto.server.reserveSigningKey": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Reserve a repo signing key for account creation.",
+        "operationId": "com.atproto.server.reserveSigningKey",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "did": {
+                    "type": "string",
+                    "description": "The did to reserve a new did:key for"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "signingKey"
+                  ],
+                  "properties": {
+                    "signingKey": {
+                      "type": "string",
+                      "description": "Public signing key in the form of a did:key."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.server.resetPassword": {
       "post": {
         "tags": [
