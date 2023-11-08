@@ -13261,6 +13261,10 @@
           },
           "inviteNote": {
             "type": "string"
+          },
+          "emailConfirmedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -13298,6 +13302,10 @@
           },
           "invitesDisabled": {
             "type": "boolean"
+          },
+          "emailConfirmedAt": {
+            "type": "string",
+            "format": "date-time"
           },
           "inviteNote": {
             "type": "string"
