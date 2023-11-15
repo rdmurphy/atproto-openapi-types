@@ -2411,6 +2411,140 @@
         }
       }
     },
+    "/app.bsky.feed.searchPosts": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Find posts matching search criteria",
+        "operationId": "app.bsky.feed.searchPosts",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "posts"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hitsTotal": {
+                      "type": "integer"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "BadQueryString"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.getBlocks": {
       "get": {
         "tags": [
