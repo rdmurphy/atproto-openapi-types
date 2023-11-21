@@ -114,6 +114,7 @@
         "tags": [
           "app.bsky.actor"
         ],
+        "summary": "Get detailed profile view of an actor.",
         "operationId": "app.bsky.actor.getProfile",
         "security": [
           {
@@ -205,6 +206,7 @@
         "tags": [
           "app.bsky.actor"
         ],
+        "summary": "Get detailed profile views of multiple actors.",
         "operationId": "app.bsky.actor.getProfiles",
         "security": [
           {
@@ -311,7 +313,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get a list of actors suggested for following. Used in discovery UIs.",
+        "summary": "Get a list of suggested actors, used for discovery.",
         "operationId": "app.bsky.actor.getSuggestions",
         "security": [
           {
@@ -427,7 +429,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Sets the private preferences attached to the account.",
+        "summary": "Set the private preferences attached to the account.",
         "operationId": "app.bsky.actor.putPreferences",
         "security": [
           {
@@ -530,21 +532,21 @@
           {
             "name": "term",
             "in": "query",
-            "description": "DEPRECATED: use 'q' instead",
+            "description": "DEPRECATED: use 'q' instead.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "DEPRECATED: use 'q' instead"
+              "description": "DEPRECATED: use 'q' instead."
             }
           },
           {
             "name": "q",
             "in": "query",
-            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "description": "Search query string. Syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
+              "description": "Search query string. Syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended."
             }
           },
           {
@@ -655,7 +657,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actor suggestions for a search term.",
+        "summary": "Find actor suggestions for a prefix search term.",
         "operationId": "app.bsky.actor.searchActorsTypeahead",
         "security": [
           {
@@ -666,21 +668,21 @@
           {
             "name": "term",
             "in": "query",
-            "description": "DEPRECATED: use 'q' instead",
+            "description": "DEPRECATED: use 'q' instead.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "DEPRECATED: use 'q' instead"
+              "description": "DEPRECATED: use 'q' instead."
             }
           },
           {
             "name": "q",
             "in": "query",
-            "description": "search query prefix; not a full query string",
+            "description": "Search query prefix; not a full query string.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "search query prefix; not a full query string"
+              "description": "Search query prefix; not a full query string."
             }
           },
           {
@@ -780,7 +782,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve a list of feeds created by a given actor",
+        "summary": "Get a list of feeds created by the actor.",
         "operationId": "app.bsky.feed.getActorFeeds",
         "security": [
           {
@@ -905,7 +907,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "A view of the posts liked by an actor.",
+        "summary": "Get a list of posts liked by an actor.",
         "operationId": "app.bsky.feed.getActorLikes",
         "security": [
           {
@@ -1036,7 +1038,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "A view of an actor's feed.",
+        "summary": "Get a view of an actor's feed.",
         "operationId": "app.bsky.feed.getAuthorFeed",
         "security": [
           {
@@ -1181,7 +1183,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Compose and hydrate a feed from a user's selected feed generator",
+        "summary": "Get a hydrated feed from an actor's selected feed generator.",
         "operationId": "app.bsky.feed.getFeed",
         "security": [
           {
@@ -1309,7 +1311,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get information about a specific feed offered by a feed generator, such as its online status",
+        "summary": "Get information about a feed generator.",
         "operationId": "app.bsky.feed.getFeedGenerator",
         "security": [
           {
@@ -1417,7 +1419,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get information about a list of feed generators",
+        "summary": "Get information about a list of feed generators.",
         "operationId": "app.bsky.feed.getFeedGenerators",
         "security": [
           {
@@ -1523,6 +1525,7 @@
         "tags": [
           "app.bsky.feed"
         ],
+        "summary": "Get the list of likes.",
         "operationId": "app.bsky.feed.getLikes",
         "security": [
           {
@@ -1665,7 +1668,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "A view of a recent posts from actors in a list",
+        "summary": "Get a view of a recent posts from actors in a list.",
         "operationId": "app.bsky.feed.getListFeed",
         "security": [
           {
@@ -1793,6 +1796,7 @@
         "tags": [
           "app.bsky.feed"
         ],
+        "summary": "Get posts in a thread.",
         "operationId": "app.bsky.feed.getPostThread",
         "security": [
           {
@@ -1927,7 +1931,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "A view of an actor's feed.",
+        "summary": "Get a view of an actor's feed.",
         "operationId": "app.bsky.feed.getPosts",
         "security": [
           {
@@ -2034,6 +2038,7 @@
         "tags": [
           "app.bsky.feed"
         ],
+        "summary": "Get a list of reposts.",
         "operationId": "app.bsky.feed.getRepostedBy",
         "security": [
           {
@@ -2292,7 +2297,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "A view of the user's home timeline.",
+        "summary": "Get a view of the actor's home timeline.",
         "operationId": "app.bsky.feed.getTimeline",
         "security": [
           {
@@ -2416,7 +2421,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Find posts matching search criteria",
+        "summary": "Find posts matching search criteria.",
         "operationId": "app.bsky.feed.searchPosts",
         "security": [
           {
@@ -2427,11 +2432,11 @@
           {
             "name": "q",
             "in": "query",
-            "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended",
+            "description": "Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.",
             "required": true,
             "schema": {
               "type": "string",
-              "description": "search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended"
+              "description": "Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended."
             }
           },
           {
@@ -2448,11 +2453,11 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set",
+            "description": "Optional pagination mechanism; may not necessarily allow scrolling through entire result set.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "optional pagination mechanism; may not necessarily allow scrolling through entire result set"
+              "description": "Optional pagination mechanism; may not necessarily allow scrolling through entire result set."
             }
           }
         ],
@@ -2550,7 +2555,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is the requester's account blocking?",
+        "summary": "Get a list of who the actor is blocking.",
         "operationId": "app.bsky.graph.getBlocks",
         "security": [
           {
@@ -2666,7 +2671,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is following an actor?",
+        "summary": "Get a list of an actor's followers.",
         "operationId": "app.bsky.graph.getFollowers",
         "security": [
           {
@@ -2795,7 +2800,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is an actor following?",
+        "summary": "Get a list of who the actor follows.",
         "operationId": "app.bsky.graph.getFollows",
         "security": [
           {
@@ -2924,7 +2929,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Fetch a list of actors",
+        "summary": "Get a list of actors.",
         "operationId": "app.bsky.graph.getList",
         "security": [
           {
@@ -3053,7 +3058,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Which lists is the requester's account blocking?",
+        "summary": "Get lists that the actor is blocking.",
         "operationId": "app.bsky.graph.getListBlocks",
         "security": [
           {
@@ -3169,7 +3174,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Which lists is the requester's account muting?",
+        "summary": "Get lists that the actor is muting.",
         "operationId": "app.bsky.graph.getListMutes",
         "security": [
           {
@@ -3285,7 +3290,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Fetch a list of lists that belong to an actor",
+        "summary": "Get a list of lists that belong to an actor.",
         "operationId": "app.bsky.graph.getLists",
         "security": [
           {
@@ -3410,7 +3415,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who does the viewer mute?",
+        "summary": "Get a list of who the actor mutes.",
         "operationId": "app.bsky.graph.getMutes",
         "security": [
           {
@@ -3629,7 +3634,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an actor by did or handle.",
+        "summary": "Mute an actor by DID or handle.",
         "operationId": "app.bsky.graph.muteActor",
         "security": [
           {
@@ -3815,7 +3820,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an actor by did or handle.",
+        "summary": "Unmute an actor by DID or handle.",
         "operationId": "app.bsky.graph.unmuteActor",
         "security": [
           {
@@ -4001,6 +4006,7 @@
         "tags": [
           "app.bsky.notification"
         ],
+        "summary": "Get the count of unread notifications.",
         "operationId": "app.bsky.notification.getUnreadCount",
         "security": [
           {
@@ -4100,6 +4106,7 @@
         "tags": [
           "app.bsky.notification"
         ],
+        "summary": "Get a list of notifications.",
         "operationId": "app.bsky.notification.listNotifications",
         "security": [
           {
@@ -4224,7 +4231,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Register for push notifications with a service",
+        "summary": "Register for push notifications with a service.",
         "operationId": "app.bsky.notification.registerPush",
         "security": [
           {
@@ -4489,7 +4496,7 @@
         "tags": [
           "app.bsky.unspecced"
         ],
-        "summary": "DEPRECATED: will be removed soon, please find a feed generator alternative",
+        "summary": "DEPRECATED: will be removed soon. Use a feed generator alternative.",
         "operationId": "app.bsky.unspecced.getPopular",
         "security": [
           {
@@ -4613,7 +4620,7 @@
         "tags": [
           "app.bsky.unspecced"
         ],
-        "summary": "An unspecced view of globally popular feed generators",
+        "summary": "An unspecced view of globally popular feed generators.",
         "operationId": "app.bsky.unspecced.getPopularFeedGenerators",
         "security": [
           {
@@ -4737,7 +4744,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Disable an account from receiving new invite codes, but does not invalidate existing codes",
+        "summary": "Disable an account from receiving new invite codes, but does not invalidate existing codes.",
         "operationId": "com.atproto.admin.disableAccountInvites",
         "security": [
           {
@@ -4760,7 +4767,7 @@
                   },
                   "note": {
                     "type": "string",
-                    "description": "Additionally add a note describing why the invites were disabled"
+                    "description": "Optional reason for disabled invites."
                   }
                 }
               }
@@ -4834,7 +4841,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Disable some set of codes and/or all codes associated with a set of users",
+        "summary": "Disable some set of codes and/or all codes associated with a set of users.",
         "operationId": "com.atproto.admin.disableInviteCodes",
         "security": [
           {
@@ -4932,7 +4939,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Re-enable an accounts ability to receive invite codes",
+        "summary": "Re-enable an account's ability to receive invite codes.",
         "operationId": "com.atproto.admin.enableAccountInvites",
         "security": [
           {
@@ -4955,7 +4962,7 @@
                   },
                   "note": {
                     "type": "string",
-                    "description": "Additionally add a note describing why the invites were enabled"
+                    "description": "Optional reason for enabled invites."
                   }
                 }
               }
@@ -5029,7 +5036,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "View details about an account.",
+        "summary": "Get details about an account.",
         "operationId": "com.atproto.admin.getAccountInfo",
         "security": [
           {
@@ -5121,7 +5128,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Admin view of invite codes",
+        "summary": "Get an admin view of invite codes.",
         "operationId": "com.atproto.admin.getInviteCodes",
         "security": [
           {
@@ -5250,7 +5257,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "View details about a moderation action.",
+        "summary": "Get details about a moderation action.",
         "operationId": "com.atproto.admin.getModerationAction",
         "security": [
           {
@@ -5341,7 +5348,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "List moderation actions related to a subject.",
+        "summary": "Get a list of moderation actions related to a subject.",
         "operationId": "com.atproto.admin.getModerationActions",
         "security": [
           {
@@ -5465,7 +5472,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "View details about a moderation report.",
+        "summary": "Get details about a moderation report.",
         "operationId": "com.atproto.admin.getModerationReport",
         "security": [
           {
@@ -5556,7 +5563,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "List moderation reports related to a subject.",
+        "summary": "Get moderation reports related to a subject.",
         "operationId": "com.atproto.admin.getModerationReports",
         "security": [
           {
@@ -5586,18 +5593,18 @@
           {
             "name": "actionedBy",
             "in": "query",
-            "description": "Get all reports that were actioned by a specific moderator",
+            "description": "Get all reports that were actioned by a specific moderator.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "Get all reports that were actioned by a specific moderator",
+              "description": "Get all reports that were actioned by a specific moderator.",
               "format": "did"
             }
           },
           {
             "name": "reporters",
             "in": "query",
-            "description": "Filter reports made by one or more DIDs",
+            "description": "Filter reports made by one or more DIDs.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5650,11 +5657,11 @@
           {
             "name": "reverse",
             "in": "query",
-            "description": "Reverse the order of the returned records? when true, returns reports in chronological order",
+            "description": "Reverse the order of the returned records. When true, returns reports in chronological order.",
             "required": false,
             "schema": {
               "type": "boolean",
-              "description": "Reverse the order of the returned records? when true, returns reports in chronological order"
+              "description": "Reverse the order of the returned records. When true, returns reports in chronological order."
             }
           }
         ],
@@ -5746,7 +5753,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "View details about a record.",
+        "summary": "Get details about a record.",
         "operationId": "com.atproto.admin.getRecord",
         "security": [
           {
@@ -5850,7 +5857,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "View details about a repository.",
+        "summary": "Get details about a repository.",
         "operationId": "com.atproto.admin.getRepo",
         "security": [
           {
@@ -5945,7 +5952,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Fetch the service-specific the admin status of a subject (account, record, or blob)",
+        "summary": "Get the service-specific admin status of a subject (account, record, or blob).",
         "operationId": "com.atproto.admin.getSubjectStatus",
         "security": [
           {
@@ -6501,7 +6508,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Send email to a user's primary email address",
+        "summary": "Send email to a user's account email address.",
         "operationId": "com.atproto.admin.sendEmail",
         "security": [
           {
@@ -6616,7 +6623,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Take a moderation action on a repo.",
+        "summary": "Take a moderation action on an actor.",
         "operationId": "com.atproto.admin.takeModerationAction",
         "security": [
           {
@@ -6765,7 +6772,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Administrative action to update an account's email",
+        "summary": "Administrative action to update an account's email.",
         "operationId": "com.atproto.admin.updateAccountEmail",
         "security": [
           {
@@ -6863,7 +6870,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Administrative action to update an account's handle",
+        "summary": "Administrative action to update an account's handle.",
         "operationId": "com.atproto.admin.updateAccountHandle",
         "security": [
           {
@@ -6961,7 +6968,7 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Update the service-specific admin status of a subject (account, record, or blob)",
+        "summary": "Update the service-specific admin status of a subject (account, record, or blob).",
         "operationId": "com.atproto.admin.updateSubjectStatus",
         "security": [
           {
@@ -7164,7 +7171,7 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Updates the handle of the account",
+        "summary": "Updates the handle of the account.",
         "operationId": "com.atproto.identity.updateHandle",
         "security": [
           {
@@ -7432,7 +7439,7 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Validate the records?",
+                    "description": "Flag for validating the records.",
                     "default": true
                   },
                   "writes": {
@@ -7566,13 +7573,13 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Validate the record?",
+                    "description": "Flag for validating the record.",
                     "default": true
                   },
                   "record": {},
                   "swapCommit": {
                     "type": "string",
-                    "description": "Compare and swap with the previous commit by cid.",
+                    "description": "Compare and swap with the previous commit by CID.",
                     "format": "cid"
                   }
                 }
@@ -7706,12 +7713,12 @@
                   },
                   "swapRecord": {
                     "type": "string",
-                    "description": "Compare and swap with the previous record by cid.",
+                    "description": "Compare and swap with the previous record by CID.",
                     "format": "cid"
                   },
                   "swapCommit": {
                     "type": "string",
-                    "description": "Compare and swap with the previous commit by cid.",
+                    "description": "Compare and swap with the previous commit by CID.",
                     "format": "cid"
                   }
                 }
@@ -8054,11 +8061,11 @@
           {
             "name": "reverse",
             "in": "query",
-            "description": "Reverse the order of the returned records?",
+            "description": "Flag to reverse the order of the returned records.",
             "required": false,
             "schema": {
               "type": "boolean",
-              "description": "Reverse the order of the returned records?"
+              "description": "Flag to reverse the order of the returned records."
             }
           }
         ],
@@ -8159,18 +8166,18 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Validate the record?",
+                    "description": "Flag for validating the record.",
                     "default": true
                   },
                   "record": {},
                   "swapRecord": {
                     "type": "string",
-                    "description": "Compare and swap with the previous record by cid.",
+                    "description": "Compare and swap with the previous record by CID.",
                     "format": "cid"
                   },
                   "swapCommit": {
                     "type": "string",
-                    "description": "Compare and swap with the previous commit by cid.",
+                    "description": "Compare and swap with the previous commit by CID.",
                     "format": "cid"
                   }
                 }
@@ -8673,7 +8680,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Create an app-specific password.",
+        "summary": "Create an App Password.",
         "operationId": "com.atproto.server.createAppPassword",
         "security": [
           {
@@ -8886,7 +8893,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Create an invite code.",
+        "summary": "Create invite codes.",
         "operationId": "com.atproto.server.createInviteCodes",
         "security": [
           {
@@ -9111,7 +9118,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Delete a user account with a token and password.",
+        "summary": "Delete an actor's account with a token and password.",
         "operationId": "com.atproto.server.deleteAccount",
         "requestBody": {
           "required": true,
@@ -9324,7 +9331,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Get all invite codes for a given account",
+        "summary": "Get all invite codes for a given account.",
         "operationId": "com.atproto.server.getAccountInviteCodes",
         "security": [
           {
@@ -9541,7 +9548,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "List all app-specific passwords.",
+        "summary": "List all App Passwords.",
         "operationId": "com.atproto.server.listAppPasswords",
         "security": [
           {
@@ -9817,7 +9824,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Request an email with a code to confirm ownership of email",
+        "summary": "Request an email with a code to confirm ownership of email.",
         "operationId": "com.atproto.server.requestEmailConfirmation",
         "security": [
           {
@@ -10181,7 +10188,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Revoke an app-specific password by name.",
+        "summary": "Revoke an App Password by name.",
         "operationId": "com.atproto.server.revokeAppPassword",
         "security": [
           {
@@ -10446,7 +10453,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets blocks from a given repo.",
+        "summary": "Get blocks from a given repo.",
         "operationId": "com.atproto.sync.getBlocks",
         "parameters": [
           {
@@ -10740,7 +10747,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the current commit CID & revision of the repo.",
+        "summary": "Get the current commit CID & revision of the repo.",
         "operationId": "com.atproto.sync.getLatestCommit",
         "parameters": [
           {
@@ -10817,7 +10824,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets blocks needed for existence or non-existence of record.",
+        "summary": "Get blocks needed for existence or non-existence of record.",
         "operationId": "com.atproto.sync.getRecord",
         "parameters": [
           {
@@ -10902,7 +10909,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the did's repo, optionally catching up from a specific revision.",
+        "summary": "Gets the DID's repo, optionally catching up from a specific revision.",
         "operationId": "com.atproto.sync.getRepo",
         "parameters": [
           {
@@ -10969,7 +10976,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List blob cids since some revision",
+        "summary": "List blob CIDs since some revision.",
         "operationId": "com.atproto.sync.listBlobs",
         "parameters": [
           {
@@ -10986,11 +10993,11 @@
           {
             "name": "since",
             "in": "query",
-            "description": "Optional revision of the repo to list blobs since",
+            "description": "Optional revision of the repo to list blobs since.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "Optional revision of the repo to list blobs since"
+              "description": "Optional revision of the repo to list blobs since."
             }
           },
           {
@@ -11074,7 +11081,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List dids and root cids of hosted repos",
+        "summary": "List DIDs and root CIDs of hosted repos.",
         "operationId": "com.atproto.sync.listRepos",
         "parameters": [
           {
@@ -11538,7 +11545,7 @@
         "properties": {
           "birthDate": {
             "type": "string",
-            "description": "The birth date of the owner of the account.",
+            "description": "The birth date of account owner.",
             "format": "date-time"
           }
         }
@@ -11579,7 +11586,7 @@
         "properties": {
           "sort": {
             "type": "string",
-            "description": "Sorting mode.",
+            "description": "Sorting mode for threads.",
             "enum": [
               "oldest",
               "newest",
@@ -12757,12 +12764,12 @@
       "app.bsky.graph.defs.modlist": {
         "type": "string",
         "format": "token",
-        "description": "A list of actors to apply an aggregate moderation action (mute/block) on"
+        "description": "A list of actors to apply an aggregate moderation action (mute/block) on."
       },
       "app.bsky.graph.defs.curatelist": {
         "type": "string",
         "format": "token",
-        "description": "A list of actors used for curation purposes such as list feeds or interaction gating"
+        "description": "A list of actors used for curation purposes such as list feeds or interaction gating."
       },
       "app.bsky.graph.defs.listViewerState": {
         "type": "object",
@@ -13774,7 +13781,7 @@
       },
       "com.atproto.label.defs.label": {
         "type": "object",
-        "description": "Metadata tag on an atproto resource (eg, repo or record)",
+        "description": "Metadata tag on an atproto resource (eg, repo or record).",
         "required": [
           "src",
           "uri",
@@ -13784,31 +13791,31 @@
         "properties": {
           "src": {
             "type": "string",
-            "description": "DID of the actor who created this label",
+            "description": "DID of the actor who created this label.",
             "format": "did"
           },
           "uri": {
             "type": "string",
-            "description": "AT URI of the record, repository (account), or other resource which this label applies to",
+            "description": "AT URI of the record, repository (account), or other resource that this label applies to.",
             "format": "uri"
           },
           "cid": {
             "type": "string",
-            "description": "optionally, CID specifying the specific version of 'uri' resource this label applies to",
+            "description": "Optionally, CID specifying the specific version of 'uri' resource this label applies to.",
             "format": "cid"
           },
           "val": {
             "type": "string",
-            "description": "the short string name of the value or type of this label",
+            "description": "The short string name of the value or type of this label.",
             "maxLength": 128
           },
           "neg": {
             "type": "boolean",
-            "description": "if true, this is a negation label, overwriting a previous label"
+            "description": "If true, this is a negation label, overwriting a previous label."
           },
           "cts": {
             "type": "string",
-            "description": "timestamp when this label was created",
+            "description": "Timestamp when this label was created.",
             "format": "date-time"
           }
         }
@@ -13831,14 +13838,14 @@
       },
       "com.atproto.label.defs.selfLabel": {
         "type": "object",
-        "description": "Metadata tag on an atproto record, published by the author within the record. Note -- schemas should use #selfLabels, not #selfLabel.",
+        "description": "Metadata tag on an atproto record, published by the author within the record. Note that schemas should use #selfLabels, not #selfLabel.",
         "required": [
           "val"
         ],
         "properties": {
           "val": {
             "type": "string",
-            "description": "the short string name of the value or type of this label",
+            "description": "The short string name of the value or type of this label.",
             "maxLength": 128
           }
         }
@@ -14202,16 +14209,16 @@
           },
           "rev": {
             "type": "string",
-            "description": "The rev of the emitted commit"
+            "description": "The rev of the emitted commit."
           },
           "since": {
             "type": "string",
-            "description": "The rev of the last emitted commit from this repo"
+            "description": "The rev of the last emitted commit from this repo."
           },
           "blocks": {
             "type": "string",
             "format": "byte",
-            "description": "CAR file containing relevant blocks",
+            "description": "CAR file containing relevant blocks.",
             "maxLength": 1000000
           },
           "ops": {
@@ -14325,7 +14332,7 @@
       },
       "com.atproto.sync.subscribeRepos.repoOp": {
         "type": "object",
-        "description": "A repo operation, ie a write of a single record. For creates and updates, cid is the record's CID as of this operation. For deletes, it's null.",
+        "description": "A repo operation, ie a write of a single record. For creates and updates, CID is the record's CID as of this operation. For deletes, it's null.",
         "required": [
           "action",
           "path",
