@@ -12038,6 +12038,9 @@
           "like": {
             "type": "string",
             "format": "at-uri"
+          },
+          "replyDisabled": {
+            "type": "boolean"
           }
         }
       },
@@ -12150,9 +12153,6 @@
                 }
               ]
             }
-          },
-          "viewer": {
-            "$ref": "#/components/schemas/app.bsky.feed.defs.viewerThreadState"
           }
         }
       },
@@ -12206,14 +12206,6 @@
           },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.viewerState"
-          }
-        }
-      },
-      "app.bsky.feed.defs.viewerThreadState": {
-        "type": "object",
-        "properties": {
-          "canReply": {
-            "type": "boolean"
           }
         }
       },
