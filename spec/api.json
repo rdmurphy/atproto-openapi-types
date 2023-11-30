@@ -4934,6 +4934,162 @@
         }
       }
     },
+    "/com.atproto.admin.emitModerationEvent": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Take a moderation action on an actor.",
+        "operationId": "com.atproto.admin.emitModerationEvent",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "event",
+                  "subject",
+                  "createdBy"
+                ],
+                "properties": {
+                  "event": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventTakedown"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventAcknowledge"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEscalate"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventComment"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventLabel"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReport"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventMute"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReverseTakedown"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventUnmute"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEmail"
+                      }
+                    ]
+                  },
+                  "subject": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.repoRef"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+                      }
+                    ]
+                  },
+                  "subjectBlobCids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "cid"
+                    }
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.atproto.admin.defs.modEventView"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "SubjectHasAction"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.admin.enableAccountInvites": {
       "post": {
         "tags": [
@@ -5389,6 +5545,97 @@
                           "const": "InvalidRequest"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.getModerationEvent": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Get details about a moderation event.",
+        "operationId": "com.atproto.admin.getModerationEvent",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.atproto.admin.defs.modEventViewDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5946,6 +6193,423 @@
         }
       }
     },
+    "/com.atproto.admin.queryModerationEvents": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "List moderation events related to a subject.",
+        "operationId": "com.atproto.admin.queryModerationEvents",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "types",
+            "in": "query",
+            "description": "The types of events (fully qualified string in the format of com.atproto.admin#modEvent<name>) to filter by. If not specified, all events are returned.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction for the events. Defaults to descending order of created at timestamp.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Sort direction for the events. Defaults to descending order of created at timestamp.",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "includeAllUserRecords",
+            "in": "query",
+            "description": "If true, events on all record types (posts, lists, profile etc.) owned by the did are returned",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "If true, events on all record types (posts, lists, profile etc.) owned by the did are returned"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "events"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.queryModerationStatuses": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "View moderation statuses of subjects (record or repo).",
+        "operationId": "com.atproto.admin.queryModerationStatuses",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "description": "Search subjects by keyword from comments",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search subjects by keyword from comments"
+            }
+          },
+          {
+            "name": "reportedAfter",
+            "in": "query",
+            "description": "Search subjects reported after a given timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search subjects reported after a given timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "reportedBefore",
+            "in": "query",
+            "description": "Search subjects reported before a given timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search subjects reported before a given timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "reviewedAfter",
+            "in": "query",
+            "description": "Search subjects reviewed after a given timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search subjects reviewed after a given timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "reviewedBefore",
+            "in": "query",
+            "description": "Search subjects reviewed before a given timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search subjects reviewed before a given timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "includeMuted",
+            "in": "query",
+            "description": "By default, we don't include muted subjects in the results. Set this to true to include them.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "By default, we don't include muted subjects in the results. Set this to true to include them."
+            }
+          },
+          {
+            "name": "reviewState",
+            "in": "query",
+            "description": "Specify when fetching subjects in a certain state",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Specify when fetching subjects in a certain state"
+            }
+          },
+          {
+            "name": "ignoreSubjects",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          },
+          {
+            "name": "lastReviewedBy",
+            "in": "query",
+            "description": "Get all subject statuses that were reviewed by a specific moderator",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Get all subject statuses that were reviewed by a specific moderator",
+              "format": "did"
+            }
+          },
+          {
+            "name": "sortField",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "lastReportedAt"
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "takendown",
+            "in": "query",
+            "description": "Get subjects that were taken down",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Get subjects that were taken down"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subjectStatuses"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "subjectStatuses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.subjectStatusView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.admin.rebaseRepo": {
       "post": {
         "tags": [
@@ -6325,7 +6989,8 @@
                 "type": "object",
                 "required": [
                   "recipientDid",
-                  "content"
+                  "content",
+                  "senderDid"
                 ],
                 "properties": {
                   "recipientDid": {
@@ -6337,6 +7002,10 @@
                   },
                   "subject": {
                     "type": "string"
+                  },
+                  "senderDid": {
+                    "type": "string",
+                    "format": "did"
                   }
                 }
               }
@@ -12742,27 +13411,50 @@
           }
         }
       },
-      "com.atproto.admin.defs.actionView": {
+      "com.atproto.admin.defs.modEventView": {
         "type": "object",
         "required": [
           "id",
-          "action",
+          "event",
           "subject",
           "subjectBlobCids",
-          "reason",
           "createdBy",
-          "createdAt",
-          "resolvedReportIds"
+          "createdAt"
         ],
         "properties": {
           "id": {
             "type": "integer"
           },
-          "action": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
-          },
-          "durationInHours": {
-            "type": "integer"
+          "event": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventTakedown"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReverseTakedown"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventComment"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReport"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventLabel"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventAcknowledge"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEscalate"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventMute"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEmail"
+              }
+            ]
           },
           "subject": {
             "oneOf": [
@@ -12780,21 +13472,6 @@
               "type": "string"
             }
           },
-          "createLabelVals": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "negateLabelVals": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "reason": {
-            "type": "string"
-          },
           "createdBy": {
             "type": "string",
             "format": "did"
@@ -12803,38 +13480,55 @@
             "type": "string",
             "format": "date-time"
           },
-          "reversal": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionReversal"
+          "creatorHandle": {
+            "type": "string"
           },
-          "resolvedReportIds": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+          "subjectHandle": {
+            "type": "string"
           }
         }
       },
-      "com.atproto.admin.defs.actionViewDetail": {
+      "com.atproto.admin.defs.modEventViewDetail": {
         "type": "object",
         "required": [
           "id",
-          "action",
+          "event",
           "subject",
           "subjectBlobs",
-          "reason",
           "createdBy",
-          "createdAt",
-          "resolvedReports"
+          "createdAt"
         ],
         "properties": {
           "id": {
             "type": "integer"
           },
-          "action": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
-          },
-          "durationInHours": {
-            "type": "integer"
+          "event": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventTakedown"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReverseTakedown"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventComment"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventReport"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventLabel"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventAcknowledge"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEscalate"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventMute"
+              }
+            ]
           },
           "subject": {
             "oneOf": [
@@ -12858,69 +13552,6 @@
               "$ref": "#/components/schemas/com.atproto.admin.defs.blobView"
             }
           },
-          "createLabelVals": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "negateLabelVals": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "reason": {
-            "type": "string"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "did"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "reversal": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionReversal"
-          },
-          "resolvedReports": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/com.atproto.admin.defs.reportView"
-            }
-          }
-        }
-      },
-      "com.atproto.admin.defs.actionViewCurrent": {
-        "type": "object",
-        "required": [
-          "id",
-          "action"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "action": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionType"
-          },
-          "durationInHours": {
-            "type": "integer"
-          }
-        }
-      },
-      "com.atproto.admin.defs.actionReversal": {
-        "type": "object",
-        "required": [
-          "reason",
-          "createdBy",
-          "createdAt"
-        ],
-        "properties": {
-          "reason": {
-            "type": "string"
-          },
           "createdBy": {
             "type": "string",
             "format": "did"
@@ -12930,42 +13561,6 @@
             "format": "date-time"
           }
         }
-      },
-      "com.atproto.admin.defs.actionType": {
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.takedown"
-          },
-          {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.flag"
-          },
-          {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.acknowledge"
-          },
-          {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.escalate"
-          }
-        ]
-      },
-      "com.atproto.admin.defs.takedown": {
-        "type": "string",
-        "format": "token",
-        "description": "Moderation action type: Takedown. Indicates that content should not be served by the PDS."
-      },
-      "com.atproto.admin.defs.flag": {
-        "type": "string",
-        "format": "token",
-        "description": "Moderation action type: Flag. Indicates that the content was reviewed and considered to violate PDS rules, but may still be served."
-      },
-      "com.atproto.admin.defs.acknowledge": {
-        "type": "string",
-        "format": "token",
-        "description": "Moderation action type: Acknowledge. Indicates that the content was reviewed and not considered to violate PDS rules."
-      },
-      "com.atproto.admin.defs.escalate": {
-        "type": "string",
-        "format": "token",
-        "description": "Moderation action type: Escalate. Indicates that the content has been flagged for additional review."
       },
       "com.atproto.admin.defs.reportView": {
         "type": "object",
@@ -12984,7 +13579,7 @@
           "reasonType": {
             "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
           },
-          "reason": {
+          "comment": {
             "type": "string"
           },
           "subjectRepoHandle": {
@@ -13016,6 +13611,81 @@
           }
         }
       },
+      "com.atproto.admin.defs.subjectStatusView": {
+        "type": "object",
+        "required": [
+          "id",
+          "subject",
+          "createdAt",
+          "updatedAt",
+          "reviewState"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "subject": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.repoRef"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+              }
+            ]
+          },
+          "subjectBlobCids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "cid"
+            }
+          },
+          "subjectRepoHandle": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Timestamp referencing when the last update was made to the moderation status of the subject",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp referencing the first moderation status impacting event was emitted on the subject",
+            "format": "date-time"
+          },
+          "reviewState": {
+            "$ref": "#/components/schemas/com.atproto.admin.defs.subjectReviewState"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Sticky comment on the subject."
+          },
+          "muteUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastReviewedBy": {
+            "type": "string",
+            "format": "did"
+          },
+          "lastReviewedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastReportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "takendown": {
+            "type": "boolean"
+          },
+          "suspendUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "com.atproto.admin.defs.reportViewDetail": {
         "type": "object",
         "required": [
@@ -13033,7 +13703,7 @@
           "reasonType": {
             "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
           },
-          "reason": {
+          "comment": {
             "type": "string"
           },
           "subject": {
@@ -13052,6 +13722,9 @@
               }
             ]
           },
+          "subjectStatus": {
+            "$ref": "#/components/schemas/com.atproto.admin.defs.subjectStatusView"
+          },
           "reportedBy": {
             "type": "string",
             "format": "did"
@@ -13063,7 +13736,7 @@
           "resolvedByActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/com.atproto.admin.defs.actionView"
+              "$ref": "#/components/schemas/com.atproto.admin.defs.modEventView"
             }
           }
         }
@@ -13359,32 +14032,16 @@
       "com.atproto.admin.defs.moderation": {
         "type": "object",
         "properties": {
-          "currentAction": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionViewCurrent"
+          "subjectStatus": {
+            "$ref": "#/components/schemas/com.atproto.admin.defs.subjectStatusView"
           }
         }
       },
       "com.atproto.admin.defs.moderationDetail": {
         "type": "object",
-        "required": [
-          "actions",
-          "reports"
-        ],
         "properties": {
-          "currentAction": {
-            "$ref": "#/components/schemas/com.atproto.admin.defs.actionViewCurrent"
-          },
-          "actions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/com.atproto.admin.defs.actionView"
-            }
-          },
-          "reports": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/com.atproto.admin.defs.reportView"
-            }
+          "subjectStatus": {
+            "$ref": "#/components/schemas/com.atproto.admin.defs.subjectStatusView"
           }
         }
       },
@@ -13457,6 +14114,161 @@
           },
           "length": {
             "type": "integer"
+          }
+        }
+      },
+      "com.atproto.admin.defs.subjectReviewState": {
+        "type": "string",
+        "enum": [
+          "#reviewOpen",
+          "#reviewEscalated",
+          "#reviewClosed"
+        ]
+      },
+      "com.atproto.admin.defs.reviewOpen": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderator review status of a subject: Open. Indicates that the subject needs to be reviewed by a moderator"
+      },
+      "com.atproto.admin.defs.reviewEscalated": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderator review status of a subject: Escalated. Indicates that the subject was escalated for review by a moderator"
+      },
+      "com.atproto.admin.defs.reviewClosed": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderator review status of a subject: Closed. Indicates that the subject was already reviewed and resolved by a moderator"
+      },
+      "com.atproto.admin.defs.modEventTakedown": {
+        "type": "object",
+        "description": "Take down a subject permanently or temporarily",
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "durationInHours": {
+            "type": "integer"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventReverseTakedown": {
+        "type": "object",
+        "description": "Revert take down action on a subject",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Describe reasoning behind the reversal."
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventComment": {
+        "type": "object",
+        "description": "Add a comment to a subject",
+        "required": [
+          "comment"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "sticky": {
+            "type": "boolean",
+            "description": "Make the comment persistent on the subject"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventReport": {
+        "type": "object",
+        "description": "Report a subject",
+        "required": [
+          "reportType"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "reportType": {
+            "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventLabel": {
+        "type": "object",
+        "description": "Apply/Negate labels on a subject",
+        "required": [
+          "createLabelVals",
+          "negateLabelVals"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "createLabelVals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "negateLabelVals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventAcknowledge": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventEscalate": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventMute": {
+        "type": "object",
+        "description": "Mute incoming reports on a subject",
+        "required": [
+          "durationInHours"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "durationInHours": {
+            "type": "integer"
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventUnmute": {
+        "type": "object",
+        "description": "Unmute action on a subject",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Describe reasoning behind the reversal."
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventEmail": {
+        "type": "object",
+        "description": "Keep a log of outgoing email to a user",
+        "required": [
+          "subjectLine"
+        ],
+        "properties": {
+          "subjectLine": {
+            "type": "string",
+            "description": "The subject line of the email sent to the user."
           }
         }
       },
