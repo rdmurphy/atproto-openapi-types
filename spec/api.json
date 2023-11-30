@@ -5259,11 +5259,6 @@
         ],
         "summary": "Get details about a moderation action.",
         "operationId": "com.atproto.admin.getModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -5301,36 +5296,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5350,11 +5317,6 @@
         ],
         "summary": "Get a list of moderation actions related to a subject.",
         "operationId": "com.atproto.admin.getModerationActions",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "subject",
@@ -5425,36 +5387,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5474,11 +5408,6 @@
         ],
         "summary": "Get details about a moderation report.",
         "operationId": "com.atproto.admin.getModerationReport",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -5516,36 +5445,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -5565,11 +5466,6 @@
         ],
         "summary": "Get moderation reports related to a subject.",
         "operationId": "com.atproto.admin.getModerationReports",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "subject",
@@ -5706,36 +5602,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6157,11 +6025,6 @@
         ],
         "summary": "Resolve moderation reports by an action.",
         "operationId": "com.atproto.admin.resolveModerationReports",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6219,36 +6082,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6268,11 +6103,6 @@
         ],
         "summary": "Reverse a moderation action.",
         "operationId": "com.atproto.admin.reverseModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6327,36 +6157,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6625,11 +6427,6 @@
         ],
         "summary": "Take a moderation action on an actor.",
         "operationId": "com.atproto.admin.takeModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6724,37 +6521,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "SubjectHasAction"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -11122,86 +10891,6 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/com.atproto.sync.listRepos.repo"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "oneOf": [
-                        {
-                          "const": "InvalidRequest"
-                        }
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/com.atproto.temp.fetchLabels": {
-      "get": {
-        "tags": [
-          "com.atproto.temp"
-        ],
-        "summary": "Fetch all labels from a labeler created after a certain date.",
-        "operationId": "com.atproto.temp.fetchLabels",
-        "parameters": [
-          {
-            "name": "since",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 250,
-              "default": 50
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "labels"
-                  ],
-                  "properties": {
-                    "labels": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/com.atproto.label.defs.label"
                       }
                     }
                   }
