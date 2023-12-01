@@ -13093,9 +13093,14 @@
       "app.bsky.graph.defs.listItemView": {
         "type": "object",
         "required": [
+          "uri",
           "subject"
         ],
         "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
           "subject": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileView"
           }
