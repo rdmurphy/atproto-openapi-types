@@ -11597,6 +11597,220 @@
         }
       }
     },
+    "/com.atproto.temp.importRepo": {
+      "post": {
+        "tags": [
+          "com.atproto.temp"
+        ],
+        "summary": "Gets the did's repo, optionally catching up from a specific revision.",
+        "operationId": "com.atproto.temp.importRepo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.ipld.car": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {}
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.temp.pushBlob": {
+      "post": {
+        "tags": [
+          "com.atproto.temp"
+        ],
+        "summary": "Gets the did's repo, optionally catching up from a specific revision.",
+        "operationId": "com.atproto.temp.pushBlob",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "*/*": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.temp.transferAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.temp"
+        ],
+        "summary": "Transfer an account.",
+        "operationId": "com.atproto.temp.transferAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "handle",
+                  "did",
+                  "plcOp"
+                ],
+                "properties": {
+                  "handle": {
+                    "type": "string",
+                    "format": "handle"
+                  },
+                  "did": {
+                    "type": "string",
+                    "format": "did"
+                  },
+                  "plcOp": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "accessJwt",
+                    "refreshJwt",
+                    "handle",
+                    "did"
+                  ],
+                  "properties": {
+                    "accessJwt": {
+                      "type": "string"
+                    },
+                    "refreshJwt": {
+                      "type": "string"
+                    },
+                    "handle": {
+                      "type": "string",
+                      "format": "handle"
+                    },
+                    "did": {
+                      "type": "string",
+                      "format": "did"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "InvalidHandle"
+                        },
+                        {
+                          "const": "InvalidPassword"
+                        },
+                        {
+                          "const": "InvalidInviteCode"
+                        },
+                        {
+                          "const": "HandleNotAvailable"
+                        },
+                        {
+                          "const": "UnsupportedDomain"
+                        },
+                        {
+                          "const": "UnresolvableDid"
+                        },
+                        {
+                          "const": "IncompatibleDidDoc"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.temp.upgradeRepoVersion": {
       "post": {
         "tags": [
