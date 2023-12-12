@@ -4163,6 +4163,10 @@
                       "items": {
                         "$ref": "#/components/schemas/app.bsky.notification.listNotifications.notification"
                       }
+                    },
+                    "seenAt": {
+                      "type": "string",
+                      "format": "date-time"
                     }
                   }
                 }
