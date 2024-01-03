@@ -6513,6 +6513,16 @@
             }
           },
           {
+            "name": "appealed",
+            "in": "query",
+            "description": "Get subjects in unresolved appealed status",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Get subjects in unresolved appealed status"
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
@@ -13764,6 +13774,9 @@
               },
               {
                 "$ref": "#/components/schemas/com.atproto.admin.defs.modEventMute"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventResolveAppeal"
               }
             ]
           },
@@ -13914,8 +13927,17 @@
             "type": "string",
             "format": "date-time"
           },
+          "lastAppealedAt": {
+            "type": "string",
+            "description": "Timestamp referencing when the author of the subject appealed a moderation action",
+            "format": "date-time"
+          },
           "takendown": {
             "type": "boolean"
+          },
+          "appealed": {
+            "type": "boolean",
+            "description": "True indicates that the a previously taken moderator action was appealed against, by the author of the content. False indicates last appeal was resolved by moderators."
           },
           "suspendUntil": {
             "type": "string",
@@ -14399,6 +14421,16 @@
           }
         }
       },
+      "com.atproto.admin.defs.modEventResolveAppeal": {
+        "type": "object",
+        "description": "Resolve appeal on a subject",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Describe resolution."
+          }
+        }
+      },
       "com.atproto.admin.defs.modEventComment": {
         "type": "object",
         "description": "Add a comment to a subject",
@@ -14638,6 +14670,9 @@
           },
           {
             "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonOther"
+          },
+          {
+            "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonAppeal"
           }
         ]
       },
@@ -14670,6 +14705,11 @@
         "type": "string",
         "format": "token",
         "description": "Other: reports not falling under another report category"
+      },
+      "com.atproto.moderation.defs.reasonAppeal": {
+        "type": "string",
+        "format": "token",
+        "description": "Appeal: appeal a previously taken moderation action"
       },
       "com.atproto.repo.applyWrites.create": {
         "type": "object",
