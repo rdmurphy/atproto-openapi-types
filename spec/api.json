@@ -12235,10 +12235,12 @@
             "format": "uri"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 3000
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 10000
           },
           "thumb": {
             "type": "string",
@@ -12271,13 +12273,16 @@
             "format": "uri"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 3000
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 10000
           },
           "thumb": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           }
         }
       },
@@ -12309,7 +12314,8 @@
             "maxLength": 1000000
           },
           "alt": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 50000
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
@@ -12358,13 +12364,16 @@
         ],
         "properties": {
           "thumb": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "fullsize": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "alt": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 50000
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
