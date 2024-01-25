@@ -12535,6 +12535,9 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.threadViewPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.interestsPref"
             }
           ]
         }
@@ -12650,6 +12653,22 @@
           "prioritizeFollowedUsers": {
             "type": "boolean",
             "description": "Show followed users at the top of all replies."
+          }
+        }
+      },
+      "app.bsky.actor.defs.interestsPref": {
+        "type": "object",
+        "required": [
+          "tags"
+        ],
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 640
+            },
+            "maxItems": 100
           }
         }
       },
