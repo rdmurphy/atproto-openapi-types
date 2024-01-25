@@ -3578,7 +3578,7 @@
                       "items": {
                         "oneOf": [
                           {
-                            "$ref": "#/components/schemas/app.bsky.graph.def.relationship"
+                            "$ref": "#/components/schemas/app.bsky.graph.defs.relationship"
                           },
                           {
                             "$ref": "#/components/schemas/app.bsky.graph.defs.notFoundActor"
