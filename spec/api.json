@@ -12240,6 +12240,11 @@
         ],
         "summary": "Check accounts location in signup queue.",
         "operationId": "com.atproto.temp.checkSignupQueue",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -12281,8 +12286,36 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
