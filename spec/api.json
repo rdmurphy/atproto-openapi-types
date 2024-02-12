@@ -25,7 +25,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get private preferences attached to the account.",
+        "summary": "Get private preferences attached to the current account. Expected use is synchronization between multiple devices, and import/export during account migration. Requires auth.",
         "operationId": "app.bsky.actor.getPreferences",
         "security": [
           {
@@ -114,7 +114,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get detailed profile view of an actor.",
+        "summary": "Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth.",
         "operationId": "app.bsky.actor.getProfile",
         "security": [
           {
@@ -125,9 +125,11 @@
           {
             "name": "actor",
             "in": "query",
+            "description": "Handle or DID of account to fetch profile of.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Handle or DID of account to fetch profile of.",
               "format": "at-identifier"
             }
           }
@@ -313,7 +315,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get a list of suggested actors, used for discovery.",
+        "summary": "Get a list of suggested actors. Expected use is discovery of accounts to follow during new account onboarding.",
         "operationId": "app.bsky.actor.getSuggestions",
         "security": [
           {
@@ -521,7 +523,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actors (profiles) matching search criteria.",
+        "summary": "Find actors (profiles) matching search criteria. Does not require auth.",
         "operationId": "app.bsky.actor.searchActors",
         "security": [
           {
@@ -657,7 +659,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actor suggestions for a prefix search term.",
+        "summary": "Find actor suggestions for a prefix search term. Expected use is for auto-completion during text field entry. Does not require auth.",
         "operationId": "app.bsky.actor.searchActorsTypeahead",
         "security": [
           {
@@ -782,7 +784,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a list of feeds created by the actor.",
+        "summary": "Get a list of feeds (feed generator records) created by the actor (in the actor's repo).",
         "operationId": "app.bsky.feed.getActorFeeds",
         "security": [
           {
@@ -907,7 +909,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a list of posts liked by an actor.",
+        "summary": "Get a list of posts liked by an actor. Does not require auth.",
         "operationId": "app.bsky.feed.getActorLikes",
         "security": [
           {
@@ -1038,7 +1040,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a view of an actor's feed.",
+        "summary": "Get a view of an actor's 'author feed' (post and reposts by the author). Does not require auth.",
         "operationId": "app.bsky.feed.getAuthorFeed",
         "security": [
           {
@@ -1077,9 +1079,11 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "Combinations of post/repost types to include in response.",
             "required": false,
             "schema": {
               "type": "string",
+              "description": "Combinations of post/repost types to include in response.",
               "default": "posts_with_replies",
               "enum": [
                 "posts_with_replies",
@@ -1184,7 +1188,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a hydrated feed from an actor's selected feed generator.",
+        "summary": "Get a hydrated feed from an actor's selected feed generator. Implemented by App View.",
         "operationId": "app.bsky.feed.getFeed",
         "security": [
           {
@@ -1312,7 +1316,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get information about a feed generator.",
+        "summary": "Get information about a feed generator. Implemented by AppView.",
         "operationId": "app.bsky.feed.getFeedGenerator",
         "security": [
           {
@@ -1323,9 +1327,11 @@
           {
             "name": "feed",
             "in": "query",
+            "description": "AT-URI of the feed generator record.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "AT-URI of the feed generator record.",
               "format": "at-uri"
             }
           }
@@ -1347,10 +1353,12 @@
                       "$ref": "#/components/schemas/app.bsky.feed.defs.generatorView"
                     },
                     "isOnline": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Indicates whether the feed generator service has been online recently, or else seems to be inactive."
                     },
                     "isValid": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Indicates whether the feed generator service is compatible with the record declaration."
                     }
                   }
                 }
@@ -1526,7 +1534,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get the list of likes.",
+        "summary": "Get like records which reference a subject (by AT-URI and CID).",
         "operationId": "app.bsky.feed.getLikes",
         "security": [
           {
@@ -1537,18 +1545,22 @@
           {
             "name": "uri",
             "in": "query",
+            "description": "AT-URI of the subject (eg, a post record).",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "AT-URI of the subject (eg, a post record).",
               "format": "at-uri"
             }
           },
           {
             "name": "cid",
             "in": "query",
+            "description": "CID of the subject record (aka, specific version of record), to filter likes.",
             "required": false,
             "schema": {
               "type": "string",
+              "description": "CID of the subject record (aka, specific version of record), to filter likes.",
               "format": "cid"
             }
           },
@@ -1669,7 +1681,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a view of a recent posts from actors in a list.",
+        "summary": "Get a feed of recent posts from a list (posts and reposts from any actors on the list). Does not require auth.",
         "operationId": "app.bsky.feed.getListFeed",
         "security": [
           {
@@ -1680,9 +1692,11 @@
           {
             "name": "list",
             "in": "query",
+            "description": "Reference (AT-URI) to the list record.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Reference (AT-URI) to the list record.",
               "format": "at-uri"
             }
           },
@@ -1797,7 +1811,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get posts in a thread.",
+        "summary": "Get posts in a thread. Does not require auth, but additional metadata and filtering will be applied for authed requests.",
         "operationId": "app.bsky.feed.getPostThread",
         "security": [
           {
@@ -1808,15 +1822,18 @@
           {
             "name": "uri",
             "in": "query",
+            "description": "Reference (AT-URI) to post record.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Reference (AT-URI) to post record.",
               "format": "at-uri"
             }
           },
           {
             "name": "depth",
             "in": "query",
+            "description": "How many levels of reply depth should be included in response.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -1828,6 +1845,7 @@
           {
             "name": "parentHeight",
             "in": "query",
+            "description": "How many levels of parent (and grandparent, etc) post to include.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -1932,7 +1950,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a view of an actor's feed.",
+        "summary": "Gets post views for a specified list of posts (by AT-URI). This is sometimes referred to as 'hydrating' a 'feed skeleton'.",
         "operationId": "app.bsky.feed.getPosts",
         "security": [
           {
@@ -1943,6 +1961,7 @@
           {
             "name": "uris",
             "in": "query",
+            "description": "List of post AT-URIs to return hydrated views for.",
             "required": true,
             "schema": {
               "type": "array",
@@ -2039,7 +2058,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a list of reposts.",
+        "summary": "Get a list of reposts for a given post.",
         "operationId": "app.bsky.feed.getRepostedBy",
         "security": [
           {
@@ -2050,18 +2069,22 @@
           {
             "name": "uri",
             "in": "query",
+            "description": "Reference (AT-URI) of post record",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Reference (AT-URI) of post record",
               "format": "at-uri"
             }
           },
           {
             "name": "cid",
             "in": "query",
+            "description": "If supplied, filters to reposts of specific version (by CID) of the post record.",
             "required": false,
             "schema": {
               "type": "string",
+              "description": "If supplied, filters to reposts of specific version (by CID) of the post record.",
               "format": "cid"
             }
           },
@@ -2182,7 +2205,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a list of suggested feeds for the viewer.",
+        "summary": "Get a list of suggested feeds (feed generators) for the requesting account.",
         "operationId": "app.bsky.feed.getSuggestedFeeds",
         "security": [
           {
@@ -2298,7 +2321,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get a view of the actor's home timeline.",
+        "summary": "Get a view of the requesting account's home timeline. This is expected to be some form of reverse-chronological feed.",
         "operationId": "app.bsky.feed.getTimeline",
         "security": [
           {
@@ -2309,9 +2332,11 @@
           {
             "name": "algorithm",
             "in": "query",
+            "description": "Variant 'algorithm' for timeline. Implementation-specific. NOTE: most feed flexibility has been moved to feed generator mechanism.",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "Variant 'algorithm' for timeline. Implementation-specific. NOTE: most feed flexibility has been moved to feed generator mechanism."
             }
           },
           {
@@ -2422,7 +2447,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Find posts matching search criteria.",
+        "summary": "Find posts matching search criteria, returning views of those posts.",
         "operationId": "app.bsky.feed.searchPosts",
         "security": [
           {
@@ -2556,7 +2581,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of who the actor is blocking.",
+        "summary": "Enumerates which accounts the requesting account is currently blocking. Requires auth.",
         "operationId": "app.bsky.graph.getBlocks",
         "security": [
           {
@@ -2672,7 +2697,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of an actor's followers.",
+        "summary": "Enumerates accounts which follow a specified account (actor).",
         "operationId": "app.bsky.graph.getFollowers",
         "security": [
           {
@@ -2801,7 +2826,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of who the actor follows.",
+        "summary": "Enumerates accounts which a specified account (actor) follows.",
         "operationId": "app.bsky.graph.getFollows",
         "security": [
           {
@@ -2930,7 +2955,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of actors.",
+        "summary": "Gets a 'view' (with additional context) of a specified list.",
         "operationId": "app.bsky.graph.getList",
         "security": [
           {
@@ -2941,9 +2966,11 @@
           {
             "name": "list",
             "in": "query",
+            "description": "Reference (AT-URI) of the list record to hydrate.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Reference (AT-URI) of the list record to hydrate.",
               "format": "at-uri"
             }
           },
@@ -3059,7 +3086,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get lists that the actor is blocking.",
+        "summary": "Get mod lists that the requesting account (actor) is blocking. Requires auth.",
         "operationId": "app.bsky.graph.getListBlocks",
         "security": [
           {
@@ -3175,7 +3202,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get lists that the actor is muting.",
+        "summary": "Enumerates mod lists that the requesting account (actor) currently has muted. Requires auth.",
         "operationId": "app.bsky.graph.getListMutes",
         "security": [
           {
@@ -3291,7 +3318,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of lists that belong to an actor.",
+        "summary": "Enumerates the lists created by a specified account (actor).",
         "operationId": "app.bsky.graph.getLists",
         "security": [
           {
@@ -3302,9 +3329,11 @@
           {
             "name": "actor",
             "in": "query",
+            "description": "The account (actor) to enumerate lists from.",
             "required": true,
             "schema": {
               "type": "string",
+              "description": "The account (actor) to enumerate lists from.",
               "format": "at-identifier"
             }
           },
@@ -3416,7 +3445,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get a list of who the actor mutes.",
+        "summary": "Enumerates accounts that the requesting account (actor) currently has muted. Requires auth.",
         "operationId": "app.bsky.graph.getMutes",
         "security": [
           {
@@ -3532,7 +3561,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get suggested follows related to a given actor.",
+        "summary": "Enumerates follows similar to a given account (actor). Expected use is to recommend additional accounts immediately after following one account.",
         "operationId": "app.bsky.graph.getSuggestedFollowsByActor",
         "security": [
           {
@@ -3635,7 +3664,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an actor by DID or handle.",
+        "summary": "Creates a mute relationship for the specified account. Mutes are private in Bluesky. Requires auth.",
         "operationId": "app.bsky.graph.muteActor",
         "security": [
           {
@@ -3728,7 +3757,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute a list of actors.",
+        "summary": "Creates a mute relationship for the specified list of accounts. Mutes are private in Bluesky. Requires auth.",
         "operationId": "app.bsky.graph.muteActorList",
         "security": [
           {
@@ -3821,7 +3850,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an actor by DID or handle.",
+        "summary": "Unmutes the specified account. Requires auth.",
         "operationId": "app.bsky.graph.unmuteActor",
         "security": [
           {
@@ -3914,7 +3943,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute a list of actors.",
+        "summary": "Unmutes the specified list of accounts. Requires auth.",
         "operationId": "app.bsky.graph.unmuteActorList",
         "security": [
           {
@@ -4007,7 +4036,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Get the count of unread notifications.",
+        "summary": "Count the number of unread notifications for the requesting account. Requires auth.",
         "operationId": "app.bsky.notification.getUnreadCount",
         "security": [
           {
@@ -4107,7 +4136,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Get a list of notifications.",
+        "summary": "Enumerate notifications for the requesting account. Requires auth.",
         "operationId": "app.bsky.notification.listNotifications",
         "security": [
           {
@@ -4236,7 +4265,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Register for push notifications with a service.",
+        "summary": "Register to receive push notifications, via a specified service, for the requesting account. Requires auth.",
         "operationId": "app.bsky.notification.registerPush",
         "security": [
           {
@@ -4346,7 +4375,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Notify server that the user has seen notifications.",
+        "summary": "Notify server that the requesting account has seen notifications. Requires auth.",
         "operationId": "app.bsky.notification.updateSeen",
         "security": [
           {
@@ -8146,7 +8175,7 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Provides the DID of a repo.",
+        "summary": "Resolves a handle (domain name) to a DID.",
         "operationId": "com.atproto.identity.resolveHandle",
         "parameters": [
           {
@@ -8216,7 +8245,7 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Updates the handle of the account.",
+        "summary": "Updates the current account's handle. Verifies handle validity, and updates did:plc document if necessary. Implemented by PDS, and requires auth.",
         "operationId": "com.atproto.identity.updateHandle",
         "security": [
           {
@@ -8235,6 +8264,7 @@
                 "properties": {
                   "handle": {
                     "type": "string",
+                    "description": "The new handle.",
                     "format": "handle"
                   }
                 }
@@ -8309,7 +8339,7 @@
         "tags": [
           "com.atproto.moderation"
         ],
-        "summary": "Report a repo or a record.",
+        "summary": "Submit a moderation report regarding an atproto account or record. Implemented by moderation services (with PDS proxying), and requires auth.",
         "operationId": "com.atproto.moderation.createReport",
         "security": [
           {
@@ -8331,7 +8361,8 @@
                     "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
                   },
                   "reason": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Additional context about the content and violation."
                   },
                   "subject": {
                     "oneOf": [
@@ -8459,7 +8490,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Apply a batch transaction of creates, updates, and deletes.",
+        "summary": "Apply a batch transaction of repository creates, updates, and deletes. Requires auth, implemented by PDS.",
         "operationId": "com.atproto.repo.applyWrites",
         "security": [
           {
@@ -8479,12 +8510,12 @@
                 "properties": {
                   "repo": {
                     "type": "string",
-                    "description": "The handle or DID of the repo.",
+                    "description": "The handle or DID of the repo (aka, current account).",
                     "format": "at-identifier"
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Flag for validating the records.",
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data, for all operations.",
                     "default": true
                   },
                   "writes": {
@@ -8505,6 +8536,7 @@
                   },
                   "swapCommit": {
                     "type": "string",
+                    "description": "If provided, the entire operation will fail if the current repo commit CID does not match this value. Used to prevent conflicting repo mutations.",
                     "format": "cid"
                   }
                 }
@@ -8582,7 +8614,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Create a new record.",
+        "summary": "Create a single new repository record. Requires auth, implemented by PDS.",
         "operationId": "com.atproto.repo.createRecord",
         "security": [
           {
@@ -8603,7 +8635,7 @@
                 "properties": {
                   "repo": {
                     "type": "string",
-                    "description": "The handle or DID of the repo.",
+                    "description": "The handle or DID of the repo (aka, current account).",
                     "format": "at-identifier"
                   },
                   "collection": {
@@ -8613,12 +8645,12 @@
                   },
                   "rkey": {
                     "type": "string",
-                    "description": "The key of the record.",
+                    "description": "The Record Key.",
                     "maxLength": 15
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Flag for validating the record.",
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data.",
                     "default": true
                   },
                   "record": {},
@@ -8723,7 +8755,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Delete a record, or ensure it doesn't exist.",
+        "summary": "Delete a repository record, or ensure it doesn't exist. Requires auth, implemented by PDS.",
         "operationId": "com.atproto.repo.deleteRecord",
         "security": [
           {
@@ -8744,7 +8776,7 @@
                 "properties": {
                   "repo": {
                     "type": "string",
-                    "description": "The handle or DID of the repo.",
+                    "description": "The handle or DID of the repo (aka, current account).",
                     "format": "at-identifier"
                   },
                   "collection": {
@@ -8754,7 +8786,7 @@
                   },
                   "rkey": {
                     "type": "string",
-                    "description": "The key of the record."
+                    "description": "The Record Key."
                   },
                   "swapRecord": {
                     "type": "string",
@@ -8841,7 +8873,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Get information about the repo, including the list of collections.",
+        "summary": "Get information about an account and repository, including the list of collections. Does not require auth.",
         "operationId": "com.atproto.repo.describeRepo",
         "parameters": [
           {
@@ -8888,7 +8920,8 @@
                       }
                     },
                     "handleIsCorrect": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Indicates if handle is currently valid (resolves bi-directionally)"
                     }
                   }
                 }
@@ -8930,7 +8963,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Get a record.",
+        "summary": "Get a single record from a repository. Does not require auth.",
         "operationId": "com.atproto.repo.getRecord",
         "parameters": [
           {
@@ -8958,11 +8991,11 @@
           {
             "name": "rkey",
             "in": "query",
-            "description": "The key of the record.",
+            "description": "The Record Key.",
             "required": true,
             "schema": {
               "type": "string",
-              "description": "The key of the record."
+              "description": "The Record Key."
             }
           },
           {
@@ -9038,7 +9071,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "List a range of records in a collection.",
+        "summary": "List a range of records in a repository, matching a specific collection. Does not require auth.",
         "operationId": "com.atproto.repo.listRecords",
         "parameters": [
           {
@@ -9174,7 +9207,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Write a record, creating or updating it as needed.",
+        "summary": "Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS.",
         "operationId": "com.atproto.repo.putRecord",
         "security": [
           {
@@ -9196,7 +9229,7 @@
                 "properties": {
                   "repo": {
                     "type": "string",
-                    "description": "The handle or DID of the repo.",
+                    "description": "The handle or DID of the repo (aka, current account).",
                     "format": "at-identifier"
                   },
                   "collection": {
@@ -9206,18 +9239,18 @@
                   },
                   "rkey": {
                     "type": "string",
-                    "description": "The key of the record.",
+                    "description": "The Record Key.",
                     "maxLength": 15
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Flag for validating the record.",
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data.",
                     "default": true
                   },
                   "record": {},
                   "swapRecord": {
                     "type": "string",
-                    "description": "Compare and swap with the previous record by CID.",
+                    "description": "Compare and swap with the previous record by CID. WARNING: nullable and optional field; may cause problems with golang implementation",
                     "format": "cid"
                   },
                   "swapCommit": {
@@ -9393,7 +9426,7 @@
         "tags": [
           "com.atproto.repo"
         ],
-        "summary": "Upload a new blob to be added to repo in a later request.",
+        "summary": "Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size, etc) are enforced when the reference is created. Requires auth, implemented by PDS.",
         "operationId": "com.atproto.repo.uploadBlob",
         "security": [
           {
@@ -9597,7 +9630,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Create an account.",
+        "summary": "Create an account. Implemented by PDS.",
         "operationId": "com.atproto.server.createAccount",
         "requestBody": {
           "required": true,
@@ -9614,10 +9647,12 @@
                   },
                   "handle": {
                     "type": "string",
+                    "description": "Requested handle for the account.",
                     "format": "handle"
                   },
                   "did": {
                     "type": "string",
+                    "description": "Pre-existing atproto DID, being imported to a new account.",
                     "format": "did"
                   },
                   "inviteCode": {
@@ -9630,10 +9665,12 @@
                     "type": "string"
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Initial account password. May need to meet instance-specific password strength requirements."
                   },
                   "recoveryKey": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "DID PLC rotation key (aka, recovery key) to be included in PLC creation operation."
                   },
                   "plcOp": {}
                 }
@@ -9648,6 +9685,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "description": "Account login session returned on successful account creation.",
                   "required": [
                     "accessJwt",
                     "refreshJwt",
@@ -9667,6 +9705,7 @@
                     },
                     "did": {
                       "type": "string",
+                      "description": "The DID of the new account.",
                       "format": "did"
                     },
                     "didDoc": {}
@@ -9749,7 +9788,8 @@
                 ],
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A short name for the App Password, to help distinguish them."
                   }
                 }
               }
@@ -10169,7 +10209,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Delete an actor's account with a token and password.",
+        "summary": "Delete an actor's account with a token and password. Can only be called after requesting a deletion token. Requires auth.",
         "operationId": "com.atproto.server.deleteAccount",
         "requestBody": {
           "required": true,
@@ -10243,7 +10283,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Delete the current session.",
+        "summary": "Delete the current session. Requires auth.",
         "operationId": "com.atproto.server.deleteSession",
         "security": [
           {
@@ -10317,7 +10357,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Get a document describing the service's accounts configuration.",
+        "summary": "Describes the server's account creation requirements and capabilities. Implemented by PDS.",
         "operationId": "com.atproto.server.describeServer",
         "responses": {
           "200": {
@@ -10331,10 +10371,12 @@
                   ],
                   "properties": {
                     "inviteCodeRequired": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "If true, an invite code must be supplied to create an account on this instance."
                     },
                     "phoneVerificationRequired": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "If true, a phone verification token must be supplied to create an account on this instance."
                     },
                     "availableUserDomains": {
                       "type": "array",
@@ -10385,7 +10427,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Get all invite codes for a given account.",
+        "summary": "Get all invite codes for the current account. Requires auth.",
         "operationId": "com.atproto.server.getAccountInviteCodes",
         "security": [
           {
@@ -10405,9 +10447,11 @@
           {
             "name": "createAvailable",
             "in": "query",
+            "description": "Controls whether any new 'earned' but not 'created' invites should be created.",
             "required": false,
             "schema": {
               "type": "boolean",
+              "description": "Controls whether any new 'earned' but not 'created' invites should be created.",
               "default": true
             }
           }
@@ -10500,7 +10544,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Get information about the current session.",
+        "summary": "Get information about the current auth session. Requires auth.",
         "operationId": "com.atproto.server.getSession",
         "security": [
           {
@@ -10697,7 +10741,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Refresh an authentication session.",
+        "summary": "Refresh an authentication session. Requires auth using the 'refreshJwt' (not the 'accessJwt').",
         "operationId": "com.atproto.server.refreshSession",
         "security": [
           {
@@ -11100,7 +11144,7 @@
         "tags": [
           "com.atproto.server"
         ],
-        "summary": "Reserve a repo signing key for account creation.",
+        "summary": "Reserve a repo signing key, for use with account creation. Necessary so that a DID PLC update operation can be constructed during an account migraiton. Public and does not require auth; implemented by PDS. NOTE: this endpoint may change when full account migration is implemented.",
         "operationId": "com.atproto.server.reserveSigningKey",
         "requestBody": {
           "required": true,
@@ -11111,7 +11155,7 @@
                 "properties": {
                   "did": {
                     "type": "string",
-                    "description": "The did to reserve a new did:key for"
+                    "description": "The DID to reserve a key for."
                   }
                 }
               }
@@ -11131,7 +11175,7 @@
                   "properties": {
                     "signingKey": {
                       "type": "string",
-                      "description": "Public signing key in the form of a did:key."
+                      "description": "The public key for the reserved signing key, in did:key serialization."
                     }
                   }
                 }
@@ -11439,17 +11483,17 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Get a blob associated with a given repo.",
+        "summary": "Get a blob associated with a given account. Returns the full blob as originally uploaded. Does not require auth; implemented by PDS.",
         "operationId": "com.atproto.sync.getBlob",
         "parameters": [
           {
             "name": "did",
             "in": "query",
-            "description": "The DID of the repo.",
+            "description": "The DID of the account.",
             "required": true,
             "schema": {
               "type": "string",
-              "description": "The DID of the repo.",
+              "description": "The DID of the account.",
               "format": "did"
             }
           },
@@ -11507,7 +11551,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Get blocks from a given repo.",
+        "summary": "Get data blocks from a given repo, by CID. For example, intermediate MST nodes, or records. Does not require auth; implemented by PDS.",
         "operationId": "com.atproto.sync.getBlocks",
         "parameters": [
           {
@@ -11801,7 +11845,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Get the current commit CID & revision of the repo.",
+        "summary": "Get the current commit CID & revision of the specified repo. Does not require auth.",
         "operationId": "com.atproto.sync.getLatestCommit",
         "parameters": [
           {
@@ -11878,7 +11922,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Get blocks needed for existence or non-existence of record.",
+        "summary": "Get data blocks needed to prove the existence or non-existence of record in the current version of repo. Does not require auth.",
         "operationId": "com.atproto.sync.getRecord",
         "parameters": [
           {
@@ -11904,9 +11948,11 @@
           {
             "name": "rkey",
             "in": "query",
+            "description": "Record Key",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "Record Key"
             }
           },
           {
@@ -11963,7 +12009,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Gets the DID's repo, optionally catching up from a specific revision.",
+        "summary": "Download a repository export as CAR file. Optionally only a 'diff' since a previous revision. Does not require auth; implemented by PDS.",
         "operationId": "com.atproto.sync.getRepo",
         "parameters": [
           {
@@ -11980,11 +12026,11 @@
           {
             "name": "since",
             "in": "query",
-            "description": "The revision of the repo to catch up from.",
+            "description": "The revision ('rev') of the repo to create a diff from.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "The revision of the repo to catch up from."
+              "description": "The revision ('rev') of the repo to create a diff from."
             }
           }
         ],
@@ -12030,7 +12076,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List blob CIDs since some revision.",
+        "summary": "List blob CIDso for an account, since some repo revision. Does not require auth; implemented by PDS.",
         "operationId": "com.atproto.sync.listBlobs",
         "parameters": [
           {
@@ -12135,7 +12181,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List DIDs and root CIDs of hosted repos.",
+        "summary": "Enumerates all the DID, rev, and commit CID for all repos hosted by this service. Does not require auth; implemented by PDS and Relay.",
         "operationId": "com.atproto.sync.listRepos",
         "parameters": [
           {
@@ -12562,6 +12608,7 @@
       },
       "app.bsky.actor.defs.viewerState": {
         "type": "object",
+        "description": "Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.",
         "properties": {
           "muted": {
             "type": "boolean"
@@ -12756,6 +12803,7 @@
           },
           "description": {
             "type": "string",
+            "description": "Free-form profile description text.",
             "maxLength": 2560
           },
           "avatar": {
@@ -12779,6 +12827,7 @@
       },
       "app.bsky.embed.external": {
         "type": "object",
+        "description": "A representation of some externally linked content (eg, a URL and 'card'), embedded in a Bluesky record (eg, a post).",
         "required": [
           "external"
         ],
@@ -12875,7 +12924,8 @@
             "maxLength": 1000000
           },
           "alt": {
-            "type": "string"
+            "type": "string",
+            "description": "Alt text description of the image, for accessibility."
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
@@ -12924,13 +12974,16 @@
         ],
         "properties": {
           "thumb": {
-            "type": "string"
+            "type": "string",
+            "description": "Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View."
           },
           "fullsize": {
-            "type": "string"
+            "type": "string",
+            "description": "Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View."
           },
           "alt": {
-            "type": "string"
+            "type": "string",
+            "description": "Alt text description of the image, for accessibility."
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.images.aspectRatio"
@@ -13177,6 +13230,7 @@
       },
       "app.bsky.feed.defs.viewerState": {
         "type": "object",
+        "description": "Metadata about the requesting account's relationship with the subject content. Only has meaningful content for authed requests.",
         "properties": {
           "repost": {
             "type": "string",
@@ -13584,6 +13638,7 @@
         "properties": {
           "text": {
             "type": "string",
+            "description": "The primary post content. May be an empty string, if there are embeds.",
             "maxLength": 3000
           },
           "entities": {
@@ -13642,6 +13697,7 @@
           },
           "createdAt": {
             "type": "string",
+            "description": "Client-declared timestamp when this post was originally created.",
             "format": "date-time"
           }
         }
@@ -13725,6 +13781,7 @@
         "properties": {
           "post": {
             "type": "string",
+            "description": "Reference (AT-URI) to the post record.",
             "format": "at-uri"
           },
           "allow": {
@@ -13782,6 +13839,7 @@
         "properties": {
           "subject": {
             "type": "string",
+            "description": "DID of the account to be blocked.",
             "format": "did"
           },
           "createdAt": {
@@ -13998,6 +14056,7 @@
           },
           "name": {
             "type": "string",
+            "description": "Display name for list; can not be empty.",
             "minLength": 1,
             "maxLength": 64
           },
@@ -14038,6 +14097,7 @@
         "properties": {
           "subject": {
             "type": "string",
+            "description": "Reference (AT-URI) to the mod list record.",
             "format": "at-uri"
           },
           "createdAt": {
@@ -14056,10 +14116,12 @@
         "properties": {
           "subject": {
             "type": "string",
+            "description": "The account which is included on the list.",
             "format": "did"
           },
           "list": {
             "type": "string",
+            "description": "Reference (AT-URI) to the list record (app.bsky.graph.list).",
             "format": "at-uri"
           },
           "createdAt": {
@@ -14125,6 +14187,7 @@
       },
       "app.bsky.richtext.facet": {
         "type": "object",
+        "description": "Annotation of a sub-string within rich text.",
         "required": [
           "index",
           "features"
@@ -14153,7 +14216,7 @@
       },
       "app.bsky.richtext.facet.mention": {
         "type": "object",
-        "description": "A facet feature for actor mentions.",
+        "description": "Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.",
         "required": [
           "did"
         ],
@@ -14166,7 +14229,7 @@
       },
       "app.bsky.richtext.facet.link": {
         "type": "object",
-        "description": "A facet feature for links.",
+        "description": "Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.",
         "required": [
           "uri"
         ],
@@ -14179,7 +14242,7 @@
       },
       "app.bsky.richtext.facet.tag": {
         "type": "object",
-        "description": "A hashtag.",
+        "description": "Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').",
         "required": [
           "tag"
         ],
@@ -14192,7 +14255,7 @@
       },
       "app.bsky.richtext.facet.byteSlice": {
         "type": "object",
-        "description": "A text segment. Start is inclusive, end is exclusive. Indices are for utf8-encoded strings.",
+        "description": "Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.",
         "required": [
           "byteStart",
           "byteEnd"
@@ -15380,7 +15443,7 @@
       },
       "com.atproto.repo.applyWrites.create": {
         "type": "object",
-        "description": "Create a new record.",
+        "description": "Operation which creates a new record.",
         "required": [
           "collection",
           "value"
@@ -15399,7 +15462,7 @@
       },
       "com.atproto.repo.applyWrites.update": {
         "type": "object",
-        "description": "Update an existing record.",
+        "description": "Operation which updates an existing record.",
         "required": [
           "collection",
           "rkey",
@@ -15418,7 +15481,7 @@
       },
       "com.atproto.repo.applyWrites.delete": {
         "type": "object",
-        "description": "Delete an existing record.",
+        "description": "Operation which deletes an existing record.",
         "required": [
           "collection",
           "rkey"
@@ -15604,6 +15667,7 @@
           },
           "head": {
             "type": "string",
+            "description": "Current repo commit CID",
             "format": "cid"
           },
           "rev": {
@@ -15613,6 +15677,7 @@
       },
       "com.atproto.sync.subscribeRepos.commit": {
         "type": "object",
+        "description": "Represents an update of repository state. Note that empty commits are allowed, which include no repo data changes, but an update to rev and signature.",
         "required": [
           "seq",
           "rebase",
@@ -15631,13 +15696,16 @@
             "type": "integer"
           },
           "rebase": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "DEPRECATED -- unused"
           },
           "tooBig": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates that this commit contained too many ops, or data size was too large. Consumers will need to make a separate request to get missing data."
           },
           "repo": {
             "type": "string",
+            "description": "The repo this event comes from.",
             "format": "did"
           },
           "commit": {
@@ -15650,16 +15718,16 @@
           },
           "rev": {
             "type": "string",
-            "description": "The rev of the emitted commit."
+            "description": "The rev of the emitted commit. Note that this information is also in the commit object included in blocks, unless this is a tooBig event."
           },
           "since": {
             "type": "string",
-            "description": "The rev of the last emitted commit from this repo."
+            "description": "The rev of the last emitted commit from this repo (if any)."
           },
           "blocks": {
             "type": "string",
             "format": "byte",
-            "description": "CAR file containing relevant blocks.",
+            "description": "CAR file containing relevant blocks, as a diff since the previous repo state.",
             "maxLength": 1000000
           },
           "ops": {
@@ -15678,12 +15746,14 @@
           },
           "time": {
             "type": "string",
+            "description": "Timestamp of when this message was originally broadcast.",
             "format": "date-time"
           }
         }
       },
       "com.atproto.sync.subscribeRepos.handle": {
         "type": "object",
+        "description": "Represents an update of the account's handle, or transition to/from invalid state.",
         "required": [
           "seq",
           "did",
@@ -15710,6 +15780,7 @@
       },
       "com.atproto.sync.subscribeRepos.migrate": {
         "type": "object",
+        "description": "Represents an account moving from one PDS instance to another. NOTE: not implemented; full account migration may introduce a new message instead.",
         "required": [
           "seq",
           "did",
@@ -15735,6 +15806,7 @@
       },
       "com.atproto.sync.subscribeRepos.tombstone": {
         "type": "object",
+        "description": "Indicates that an account has been deleted.",
         "required": [
           "seq",
           "did",
@@ -15773,7 +15845,7 @@
       },
       "com.atproto.sync.subscribeRepos.repoOp": {
         "type": "object",
-        "description": "A repo operation, ie a write of a single record. For creates and updates, CID is the record's CID as of this operation. For deletes, it's null.",
+        "description": "A repo operation, ie a mutation of a single record.",
         "required": [
           "action",
           "path",
