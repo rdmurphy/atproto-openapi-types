@@ -11155,7 +11155,8 @@
                 "properties": {
                   "did": {
                     "type": "string",
-                    "description": "The DID to reserve a key for."
+                    "description": "The DID to reserve a key for.",
+                    "format": "did"
                   }
                 }
               }
