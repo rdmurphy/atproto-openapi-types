@@ -5415,6 +5415,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/com.atproto.admin.defs.modEventEmail"
+                      },
+                      {
+                        "$ref": "#/components/schemas/com.atproto.admin.defs.modEventTag"
                       }
                     ]
                   },
@@ -6853,6 +6856,30 @@
             }
           },
           {
+            "name": "addedTags",
+            "in": "query",
+            "description": "If specified, only events where all of these tags were added are returned",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "removedTags",
+            "in": "query",
+            "description": "If specified, only events where all of these tags were removed are returned",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "reportTypes",
             "in": "query",
             "required": false,
@@ -7121,6 +7148,28 @@
               "minimum": 1,
               "maximum": 100,
               "default": 50
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "excludeTags",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -14720,6 +14769,12 @@
           "suspendUntil": {
             "type": "string",
             "format": "date-time"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -15324,6 +15379,32 @@
           "comment": {
             "type": "string",
             "description": "Additional comment about the outgoing comm."
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventTag": {
+        "type": "object",
+        "description": "Add/Remove a tag on a subject",
+        "required": [
+          "add",
+          "remove"
+        ],
+        "properties": {
+          "add": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "remove": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comment": {
+            "type": "string",
+            "description": "Additional comment about added/removed tags."
           }
         }
       },
