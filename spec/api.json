@@ -16749,9 +16749,31 @@
           }
         }
       },
+      "com.atproto.sync.subscribeRepos.identity": {
+        "type": "object",
+        "description": "Represents a change to an account's identity. Could be an updated handle, signing key, or pds hosting endpoint. Serves as a prod to all downstream services to refresh their identity cache.",
+        "required": [
+          "seq",
+          "did",
+          "time"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer"
+          },
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "com.atproto.sync.subscribeRepos.handle": {
         "type": "object",
-        "description": "Represents an update of the account's handle, or transition to/from invalid state.",
+        "description": "Represents an update of the account's handle, or transition to/from invalid state. NOTE: Will be deprecated in favor of #identity.",
         "required": [
           "seq",
           "did",
@@ -16778,7 +16800,7 @@
       },
       "com.atproto.sync.subscribeRepos.migrate": {
         "type": "object",
-        "description": "Represents an account moving from one PDS instance to another. NOTE: not implemented; full account migration may introduce a new message instead.",
+        "description": "Represents an account moving from one PDS instance to another. NOTE: not implemented; account migration uses #identity instead",
         "required": [
           "seq",
           "did",
@@ -16804,7 +16826,7 @@
       },
       "com.atproto.sync.subscribeRepos.tombstone": {
         "type": "object",
-        "description": "Indicates that an account has been deleted.",
+        "description": "Indicates that an account has been deleted. NOTE: may be deprecated in favor of #identity or a future #account event",
         "required": [
           "seq",
           "did",
