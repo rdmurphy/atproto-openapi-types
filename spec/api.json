@@ -13743,6 +13743,64 @@
           }
         }
       },
+      "app.bsky.actor.defs.mutedWordTarget": {
+        "type": "string",
+        "maxLength": 640,
+        "enum": [
+          "content",
+          "tag"
+        ]
+      },
+      "app.bsky.actor.defs.mutedWord": {
+        "type": "object",
+        "description": "A word that the account owner has muted.",
+        "required": [
+          "value",
+          "targets"
+        ],
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "The muted word itself.",
+            "maxLength": 10000
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.mutedWordTarget"
+            }
+          }
+        }
+      },
+      "app.bsky.actor.defs.mutedWordsPref": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.mutedWord"
+            }
+          }
+        }
+      },
+      "app.bsky.actor.defs.hiddenPostsPref": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "at-uri"
+            }
+          }
+        }
+      },
       "app.bsky.actor.profile": {
         "type": "object",
         "properties": {
