@@ -13670,6 +13670,12 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.interestsPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.mutedWordsPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.hiddenPostsPref"
             }
           ]
         }
