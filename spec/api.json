@@ -16150,7 +16150,8 @@
         "enum": [
           "#reviewOpen",
           "#reviewEscalated",
-          "#reviewClosed"
+          "#reviewClosed",
+          "#reviewNone"
         ]
       },
       "com.atproto.admin.defs.reviewOpen": {
@@ -16167,6 +16168,11 @@
         "type": "string",
         "format": "token",
         "description": "Moderator review status of a subject: Closed. Indicates that the subject was already reviewed and resolved by a moderator"
+      },
+      "com.atproto.admin.defs.reviewNone": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderator review status of a subject: Unnecessary. Indicates that the subject does not need a review at the moment but there is probably some moderation related metadata available for it"
       },
       "com.atproto.admin.defs.modEventTakedown": {
         "type": "object",
