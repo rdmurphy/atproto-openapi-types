@@ -14674,6 +14674,12 @@
             "type": "integer",
             "minimum": 0
           },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.label"
+            }
+          },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.generatorViewerState"
           },
@@ -15094,6 +15100,12 @@
           "avatar": {
             "type": "string"
           },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.label"
+            }
+          },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.graph.defs.listViewerState"
           },
@@ -15145,6 +15157,12 @@
           },
           "avatar": {
             "type": "string"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.label"
+            }
           },
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.graph.defs.listViewerState"
