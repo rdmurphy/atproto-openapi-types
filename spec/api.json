@@ -15730,6 +15730,9 @@
               },
               {
                 "$ref": "#/components/schemas/com.atproto.admin.defs.modEventResolveAppeal"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventDivert"
               }
             ]
           },
@@ -15810,6 +15813,9 @@
               },
               {
                 "$ref": "#/components/schemas/com.atproto.admin.defs.modEventResolveAppeal"
+              },
+              {
+                "$ref": "#/components/schemas/com.atproto.admin.defs.modEventDivert"
               }
             ]
           },
@@ -16621,6 +16627,15 @@
           "comment": {
             "type": "string",
             "description": "Additional comment about added/removed tags."
+          }
+        }
+      },
+      "com.atproto.admin.defs.modEventDivert": {
+        "type": "object",
+        "description": "Divert a record's blobs to a 3rd party service for further scanning/tagging",
+        "properties": {
+          "comment": {
+            "type": "string"
           }
         }
       },
