@@ -11378,6 +11378,9 @@
                     "links": {
                       "$ref": "#/components/schemas/com.atproto.server.describeServer.links"
                     },
+                    "contact": {
+                      "$ref": "#/components/schemas/com.atproto.server.describeServer.contact"
+                    },
                     "did": {
                       "type": "string",
                       "format": "did"
@@ -17821,6 +17824,14 @@
             "type": "string"
           },
           "termsOfService": {
+            "type": "string"
+          }
+        }
+      },
+      "com.atproto.server.describeServer.contact": {
+        "type": "object",
+        "properties": {
+          "email": {
             "type": "string"
           }
         }
