@@ -4038,6 +4038,11 @@
         ],
         "summary": "Get information about a list of labeler services.",
         "operationId": "app.bsky.labeler.getServices",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "dids",
@@ -4105,8 +4110,36 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
