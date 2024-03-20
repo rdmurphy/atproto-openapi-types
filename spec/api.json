@@ -13092,11 +13092,11 @@
           {
             "name": "commit",
             "in": "query",
-            "description": "An optional past commit CID.",
+            "description": "DEPRECATED: referenced a repo commit by CID, and retrieved record as of that commit",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "An optional past commit CID.",
+              "description": "DEPRECATED: referenced a repo commit by CID, and retrieved record as of that commit",
               "format": "cid"
             }
           }
@@ -15185,7 +15185,8 @@
             "maxLength": 640
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "associated": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociated"
@@ -15225,7 +15226,8 @@
             "maxLength": 2560
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "associated": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociated"
@@ -15269,10 +15271,12 @@
             "maxLength": 2560
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "banner": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "followersCount": {
             "type": "integer"
@@ -15701,7 +15705,8 @@
             "type": "string"
           },
           "thumb": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           }
         }
       },
@@ -15784,11 +15789,13 @@
         "properties": {
           "thumb": {
             "type": "string",
-            "description": "Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View."
+            "description": "Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.",
+            "format": "uri"
           },
           "fullsize": {
             "type": "string",
-            "description": "Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View."
+            "description": "Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.",
+            "format": "uri"
           },
           "alt": {
             "type": "string",
@@ -16262,7 +16269,8 @@
             }
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "likeCount": {
             "type": "integer",
@@ -16692,7 +16700,8 @@
             "$ref": "#/components/schemas/app.bsky.graph.defs.listPurpose"
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "labels": {
             "type": "array",
@@ -16750,7 +16759,8 @@
             }
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "labels": {
             "type": "array",
@@ -17860,10 +17870,12 @@
         "type": "object",
         "properties": {
           "privacyPolicy": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "termsOfService": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           }
         }
       },
