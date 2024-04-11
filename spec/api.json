@@ -2576,6 +2576,76 @@
         }
       }
     },
+    "/app.bsky.feed.sendInteractions": {
+      "post": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Send information about interactions with feed items back to the feed generator that served them.",
+        "operationId": "app.bsky.feed.sendInteractions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "interactions"
+                ],
+                "properties": {
+                  "interactions": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/app.bsky.feed.defs.interaction"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.getBlocks": {
       "get": {
         "tags": [
@@ -16092,6 +16162,11 @@
                 "$ref": "#/components/schemas/app.bsky.feed.defs.reasonRepost"
               }
             ]
+          },
+          "feedContext": {
+            "type": "string",
+            "description": "Context provided by feed generator that may be passed back alongside interactions.",
+            "maxLength": 2000
           }
         }
       },
@@ -16286,6 +16361,9 @@
             "type": "integer",
             "minimum": 0
           },
+          "acceptsInteractions": {
+            "type": "boolean"
+          },
           "labels": {
             "type": "array",
             "items": {
@@ -16326,6 +16404,11 @@
                 "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonReasonRepost"
               }
             ]
+          },
+          "feedContext": {
+            "type": "string",
+            "description": "Context that will be passed through to client and may be passed to feed generator back alongside interactions.",
+            "maxLength": 2000
           }
         }
       },
@@ -16360,6 +16443,97 @@
             }
           }
         }
+      },
+      "app.bsky.feed.defs.interaction": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "event": {
+            "type": "string",
+            "enum": [
+              "app.bsky.feed.defs#requestLess",
+              "app.bsky.feed.defs#requestMore",
+              "app.bsky.feed.defs#clickthroughItem",
+              "app.bsky.feed.defs#clickthroughAuthor",
+              "app.bsky.feed.defs#clickthroughReposter",
+              "app.bsky.feed.defs#clickthroughEmbed",
+              "app.bsky.feed.defs#interactionSeen",
+              "app.bsky.feed.defs#interactionLike",
+              "app.bsky.feed.defs#interactionRepost",
+              "app.bsky.feed.defs#interactionReply",
+              "app.bsky.feed.defs#interactionQuote",
+              "app.bsky.feed.defs#interactionShare"
+            ]
+          },
+          "feedContext": {
+            "type": "string",
+            "description": "Context on a feed item that was orginally supplied by the feed generator on getFeedSkeleton.",
+            "maxLength": 2000
+          }
+        }
+      },
+      "app.bsky.feed.defs.requestLess": {
+        "type": "string",
+        "format": "token",
+        "description": "Request that less content like the given feed item be shown in the feed"
+      },
+      "app.bsky.feed.defs.requestMore": {
+        "type": "string",
+        "format": "token",
+        "description": "Request that more content like the given feed item be shown in the feed"
+      },
+      "app.bsky.feed.defs.clickthroughItem": {
+        "type": "string",
+        "format": "token",
+        "description": "User clicked through to the feed item"
+      },
+      "app.bsky.feed.defs.clickthroughAuthor": {
+        "type": "string",
+        "format": "token",
+        "description": "User clicked through to the author of the feed item"
+      },
+      "app.bsky.feed.defs.clickthroughReposter": {
+        "type": "string",
+        "format": "token",
+        "description": "User clicked through to the reposter of the feed item"
+      },
+      "app.bsky.feed.defs.clickthroughEmbed": {
+        "type": "string",
+        "format": "token",
+        "description": "User clicked through to the embedded content of the feed item"
+      },
+      "app.bsky.feed.defs.interactionSeen": {
+        "type": "string",
+        "format": "token",
+        "description": "Feed item was seen by user"
+      },
+      "app.bsky.feed.defs.interactionLike": {
+        "type": "string",
+        "format": "token",
+        "description": "User liked the feed item"
+      },
+      "app.bsky.feed.defs.interactionRepost": {
+        "type": "string",
+        "format": "token",
+        "description": "User reposted the feed item"
+      },
+      "app.bsky.feed.defs.interactionReply": {
+        "type": "string",
+        "format": "token",
+        "description": "User replied to the feed item"
+      },
+      "app.bsky.feed.defs.interactionQuote": {
+        "type": "string",
+        "format": "token",
+        "description": "User quoted the feed item"
+      },
+      "app.bsky.feed.defs.interactionShare": {
+        "type": "string",
+        "format": "token",
+        "description": "User shared the feed item"
       },
       "app.bsky.feed.describeFeedGenerator.feed": {
         "type": "object",
@@ -16414,6 +16588,10 @@
             "type": "string",
             "format": "binary",
             "maxLength": 1000000
+          },
+          "acceptsInteractions": {
+            "type": "boolean",
+            "description": "Declaration that a feed accepts feedback interactions from a client through app.bsky.feed.sendInteractions"
           },
           "labels": {
             "oneOf": [
