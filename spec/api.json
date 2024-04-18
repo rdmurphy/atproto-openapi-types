@@ -13049,6 +13049,9 @@
                   },
                   "password": {
                     "type": "string"
+                  },
+                  "authFactorToken": {
+                    "type": "string"
                   }
                 }
               }
@@ -13089,6 +13092,9 @@
                     },
                     "emailConfirmed": {
                       "type": "boolean"
+                    },
+                    "emailAuthFactor": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -13114,6 +13120,9 @@
                         },
                         {
                           "const": "AccountTakedown"
+                        },
+                        {
+                          "const": "AuthFactorTokenRequired"
                         }
                       ]
                     },
@@ -13700,6 +13709,9 @@
                       "type": "string"
                     },
                     "emailConfirmed": {
+                      "type": "boolean"
+                    },
+                    "emailAuthFactor": {
                       "type": "boolean"
                     },
                     "didDoc": {}
@@ -14556,6 +14568,9 @@
                 "properties": {
                   "email": {
                     "type": "string"
+                  },
+                  "emailAuthFactor": {
+                    "type": "boolean"
                   },
                   "token": {
                     "type": "string",
