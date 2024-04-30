@@ -17038,9 +17038,6 @@
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventReverseTakedown"
                       },
                       {
-                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventUnmute"
-                      },
-                      {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventEmail"
                       },
                       {
