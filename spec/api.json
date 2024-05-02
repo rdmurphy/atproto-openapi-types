@@ -19141,6 +19141,9 @@
                 "$ref": "#/components/schemas/app.bsky.feed.defs.blockedPost"
               }
             ]
+          },
+          "grandparentAuthor": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
           }
         }
       },
