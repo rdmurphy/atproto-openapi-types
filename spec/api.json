@@ -7299,7 +7299,7 @@
                     "type": "string"
                   },
                   "message": {
-                    "$ref": "#/components/schemas/chat.bsky.convo.defs.message"
+                    "$ref": "#/components/schemas/chat.bsky.convo.defs.messageInput"
                   }
                 }
               }
@@ -7400,7 +7400,8 @@
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/chat.bsky.convo.sendMessageBatch.batchItem"
-                    }
+                    },
+                    "maxItems": 100
                   }
                 }
               }
@@ -7821,6 +7822,16 @@
           }
         ],
         "parameters": [
+          {
+            "name": "convoId",
+            "in": "query",
+            "description": "Conversation that the message is from. NOTE: this field will eventually be required.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Conversation that the message is from. NOTE: this field will eventually be required."
+            }
+          },
           {
             "name": "messageId",
             "in": "query",
@@ -22302,27 +22313,28 @@
         "type": "object",
         "required": [
           "did",
-          "messageId"
+          "messageId",
+          "convoId"
         ],
         "properties": {
           "did": {
             "type": "string",
             "format": "did"
           },
+          "convoId": {
+            "type": "string"
+          },
           "messageId": {
             "type": "string"
           }
         }
       },
-      "chat.bsky.convo.defs.message": {
+      "chat.bsky.convo.defs.messageInput": {
         "type": "object",
         "required": [
           "text"
         ],
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "text": {
             "type": "string",
             "maxLength": 10000
@@ -22553,7 +22565,7 @@
             "type": "string"
           },
           "message": {
-            "$ref": "#/components/schemas/chat.bsky.convo.defs.message"
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.messageInput"
           }
         }
       },
