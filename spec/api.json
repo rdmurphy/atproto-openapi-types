@@ -22387,7 +22387,7 @@
           "embed": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/app.bsky.embed.record"
+                "$ref": "#/components/schemas/app.bsky.embed.record.view"
               }
             ]
           },
