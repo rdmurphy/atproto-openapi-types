@@ -16520,6 +16520,21 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "BlobNotFound"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
                         }
                       ]
                     },
@@ -16600,6 +16615,21 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "BlockNotFound"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
                         }
                       ]
                     },
@@ -17034,6 +17064,15 @@
                         },
                         {
                           "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
                         }
                       ]
                     },
@@ -17154,6 +17193,21 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RecordNotFound"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
                         }
                       ]
                     },
@@ -17254,6 +17308,141 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.sync.getRepoStatus": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get the hosting status for a repository, on this server. Expected to be implemented by PDS and Relay.",
+        "operationId": "com.atproto.sync.getRepoStatus",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "description": "The DID of the repo.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The DID of the repo.",
+              "format": "did"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "did",
+                    "active"
+                  ],
+                  "properties": {
+                    "did": {
+                      "type": "string",
+                      "format": "did"
+                    },
+                    "active": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "If active=false, this optional field indicates a possible reason for why the account is not active. If active=false and no status is supplied, then the host makes no claim for why the repository is no longer being hosted.",
+                      "enum": [
+                        "takendown",
+                        "suspended",
+                        "deactivated"
+                      ]
+                    },
+                    "rev": {
+                      "type": "string",
+                      "description": "Optional field, the current rev of the repo, if active=true"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RepoNotFound"
                         }
                       ]
                     },
@@ -17392,6 +17581,18 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        },
+                        {
+                          "const": "RepoTakendown"
+                        },
+                        {
+                          "const": "RepoSuspended"
+                        },
+                        {
+                          "const": "RepoDeactivated"
                         }
                       ]
                     },
@@ -23231,6 +23432,18 @@
           },
           "rev": {
             "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "description": "If active=false, this optional field indicates a possible reason for why the account is not active. If active=false and no status is supplied, then the host makes no claim for why the repository is no longer being hosted.",
+            "enum": [
+              "takendown",
+              "suspended",
+              "deactivated"
+            ]
           }
         }
       },
@@ -23329,12 +23542,54 @@
           "time": {
             "type": "string",
             "format": "date-time"
+          },
+          "handle": {
+            "type": "string",
+            "description": "The current handle for the account, or 'handle.invalid' if validation fails. This field is optional, might have been validated or passed-through from an upstream source. Semantics and behaviors for PDS vs Relay may evolve in the future; see atproto specs for more details.",
+            "format": "handle"
+          }
+        }
+      },
+      "com.atproto.sync.subscribeRepos.account": {
+        "type": "object",
+        "description": "Represents a change to an account's status on a host (eg, PDS or Relay). The semantics of this event are that the status is at the host which emitted the event, not necessarily that at the currently active PDS. Eg, a Relay takedown would emit a takedown with active=false, even if the PDS is still active.",
+        "required": [
+          "seq",
+          "did",
+          "time",
+          "active"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer"
+          },
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Indicates that the account has a repository which can be fetched from the host that emitted this event."
+          },
+          "status": {
+            "type": "string",
+            "description": "If active=false, this optional field indicates a reason for why the account is not active.",
+            "enum": [
+              "takendown",
+              "suspended",
+              "deleted",
+              "deactivated"
+            ]
           }
         }
       },
       "com.atproto.sync.subscribeRepos.handle": {
         "type": "object",
-        "description": "Represents an update of the account's handle, or transition to/from invalid state. NOTE: Will be deprecated in favor of #identity.",
+        "description": "DEPRECATED -- Use #identity event instead",
         "required": [
           "seq",
           "did",
@@ -23361,7 +23616,7 @@
       },
       "com.atproto.sync.subscribeRepos.migrate": {
         "type": "object",
-        "description": "Represents an account moving from one PDS instance to another. NOTE: not implemented; account migration uses #identity instead",
+        "description": "DEPRECATED -- Use #account event instead",
         "required": [
           "seq",
           "did",
@@ -23387,7 +23642,7 @@
       },
       "com.atproto.sync.subscribeRepos.tombstone": {
         "type": "object",
-        "description": "Indicates that an account has been deleted. NOTE: may be deprecated in favor of #identity or a future #account event",
+        "description": "DEPRECATED -- Use #account event instead",
         "required": [
           "seq",
           "did",
