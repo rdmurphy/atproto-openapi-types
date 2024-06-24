@@ -17965,7 +17965,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "List blob CIDso for an account, since some repo revision. Does not require auth; implemented by PDS.",
+        "summary": "List blob CIDs for an account, since some repo revision. Does not require auth; implemented by PDS.",
         "operationId": "com.atproto.sync.listBlobs",
         "security": [
           {
