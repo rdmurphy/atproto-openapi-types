@@ -3011,6 +3011,131 @@
         }
       }
     },
+    "/app.bsky.graph.getActorStarterPacks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get a list of starter packs created by the actor.",
+        "operationId": "app.bsky.graph.getActorStarterPacks",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "at-identifier"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "starterPacks"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "starterPacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackViewBasic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.getBlocks": {
       "get": {
         "tags": [
@@ -4217,6 +4342,215 @@
                         },
                         {
                           "const": "ActorNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getStarterPack": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Gets a view of a starter pack.",
+        "operationId": "app.bsky.graph.getStarterPack",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "starterPack",
+            "in": "query",
+            "description": "Reference (AT-URI) of the starter pack record.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Reference (AT-URI) of the starter pack record.",
+              "format": "at-uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "starterPack"
+                  ],
+                  "properties": {
+                    "starterPack": {
+                      "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackView"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getStarterPacks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get views for a list of starter packs.",
+        "operationId": "app.bsky.graph.getStarterPacks",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uris",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "at-uri"
+              },
+              "maxItems": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "starterPacks"
+                  ],
+                  "properties": {
+                    "starterPacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackViewBasic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
                         }
                       ]
                     },
@@ -21199,6 +21533,10 @@
             "items": {
               "$ref": "#/components/schemas/com.atproto.label.defs.label"
             }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -21233,6 +21571,10 @@
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociated"
           },
           "indexedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -21290,7 +21632,14 @@
           "associated": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociated"
           },
+          "joinedViaStarterPack": {
+            "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackViewBasic"
+          },
           "indexedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -21312,6 +21661,9 @@
             "type": "integer"
           },
           "feedgens": {
+            "type": "integer"
+          },
+          "starterPacks": {
             "type": "integer"
           },
           "labeler": {
@@ -21722,6 +22074,13 @@
                 "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
               }
             ]
+          },
+          "joinedViaStarterPack": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -22913,6 +23272,10 @@
             "type": "string",
             "format": "uri"
           },
+          "listItemCount": {
+            "type": "integer",
+            "minimum": 0
+          },
           "labels": {
             "type": "array",
             "items": {
@@ -22972,6 +23335,10 @@
             "type": "string",
             "format": "uri"
           },
+          "listItemCount": {
+            "type": "integer",
+            "minimum": 0
+          },
           "labels": {
             "type": "array",
             "items": {
@@ -23003,6 +23370,111 @@
           }
         }
       },
+      "app.bsky.graph.defs.starterPackView": {
+        "type": "object",
+        "required": [
+          "uri",
+          "cid",
+          "record",
+          "creator",
+          "indexedAt"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "record": {},
+          "creator": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
+          },
+          "list": {
+            "$ref": "#/components/schemas/app.bsky.graph.defs.listViewBasic"
+          },
+          "listItemsSample": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.graph.defs.listItemView"
+            },
+            "maxItems": 12
+          },
+          "feeds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.feed.defs.generatorView"
+            },
+            "maxItems": 3
+          },
+          "joinedWeekCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "joinedAllTimeCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.label"
+            }
+          },
+          "indexedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.graph.defs.starterPackViewBasic": {
+        "type": "object",
+        "required": [
+          "uri",
+          "cid",
+          "record",
+          "creator",
+          "indexedAt"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "record": {},
+          "creator": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
+          },
+          "listItemCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "joinedWeekCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "joinedAllTimeCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.label.defs.label"
+            }
+          },
+          "indexedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "app.bsky.graph.defs.listPurpose": {
         "oneOf": [
           {
@@ -23010,6 +23482,9 @@
           },
           {
             "$ref": "#/components/schemas/app.bsky.graph.defs.curatelist"
+          },
+          {
+            "$ref": "#/components/schemas/app.bsky.graph.defs.referencelist"
           }
         ]
       },
@@ -23022,6 +23497,11 @@
         "type": "string",
         "format": "token",
         "description": "A list of actors used for curation purposes such as list feeds or interaction gating."
+      },
+      "app.bsky.graph.defs.referencelist": {
+        "type": "string",
+        "format": "token",
+        "description": "A list of actors used for only for reference purposes such as within a starter pack."
       },
       "app.bsky.graph.defs.listViewerState": {
         "type": "object",
@@ -23177,6 +23657,60 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.graph.starterpack": {
+        "type": "object",
+        "required": [
+          "name",
+          "list",
+          "createdAt"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Display name for starter pack; can not be empty.",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 3000
+          },
+          "descriptionFacets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.richtext.facet"
+            }
+          },
+          "list": {
+            "type": "string",
+            "description": "Reference (AT-URI) to the list record.",
+            "format": "at-uri"
+          },
+          "feeds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.graph.starterpack.feedItem"
+            },
+            "maxItems": 3
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.graph.starterpack.feedItem": {
+        "type": "object",
+        "required": [
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
           }
         }
       },
@@ -23339,14 +23873,15 @@
           },
           "reason": {
             "type": "string",
-            "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', and 'quote'.",
+            "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', and 'starterpack-joined'.",
             "enum": [
               "like",
               "repost",
               "follow",
               "mention",
               "reply",
-              "quote"
+              "quote",
+              "starterpack-joined"
             ]
           },
           "reasonSubject": {
