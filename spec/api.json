@@ -21779,6 +21779,9 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.bskyAppStatePref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.labelersPref"
             }
           ]
         }
