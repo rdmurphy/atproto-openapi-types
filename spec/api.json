@@ -25431,6 +25431,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventDivert"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventTag"
               }
             ]
           },
@@ -25526,6 +25529,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventDivert"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventTag"
               }
             ]
           },
