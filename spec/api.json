@@ -16321,6 +16321,26 @@
               "description": "The DID of the service that the token will be used to authenticate with",
               "format": "did"
             }
+          },
+          {
+            "name": "exp",
+            "in": "query",
+            "description": "The time in Unix Epoch seconds that the JWT expires. Defaults to 60 seconds in the future. The service may enforce certain time bounds on tokens depending on the requested scope.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "lxm",
+            "in": "query",
+            "description": "Lexicon (XRPC) method to bind the requested token to",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Lexicon (XRPC) method to bind the requested token to",
+              "format": "nsid"
+            }
           }
         ],
         "responses": {
@@ -16364,6 +16384,9 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "BadExpiration"
                         }
                       ]
                     },
