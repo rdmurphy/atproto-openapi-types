@@ -22626,6 +22626,9 @@
                 "$ref": "#/components/schemas/app.bsky.embed.record.viewBlocked"
               },
               {
+                "$ref": "#/components/schemas/app.bsky.embed.record.viewDetached"
+              },
+              {
                 "$ref": "#/components/schemas/app.bsky.feed.defs.generatorView"
               },
               {
@@ -22738,6 +22741,23 @@
           },
           "author": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
+          }
+        }
+      },
+      "app.bsky.embed.record.viewDetached": {
+        "type": "object",
+        "required": [
+          "uri",
+          "detached"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "detached": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
@@ -22869,6 +22889,9 @@
             "type": "boolean"
           },
           "replyDisabled": {
+            "type": "boolean"
+          },
+          "embeddingDisabled": {
             "type": "boolean"
           }
         }
@@ -23529,6 +23552,48 @@
           }
         }
       },
+      "app.bsky.feed.postgate": {
+        "type": "object",
+        "required": [
+          "post",
+          "createdAt"
+        ],
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "post": {
+            "type": "string",
+            "description": "Reference (AT-URI) to the post record.",
+            "format": "at-uri"
+          },
+          "detachedEmbeddingUris": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "at-uri"
+            },
+            "maxItems": 50
+          },
+          "embeddingRules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.postgate.disableRule"
+                }
+              ]
+            },
+            "maxItems": 5
+          }
+        }
+      },
+      "app.bsky.feed.postgate.disableRule": {
+        "type": "object",
+        "description": "Disables embedding of this post.",
+        "properties": {}
+      },
       "app.bsky.feed.repost": {
         "type": "object",
         "required": [
@@ -23577,6 +23642,14 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "hiddenReplies": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "at-uri"
+            },
+            "maxItems": 50
           }
         }
       },
