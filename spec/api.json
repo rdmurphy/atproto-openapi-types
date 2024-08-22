@@ -2108,6 +2108,9 @@
                           "$ref": "#/components/schemas/app.bsky.feed.defs.blockedPost"
                         }
                       ]
+                    },
+                    "threadgate": {
+                      "$ref": "#/components/schemas/app.bsky.feed.defs.threadgateView"
                     }
                   }
                 }
