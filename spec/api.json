@@ -14170,8 +14170,7 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data, for all operations.",
-                    "default": true
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data across all operations, 'true' to require it, or leave unset to validate only for known Lexicons."
                   },
                   "writes": {
                     "type": "array",
@@ -14201,7 +14200,33 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [],
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "$ref": "#/components/schemas/com.atproto.repo.applyWrites.createResult"
+                          },
+                          {
+                            "$ref": "#/components/schemas/com.atproto.repo.applyWrites.updateResult"
+                          },
+                          {
+                            "$ref": "#/components/schemas/com.atproto.repo.applyWrites.deleteResult"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -14305,8 +14330,7 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data.",
-                    "default": true
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."
                   },
                   "record": {},
                   "swapCommit": {
@@ -14338,6 +14362,13 @@
                     "cid": {
                       "type": "string",
                       "format": "cid"
+                    },
+                    "validationStatus": {
+                      "type": "string",
+                      "enum": [
+                        "valid",
+                        "unknown"
+                      ]
                     }
                   }
                 }
@@ -15095,8 +15126,7 @@
                   },
                   "validate": {
                     "type": "boolean",
-                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data.",
-                    "default": true
+                    "description": "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."
                   },
                   "record": {},
                   "swapRecord": {
@@ -15133,6 +15163,13 @@
                     "cid": {
                       "type": "string",
                       "format": "cid"
+                    },
+                    "validationStatus": {
+                      "type": "string",
+                      "enum": [
+                        "valid",
+                        "unknown"
+                      ]
                     }
                   }
                 }
@@ -25688,6 +25725,59 @@
             "type": "string"
           }
         }
+      },
+      "com.atproto.repo.applyWrites.createResult": {
+        "type": "object",
+        "required": [
+          "uri",
+          "cid"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "validationStatus": {
+            "type": "string",
+            "enum": [
+              "valid",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "com.atproto.repo.applyWrites.updateResult": {
+        "type": "object",
+        "required": [
+          "uri",
+          "cid"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "validationStatus": {
+            "type": "string",
+            "enum": [
+              "valid",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "com.atproto.repo.applyWrites.deleteResult": {
+        "type": "object",
+        "required": [],
+        "properties": {}
       },
       "com.atproto.repo.listMissingBlobs.recordBlob": {
         "type": "object",
