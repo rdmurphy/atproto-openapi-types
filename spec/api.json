@@ -14207,6 +14207,9 @@
                   "type": "object",
                   "required": [],
                   "properties": {
+                    "commit": {
+                      "$ref": "#/components/schemas/com.atproto.repo.defs.commitMeta"
+                    },
                     "results": {
                       "type": "array",
                       "items": {
@@ -14363,6 +14366,9 @@
                       "type": "string",
                       "format": "cid"
                     },
+                    "commit": {
+                      "$ref": "#/components/schemas/com.atproto.repo.defs.commitMeta"
+                    },
                     "validationStatus": {
                       "type": "string",
                       "enum": [
@@ -14491,7 +14497,19 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commit": {
+                      "$ref": "#/components/schemas/com.atproto.repo.defs.commitMeta"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -15163,6 +15181,9 @@
                     "cid": {
                       "type": "string",
                       "format": "cid"
+                    },
+                    "commit": {
+                      "$ref": "#/components/schemas/com.atproto.repo.defs.commitMeta"
                     },
                     "validationStatus": {
                       "type": "string",
@@ -25778,6 +25799,22 @@
         "type": "object",
         "required": [],
         "properties": {}
+      },
+      "com.atproto.repo.defs.commitMeta": {
+        "type": "object",
+        "required": [
+          "cid",
+          "rev"
+        ],
+        "properties": {
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
+          "rev": {
+            "type": "string"
+          }
+        }
       },
       "com.atproto.repo.listMissingBlobs.recordBlob": {
         "type": "object",
