@@ -21245,11 +21245,23 @@
         ],
         "parameters": [
           {
+            "name": "includeAllUserRecords",
+            "in": "query",
+            "description": "All subjects belonging to the account specified in the 'subject' param will be returned.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "All subjects belonging to the account specified in the 'subject' param will be returned."
+            }
+          },
+          {
             "name": "subject",
             "in": "query",
+            "description": "The subject to get the status for.",
             "required": false,
             "schema": {
               "type": "string",
+              "description": "The subject to get the status for.",
               "format": "uri"
             }
           },
@@ -26725,6 +26737,10 @@
           },
           "durationInHours": {
             "type": "integer"
+          },
+          "acknowledgeAccountSubjects": {
+            "type": "boolean",
+            "description": "If true, all other reports on content authored by this account will be resolved (acknowledged)."
           }
         }
       },
