@@ -4776,6 +4776,10 @@
                       "items": {
                         "$ref": "#/components/schemas/app.bsky.actor.defs.profileView"
                       }
+                    },
+                    "isFallback": {
+                      "type": "boolean",
+                      "description": "If true, response has fallen-back to generic results, and is not scoped using relativeToDid"
                     }
                   }
                 }
@@ -6479,6 +6483,11 @@
                       "items": {
                         "$ref": "#/components/schemas/app.bsky.unspecced.defs.skeletonSearchActor"
                       }
+                    },
+                    "relativeToDid": {
+                      "type": "string",
+                      "description": "DID of the account these suggestions are relative to. If this is returned undefined, suggestions are based on the viewer.",
+                      "format": "did"
                     }
                   }
                 }
