@@ -1192,6 +1192,14 @@
                 "posts_and_author_threads"
               ]
             }
+          },
+          {
+            "name": "includePins",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -22372,6 +22380,9 @@
             "items": {
               "$ref": "#/components/schemas/com.atproto.label.defs.label"
             }
+          },
+          "pinnedPost": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
           }
         }
       },
@@ -22884,6 +22895,9 @@
             ]
           },
           "joinedViaStarterPack": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+          },
+          "pinnedPost": {
             "$ref": "#/components/schemas/com.atproto.repo.strongRef"
           },
           "createdAt": {
@@ -23445,6 +23459,9 @@
           },
           "embeddingDisabled": {
             "type": "boolean"
+          },
+          "pinned": {
+            "type": "boolean"
           }
         }
       },
@@ -23464,6 +23481,9 @@
             "oneOf": [
               {
                 "$ref": "#/components/schemas/app.bsky.feed.defs.reasonRepost"
+              },
+              {
+                "$ref": "#/components/schemas/app.bsky.feed.defs.reasonPin"
               }
             ]
           },
@@ -23527,6 +23547,10 @@
             "format": "date-time"
           }
         }
+      },
+      "app.bsky.feed.defs.reasonPin": {
+        "type": "object",
+        "properties": {}
       },
       "app.bsky.feed.defs.threadViewPost": {
         "type": "object",
@@ -23709,6 +23733,9 @@
             "oneOf": [
               {
                 "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonReasonRepost"
+              },
+              {
+                "$ref": "#/components/schemas/app.bsky.feed.defs.skeletonReasonPin"
               }
             ]
           },
@@ -23730,6 +23757,10 @@
             "format": "at-uri"
           }
         }
+      },
+      "app.bsky.feed.defs.skeletonReasonPin": {
+        "type": "object",
+        "properties": {}
       },
       "app.bsky.feed.defs.threadgateView": {
         "type": "object",
