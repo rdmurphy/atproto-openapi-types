@@ -27,11 +27,6 @@
         ],
         "summary": "Get private preferences attached to the current account. Expected use is synchronization between multiple devices, and import/export during account migration. Requires auth.",
         "operationId": "app.bsky.actor.getPreferences",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -67,36 +62,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -525,11 +492,6 @@
         ],
         "summary": "Find actors (profiles) matching search criteria. Does not require auth.",
         "operationId": "app.bsky.actor.searchActors",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "term",
@@ -612,36 +574,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -661,11 +595,6 @@
         ],
         "summary": "Find actor suggestions for a prefix search term. Expected use is for auto-completion during text field entry. Does not require auth.",
         "operationId": "app.bsky.actor.searchActorsTypeahead",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "term",
@@ -737,36 +666,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -6300,11 +6201,6 @@
         ],
         "summary": "An unspecced view of globally popular feed generators.",
         "operationId": "app.bsky.unspecced.getPopularFeedGenerators",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "limit",
@@ -6375,36 +6271,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -11925,11 +11793,6 @@
         ],
         "summary": "Administrative action to rebase an account's repo",
         "operationId": "com.atproto.admin.rebaseRepo",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -11977,40 +11840,12 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidSwap"
                         },
                         {
                           "const": "ConcurrentWrites"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12030,11 +11865,6 @@
         ],
         "summary": "Resolve moderation reports by an action.",
         "operationId": "com.atproto.admin.resolveModerationReports",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -12092,36 +11922,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12249,11 +12051,6 @@
         ],
         "summary": "Get list of accounts that matches your search query.",
         "operationId": "com.atproto.admin.searchAccounts",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "email",
@@ -12324,36 +12121,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12507,11 +12276,6 @@
         ],
         "summary": "Send email to a user's account email address.",
         "operationId": "com.atproto.admin.sendEmail",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -12582,36 +12346,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12631,11 +12367,6 @@
         ],
         "summary": "Take a moderation action on an actor.",
         "operationId": "com.atproto.admin.takeModerationAction",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -12730,37 +12461,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "SubjectHasAction"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12780,11 +12483,6 @@
         ],
         "summary": "Administrative action to update an account's email.",
         "operationId": "com.atproto.admin.updateAccountEmail",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -12829,36 +12527,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12878,11 +12548,6 @@
         ],
         "summary": "Administrative action to update an account's handle.",
         "operationId": "com.atproto.admin.updateAccountHandle",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -12927,36 +12592,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -12976,11 +12613,6 @@
         ],
         "summary": "Update the password for a user account as an administrator.",
         "operationId": "com.atproto.admin.updateAccountPassword",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -13024,36 +12656,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -13073,11 +12677,6 @@
         ],
         "summary": "Administrative action to update an existing communication template. Allows passing partial fields to patch specific fields only.",
         "operationId": "com.atproto.admin.updateCommunicationTemplate",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -13144,36 +12743,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -16711,11 +16282,6 @@
         ],
         "summary": "Get all invite codes for the current account. Requires auth.",
         "operationId": "com.atproto.server.getAccountInviteCodes",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "includeUsed",
@@ -16778,37 +16344,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "DuplicateCreate"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -16828,11 +16366,6 @@
         ],
         "summary": "Get a signed token on behalf of the requesting DID for the requested service.",
         "operationId": "com.atproto.server.getServiceAuth",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "aud",
@@ -16903,37 +16436,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "BadExpiration"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -16953,11 +16458,6 @@
         ],
         "summary": "Get information about the current auth session. Requires auth.",
         "operationId": "com.atproto.server.getSession",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -17021,36 +16521,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17070,11 +16542,6 @@
         ],
         "summary": "List all App Passwords.",
         "operationId": "com.atproto.server.listAppPasswords",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -17115,37 +16582,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "AccountTakedown"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17165,11 +16604,6 @@
         ],
         "summary": "Refresh an authentication session. Requires auth using the 'refreshJwt' (not the 'accessJwt').",
         "operationId": "com.atproto.server.refreshSession",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -17234,37 +16668,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "AccountTakedown"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17284,11 +16690,6 @@
         ],
         "summary": "Initiate a user account deletion via email.",
         "operationId": "com.atproto.server.requestAccountDelete",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -17309,36 +16710,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17358,11 +16731,6 @@
         ],
         "summary": "Request an email with a code to confirm ownership of email.",
         "operationId": "com.atproto.server.requestEmailConfirmation",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -17383,36 +16751,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17432,11 +16772,6 @@
         ],
         "summary": "Request a token in order to update email.",
         "operationId": "com.atproto.server.requestEmailUpdate",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -17472,36 +16807,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -17580,11 +16887,6 @@
         ],
         "summary": "Reserve a repo signing key, for use with account creation. Necessary so that a DID PLC update operation can be constructed during an account migraiton. Public and does not require auth; implemented by PDS. NOTE: this endpoint may change when full account migration is implemented.",
         "operationId": "com.atproto.server.reserveSigningKey",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -17638,36 +16940,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
