@@ -27197,6 +27197,9 @@
           "muted": {
             "type": "boolean"
           },
+          "opened": {
+            "type": "boolean"
+          },
           "unreadCount": {
             "type": "integer"
           }
