@@ -14433,7 +14433,7 @@
                   "rkey": {
                     "type": "string",
                     "description": "The Record Key.",
-                    "maxLength": 15
+                    "maxLength": 512
                   },
                   "validate": {
                     "type": "boolean",
@@ -15247,7 +15247,7 @@
                   "rkey": {
                     "type": "string",
                     "description": "The Record Key.",
-                    "maxLength": 15
+                    "maxLength": 512
                   },
                   "validate": {
                     "type": "boolean",
@@ -27732,7 +27732,7 @@
           },
           "rkey": {
             "type": "string",
-            "maxLength": 15
+            "maxLength": 512
           },
           "value": {}
         }
