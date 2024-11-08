@@ -24791,16 +24791,6 @@
           }
         }
       },
-      "app.bsky.embed.defs.videoPresentation": {
-        "type": "object",
-        "description": "Indicates that this video should be presented as a normal video - i.e. with sound, a progress bar, etc.",
-        "properties": {}
-      },
-      "app.bsky.embed.defs.gifPresentation": {
-        "type": "object",
-        "description": "Indicates that this video should be presented as a GIF - i.e. with no sound, looping, etc.",
-        "properties": {}
-      },
       "app.bsky.embed.external": {
         "type": "object",
         "description": "A representation of some externally linked content (eg, a URL and 'card'), embedded in a Bluesky record (eg, a post).",
@@ -25196,16 +25186,6 @@
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.defs.aspectRatio"
-          },
-          "presentation": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/app.bsky.embed.video.videoPresentation"
-              },
-              {
-                "$ref": "#/components/schemas/app.bsky.embed.video.gifPresentation"
-              }
-            ]
           }
         }
       },
@@ -25252,16 +25232,6 @@
           },
           "aspectRatio": {
             "$ref": "#/components/schemas/app.bsky.embed.defs.aspectRatio"
-          },
-          "presentation": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/app.bsky.embed.video.videoPresentation"
-              },
-              {
-                "$ref": "#/components/schemas/app.bsky.embed.video.gifPresentation"
-              }
-            ]
           }
         }
       },
