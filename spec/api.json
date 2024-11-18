@@ -5131,6 +5131,132 @@
         }
       }
     },
+    "/app.bsky.graph.searchStarterPacks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Find starter packs matching search criteria. Does not require auth.",
+        "operationId": "app.bsky.graph.searchStarterPacks",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query string. Syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Search query string. Syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended."
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "starterPacks"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "starterPacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackViewBasic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.unmuteActor": {
       "post": {
         "tags": [
@@ -7192,6 +7318,151 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/app.bsky.unspecced.defs.skeletonSearchPost"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "BadQueryString"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.unspecced.searchStarterPacksSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Backend Starter Pack search, returns only skeleton.",
+        "operationId": "app.bsky.unspecced.searchStarterPacksSkeleton",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended."
+            }
+          },
+          {
+            "name": "viewer",
+            "in": "query",
+            "description": "DID of the account making the request (not included for public/unauthenticated queries).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "DID of the account making the request (not included for public/unauthenticated queries).",
+              "format": "did"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Optional pagination mechanism; may not necessarily allow scrolling through entire result set.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Optional pagination mechanism; may not necessarily allow scrolling through entire result set."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "starterPacks"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hitsTotal": {
+                      "type": "integer"
+                    },
+                    "starterPacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.unspecced.defs.skeletonSearchStarterPack"
                       }
                     }
                   }
@@ -26915,6 +27186,18 @@
           "did": {
             "type": "string",
             "format": "did"
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.skeletonSearchStarterPack": {
+        "type": "object",
+        "required": [
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
           }
         }
       },
