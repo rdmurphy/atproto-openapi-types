@@ -21816,11 +21816,11 @@
           {
             "name": "comment",
             "in": "query",
-            "description": "If specified, only events with comments containing the keyword are returned",
+            "description": "If specified, only events with comments containing the keyword are returned. Apply || separator to use multiple keywords and match using OR condition.",
             "required": false,
             "schema": {
               "type": "string",
-              "description": "If specified, only events with comments containing the keyword are returned"
+              "description": "If specified, only events with comments containing the keyword are returned. Apply || separator to use multiple keywords and match using OR condition."
             }
           },
           {
