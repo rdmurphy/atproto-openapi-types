@@ -5779,6 +5779,19 @@
         ],
         "parameters": [
           {
+            "name": "reasons",
+            "in": "query",
+            "description": "Notification reasons to include in response.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "A reason that matches the reason property of #notification."
+              }
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
