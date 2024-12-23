@@ -22128,6 +22128,34 @@
         ],
         "parameters": [
           {
+            "name": "queueCount",
+            "in": "query",
+            "description": "Number of queues being used by moderators. Subjects will be split among all queues.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "queueIndex",
+            "in": "query",
+            "description": "Index of the queue to fetch subjects from. Works only when queueCount value is specified.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "queueSeed",
+            "in": "query",
+            "description": "A seeder to shuffle/balance the queue items.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "A seeder to shuffle/balance the queue items."
+            }
+          },
+          {
             "name": "includeAllUserRecords",
             "in": "query",
             "description": "All subjects, or subjects from given 'collections' param, belonging to the account specified in the 'subject' param will be returned.",
