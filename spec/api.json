@@ -22023,6 +22023,18 @@
             }
           },
           {
+            "name": "policies",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "If specified, only events where the action policies match any of the given policies are returned"
+              }
+            }
+          },
+          {
             "name": "cursor",
             "in": "query",
             "required": false,
@@ -29309,6 +29321,13 @@
           "acknowledgeAccountSubjects": {
             "type": "boolean",
             "description": "If true, all other reports on content authored by this account will be resolved (acknowledged)."
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5
           }
         }
       },
