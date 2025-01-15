@@ -28257,6 +28257,17 @@
           }
         }
       },
+      "com.atproto.lexicon.schema": {
+        "type": "object",
+        "required": [
+          "lexicon"
+        ],
+        "properties": {
+          "lexicon": {
+            "type": "integer"
+          }
+        }
+      },
       "com.atproto.moderation.defs.reasonType": {
         "oneOf": [
           {
@@ -30280,6 +30291,9 @@
     },
     {
       "name": "com.atproto.label"
+    },
+    {
+      "name": "com.atproto.lexicon"
     },
     {
       "name": "com.atproto.moderation"
