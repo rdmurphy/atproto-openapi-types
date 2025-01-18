@@ -26134,6 +26134,13 @@
           "viewer": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.generatorViewerState"
           },
+          "contentMode": {
+            "type": "string",
+            "enum": [
+              "app.bsky.feed.defs#contentModeUnspecified",
+              "app.bsky.feed.defs#contentModeVideo"
+            ]
+          },
           "indexedAt": {
             "type": "string",
             "format": "date-time"
@@ -26273,6 +26280,16 @@
         "format": "token",
         "description": "User clicked through to the embedded content of the feed item"
       },
+      "app.bsky.feed.defs.contentModeUnspecified": {
+        "type": "string",
+        "format": "token",
+        "description": "Declares the feed generator returns any types of posts."
+      },
+      "app.bsky.feed.defs.contentModeVideo": {
+        "type": "string",
+        "format": "token",
+        "description": "Declares the feed generator returns posts containing app.bsky.embed.video embeds."
+      },
       "app.bsky.feed.defs.interactionSeen": {
         "type": "string",
         "format": "token",
@@ -26393,6 +26410,13 @@
               {
                 "$ref": "#/components/schemas/com.atproto.label.defs.selfLabels"
               }
+            ]
+          },
+          "contentMode": {
+            "type": "string",
+            "enum": [
+              "app.bsky.feed.defs#contentModeUnspecified",
+              "app.bsky.feed.defs#contentModeVideo"
             ]
           },
           "createdAt": {
