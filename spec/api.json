@@ -22468,6 +22468,33 @@
                 "record"
               ]
             }
+          },
+          {
+            "name": "minAccountSuspendCount",
+            "in": "query",
+            "description": "If specified, only subjects that belong to an account that has at least this many suspensions will be returned.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "minReportedRecordsCount",
+            "in": "query",
+            "description": "If specified, only subjects that belong to an account that has at least this many reported records will be returned.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "minTakendownRecordsCount",
+            "in": "query",
+            "description": "If specified, only subjects that belong to an account that has at least this many taken down records will be returned.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -29320,6 +29347,63 @@
             "items": {
               "type": "string"
             }
+          },
+          "accountStats": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.accountStats"
+          },
+          "recordsStats": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordsStats"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.accountStats": {
+        "type": "object",
+        "description": "Statistics about a particular account subject",
+        "properties": {
+          "reportCount": {
+            "type": "integer"
+          },
+          "appealCount": {
+            "type": "integer"
+          },
+          "suspendCount": {
+            "type": "integer"
+          },
+          "escalateCount": {
+            "type": "integer"
+          },
+          "takedownCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.recordsStats": {
+        "type": "object",
+        "description": "Statistics about a set of record subject items",
+        "properties": {
+          "totalReports": {
+            "type": "integer"
+          },
+          "reportedCount": {
+            "type": "integer"
+          },
+          "escalatedCount": {
+            "type": "integer"
+          },
+          "appealedCount": {
+            "type": "integer"
+          },
+          "subjectCount": {
+            "type": "integer"
+          },
+          "pendingCount": {
+            "type": "integer"
+          },
+          "processedCount": {
+            "type": "integer"
+          },
+          "takendownCount": {
+            "type": "integer"
           }
         }
       },
