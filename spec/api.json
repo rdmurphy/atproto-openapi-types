@@ -25922,6 +25922,16 @@
           }
         }
       },
+      "app.bsky.feed.defs.threadContext": {
+        "type": "object",
+        "description": "Metadata about this post within the context of the thread it is in.",
+        "properties": {
+          "rootAuthorLike": {
+            "type": "string",
+            "format": "at-uri"
+          }
+        }
+      },
       "app.bsky.feed.defs.feedViewPost": {
         "type": "object",
         "required": [
@@ -26046,6 +26056,9 @@
                 }
               ]
             }
+          },
+          "threadContext": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.threadContext"
           }
         }
       },
