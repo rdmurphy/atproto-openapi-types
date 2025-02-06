@@ -21209,6 +21209,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordEvent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
                       }
                     ]
                   },
@@ -22495,6 +22498,17 @@
             "required": false,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "minPriorityScore",
+            "in": "query",
+            "description": "If specified, only subjects that have priority score value above the given value will be returned.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
             }
           }
         ],
@@ -29167,6 +29181,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
               }
             ]
           },
@@ -29274,6 +29291,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
               }
             ]
           },
@@ -29368,6 +29388,11 @@
           "comment": {
             "type": "string",
             "description": "Sticky comment on the subject."
+          },
+          "priorityScore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
           },
           "muteUntil": {
             "type": "string",
@@ -29602,6 +29627,23 @@
           },
           "durationInHours": {
             "type": "integer"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.modEventPriorityScore": {
+        "type": "object",
+        "description": "Set priority score of the subject. Higher score means higher priority.",
+        "required": [
+          "score"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
           }
         }
       },
