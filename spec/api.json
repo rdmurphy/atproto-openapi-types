@@ -24971,6 +24971,9 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.labelersPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.postInteractionSettingsPref"
             }
           ]
         }
@@ -25320,6 +25323,41 @@
             "type": "string",
             "description": "The date and time at which the NUX will expire and should be considered completed.",
             "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.actor.defs.postInteractionSettingsPref": {
+        "type": "object",
+        "description": "Default post interaction settings for the account. These values should be applied as default values when creating new posts. These refs should mirror the threadgate and postgate records exactly.",
+        "required": [],
+        "properties": {
+          "threadgateAllowRules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.mentionRule"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.followingRule"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.listRule"
+                }
+              ]
+            },
+            "maxItems": 5
+          },
+          "postgateEmbeddingRules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/app.bsky.feed.postgate.disableRule"
+                }
+              ]
+            },
+            "maxItems": 5
           }
         }
       },
