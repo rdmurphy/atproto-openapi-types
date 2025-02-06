@@ -26749,6 +26749,9 @@
                   "$ref": "#/components/schemas/app.bsky.feed.threadgate.mentionRule"
                 },
                 {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.followerRule"
+                },
+                {
                   "$ref": "#/components/schemas/app.bsky.feed.threadgate.followingRule"
                 },
                 {
@@ -26775,6 +26778,11 @@
       "app.bsky.feed.threadgate.mentionRule": {
         "type": "object",
         "description": "Allow replies from actors mentioned in your post.",
+        "properties": {}
+      },
+      "app.bsky.feed.threadgate.followerRule": {
+        "type": "object",
+        "description": "Allow replies from actors who follow you.",
         "properties": {}
       },
       "app.bsky.feed.threadgate.followingRule": {
