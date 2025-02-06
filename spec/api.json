@@ -25339,6 +25339,9 @@
                   "$ref": "#/components/schemas/app.bsky.feed.threadgate.mentionRule"
                 },
                 {
+                  "$ref": "#/components/schemas/app.bsky.feed.threadgate.followerRule"
+                },
+                {
                   "$ref": "#/components/schemas/app.bsky.feed.threadgate.followingRule"
                 },
                 {
