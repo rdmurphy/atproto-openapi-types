@@ -21717,6 +21717,113 @@
         }
       }
     },
+    "/tools.ozone.moderation.getReporterStats": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get reporter stats for a list of users.",
+        "operationId": "tools.ozone.moderation.getReporterStats",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "did"
+              },
+              "maxItems": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "stats"
+                  ],
+                  "properties": {
+                    "stats": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.reporterStats"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.getRepos": {
       "get": {
         "tags": [
@@ -30239,6 +30346,50 @@
           "deletedAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.reporterStats": {
+        "type": "object",
+        "required": [
+          "did",
+          "accountReportCount",
+          "recordReportCount",
+          "reportedAccountCount",
+          "reportedRecordCount",
+          "takendownAccountCount",
+          "takendownRecordCount",
+          "labeledAccountCount",
+          "labeledRecordCount"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "accountReportCount": {
+            "type": "integer"
+          },
+          "recordReportCount": {
+            "type": "integer"
+          },
+          "reportedAccountCount": {
+            "type": "integer"
+          },
+          "reportedRecordCount": {
+            "type": "integer"
+          },
+          "takendownAccountCount": {
+            "type": "integer"
+          },
+          "takendownRecordCount": {
+            "type": "integer"
+          },
+          "labeledAccountCount": {
+            "type": "integer"
+          },
+          "labeledRecordCount": {
+            "type": "integer"
           }
         }
       },
