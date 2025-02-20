@@ -14850,6 +14850,7 @@
                   "rkey": {
                     "type": "string",
                     "description": "The Record Key.",
+                    "format": "record-key",
                     "maxLength": 512
                   },
                   "validate": {
@@ -14999,7 +15000,8 @@
                   },
                   "rkey": {
                     "type": "string",
-                    "description": "The Record Key."
+                    "description": "The Record Key.",
+                    "format": "record-key"
                   },
                   "swapRecord": {
                     "type": "string",
@@ -15220,7 +15222,8 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "The Record Key."
+              "description": "The Record Key.",
+              "format": "record-key"
             }
           },
           {
@@ -15664,6 +15667,7 @@
                   "rkey": {
                     "type": "string",
                     "description": "The Record Key.",
+                    "format": "record-key",
                     "maxLength": 512
                   },
                   "validate": {
@@ -19023,7 +19027,8 @@
                       "format": "cid"
                     },
                     "rev": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "tid"
                     }
                   }
                 }
@@ -19140,7 +19145,8 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Record Key"
+              "description": "Record Key",
+              "format": "record-key"
             }
           },
           {
@@ -19266,7 +19272,8 @@
             "required": false,
             "schema": {
               "type": "string",
-              "description": "The revision ('rev') of the repo to create a diff from."
+              "description": "The revision ('rev') of the repo to create a diff from.",
+              "format": "tid"
             }
           }
         ],
@@ -19402,7 +19409,8 @@
                     },
                     "rev": {
                       "type": "string",
-                      "description": "Optional field, the current rev of the repo, if active=true"
+                      "description": "Optional field, the current rev of the repo, if active=true",
+                      "format": "tid"
                     }
                   }
                 }
@@ -19501,7 +19509,8 @@
             "required": false,
             "schema": {
               "type": "string",
-              "description": "Optional revision of the repo to list blobs since."
+              "description": "Optional revision of the repo to list blobs since.",
+              "format": "tid"
             }
           },
           {
@@ -28722,6 +28731,8 @@
           },
           "rkey": {
             "type": "string",
+            "description": "NOTE: maxLength is redundant with record-key format. Keeping it temporarily to ensure backwards compatibility.",
+            "format": "record-key",
             "maxLength": 512
           },
           "value": {}
@@ -28741,7 +28752,8 @@
             "format": "nsid"
           },
           "rkey": {
-            "type": "string"
+            "type": "string",
+            "format": "record-key"
           },
           "value": {}
         }
@@ -28759,7 +28771,8 @@
             "format": "nsid"
           },
           "rkey": {
-            "type": "string"
+            "type": "string",
+            "format": "record-key"
           }
         }
       },
@@ -28828,7 +28841,8 @@
             "format": "cid"
           },
           "rev": {
-            "type": "string"
+            "type": "string",
+            "format": "tid"
           }
         }
       },
@@ -29040,7 +29054,8 @@
             "format": "cid"
           },
           "rev": {
-            "type": "string"
+            "type": "string",
+            "format": "tid"
           },
           "active": {
             "type": "boolean"
@@ -29111,11 +29126,13 @@
           },
           "rev": {
             "type": "string",
-            "description": "The rev of the emitted commit. Note that this information is also in the commit object included in blocks, unless this is a tooBig event."
+            "description": "The rev of the emitted commit. Note that this information is also in the commit object included in blocks, unless this is a tooBig event.",
+            "format": "tid"
           },
           "since": {
             "type": "string",
-            "description": "The rev of the last emitted commit from this repo (if any)."
+            "description": "The rev of the last emitted commit from this repo (if any).",
+            "format": "tid"
           },
           "blocks": {
             "type": "string",
