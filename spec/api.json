@@ -21571,6 +21571,9 @@
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventEmail"
                       },
                       {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventDivert"
+                      },
+                      {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventTag"
                       },
                       {
