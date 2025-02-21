@@ -29435,10 +29435,6 @@
             "type": "string",
             "format": "cid-link"
           },
-          "prev": {
-            "type": "string",
-            "format": "cid-link"
-          },
           "rev": {
             "type": "string",
             "description": "The rev of the emitted commit. Note that this information is also in the commit object included in blocks, unless this is a tooBig event.",
@@ -29468,6 +29464,10 @@
               "type": "string",
               "format": "cid-link"
             }
+          },
+          "prevData": {
+            "type": "string",
+            "format": "cid-link"
           },
           "time": {
             "type": "string",
@@ -29653,6 +29653,10 @@
             "type": "string"
           },
           "cid": {
+            "type": "string",
+            "format": "cid-link"
+          },
+          "prev": {
             "type": "string",
             "format": "cid-link"
           }
