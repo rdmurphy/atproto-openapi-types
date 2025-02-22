@@ -19641,7 +19641,10 @@
                       "enum": [
                         "takendown",
                         "suspended",
-                        "deactivated"
+                        "deleted",
+                        "deactivated",
+                        "desynchronized",
+                        "throttled"
                       ]
                     },
                     "rev": {
@@ -29381,7 +29384,10 @@
             "enum": [
               "takendown",
               "suspended",
-              "deactivated"
+              "deleted",
+              "deactivated",
+              "desynchronized",
+              "throttled"
             ]
           }
         }
@@ -29424,11 +29430,11 @@
           },
           "tooBig": {
             "type": "boolean",
-            "description": "Indicates that this commit contained too many ops, or data size was too large. Consumers will need to make a separate request to get missing data."
+            "description": "DEPRECATED -- replaced by #sync event and data limits. Indicates that this commit contained too many ops, or data size was too large. Consumers will need to make a separate request to get missing data."
           },
           "repo": {
             "type": "string",
-            "description": "The repo this event comes from.",
+            "description": "The repo this event comes from. Note that all other message types name this field 'did'.",
             "format": "did"
           },
           "commit": {
@@ -29448,8 +29454,8 @@
           "blocks": {
             "type": "string",
             "format": "byte",
-            "description": "CAR file containing relevant blocks, as a diff since the previous repo state.",
-            "maxLength": 1000000
+            "description": "CAR file containing relevant blocks, as a diff since the previous repo state. The commit must be included as a block, and the commit block CID must be the first entry in the CAR header 'roots' list.",
+            "maxLength": 2000000
           },
           "ops": {
             "type": "array",
@@ -29468,6 +29474,42 @@
           "prevData": {
             "type": "string",
             "format": "cid-link"
+          },
+          "time": {
+            "type": "string",
+            "description": "Timestamp of when this message was originally broadcast.",
+            "format": "date-time"
+          }
+        }
+      },
+      "com.atproto.sync.subscribeRepos.sync": {
+        "type": "object",
+        "description": "Updates the repo to a new state, without necessarily including that state on the firehose. Used to recover from broken commit streams, data loss incidents, or in situations where upstream host does not know recent state of the repository.",
+        "required": [
+          "seq",
+          "did",
+          "blocks",
+          "rev",
+          "time"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer"
+          },
+          "did": {
+            "type": "string",
+            "description": "The account this repo event corresponds to. Must match that in the commit object.",
+            "format": "did"
+          },
+          "blocks": {
+            "type": "string",
+            "format": "byte",
+            "description": "CAR file containing the commit, as a block. The CAR header must include the commit block CID as the first 'root'.",
+            "maxLength": 10000
+          },
+          "rev": {
+            "type": "string",
+            "description": "The rev of the commit. This value must match that in the commit object."
           },
           "time": {
             "type": "string",
@@ -29535,7 +29577,9 @@
               "takendown",
               "suspended",
               "deleted",
-              "deactivated"
+              "deactivated",
+              "desynchronized",
+              "throttled"
             ]
           }
         }
