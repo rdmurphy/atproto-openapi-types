@@ -15888,26 +15888,6 @@
             }
           },
           {
-            "name": "rkeyStart",
-            "in": "query",
-            "description": "DEPRECATED: The lowest sort-ordered rkey to start from (exclusive)",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "DEPRECATED: The lowest sort-ordered rkey to start from (exclusive)"
-            }
-          },
-          {
-            "name": "rkeyEnd",
-            "in": "query",
-            "description": "DEPRECATED: The highest sort-ordered rkey to stop at (exclusive)",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "DEPRECATED: The highest sort-ordered rkey to stop at (exclusive)"
-            }
-          },
-          {
             "name": "reverse",
             "in": "query",
             "description": "Flag to reverse the order of the returned records.",
@@ -19491,17 +19471,6 @@
               "type": "string",
               "description": "Record Key",
               "format": "record-key"
-            }
-          },
-          {
-            "name": "commit",
-            "in": "query",
-            "description": "DEPRECATED: referenced a repo commit by CID, and retrieved record as of that commit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "DEPRECATED: referenced a repo commit by CID, and retrieved record as of that commit",
-              "format": "cid"
             }
           }
         ],
