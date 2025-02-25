@@ -20223,7 +20223,7 @@
         "tags": [
           "com.atproto.sync"
         ],
-        "summary": "Notify a crawling service of a recent update, and that crawling should resume. Intended use is after a gap between repo stream events caused the crawling service to disconnect. Does not require auth; implemented by Relay.",
+        "summary": "Notify a crawling service of a recent update, and that crawling should resume. Intended use is after a gap between repo stream events caused the crawling service to disconnect. Does not require auth; implemented by Relay. DEPRECATED: just use com.atproto.sync.requestCrawl",
         "operationId": "com.atproto.sync.notifyOfUpdate",
         "security": [
           {
@@ -28051,6 +28051,25 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "reasonTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
+            }
+          },
+          "subjectTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.moderation.defs.subjectType"
+            }
+          },
+          "subjectCollections": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "nsid"
+            }
           }
         }
       },
@@ -29141,6 +29160,15 @@
         "type": "string",
         "format": "token",
         "description": "Appeal: appeal a previously taken moderation action"
+      },
+      "com.atproto.moderation.defs.subjectType": {
+        "type": "string",
+        "description": "Tag describing a type of subject that might be reported.",
+        "enum": [
+          "account",
+          "record",
+          "chat"
+        ]
       },
       "com.atproto.repo.applyWrites.create": {
         "type": "object",
