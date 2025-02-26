@@ -27968,6 +27968,25 @@
             "items": {
               "$ref": "#/components/schemas/com.atproto.label.defs.label"
             }
+          },
+          "reasonTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.moderation.defs.reasonType"
+            }
+          },
+          "subjectTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.moderation.defs.subjectType"
+            }
+          },
+          "subjectCollections": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "nsid"
+            }
           }
         }
       },
