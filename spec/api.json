@@ -14267,6 +14267,115 @@
         }
       }
     },
+    "/com.atproto.identity.refreshIdentity": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Request that the server re-resolve an identity (DID and handle). The server may ignore this request, or require authentication, depending on the role, implementation, and policy of the server.",
+        "operationId": "com.atproto.identity.refreshIdentity",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "identifier"
+                ],
+                "properties": {
+                  "identifier": {
+                    "type": "string",
+                    "format": "at-identifier"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.atproto.identity.defs.identityInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "HandleNotFound"
+                        },
+                        {
+                          "const": "DidNotFound"
+                        },
+                        {
+                          "const": "DidDeactivated"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.identity.requestPlcOperationSignature": {
       "post": {
         "tags": [
@@ -14341,12 +14450,118 @@
         }
       }
     },
+    "/com.atproto.identity.resolveDid": {
+      "get": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Resolves DID to DID document. Does not bi-directionally verify handle.",
+        "operationId": "com.atproto.identity.resolveDid",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "description": "DID to resolve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "DID to resolve.",
+              "format": "did"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "didDoc"
+                  ],
+                  "properties": {
+                    "didDoc": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "DidNotFound"
+                        },
+                        {
+                          "const": "DidDeactivated"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.identity.resolveHandle": {
       "get": {
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Resolves a handle (domain name) to a DID.",
+        "summary": "Resolves an atproto handle (hostname) to a DID. Does not necessarily bi-directionally verify against the the DID document.",
         "operationId": "com.atproto.identity.resolveHandle",
         "parameters": [
           {
@@ -14397,8 +14612,114 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "HandleNotFound"
                         }
                       ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.identity.resolveIdentity": {
+      "get": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Resolves an identity (DID or Handle) to a full identity (DID document and verified handle).",
+        "operationId": "com.atproto.identity.resolveIdentity",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "query",
+            "description": "Handle or DID to resolve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Handle or DID to resolve.",
+              "format": "at-identifier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.atproto.identity.defs.identityInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "HandleNotFound"
+                        },
+                        {
+                          "const": "DidNotFound"
+                        },
+                        {
+                          "const": "DidDeactivated"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
@@ -28860,6 +29181,26 @@
           "value": {
             "type": "string"
           }
+        }
+      },
+      "com.atproto.identity.defs.identityInfo": {
+        "type": "object",
+        "required": [
+          "did",
+          "handle",
+          "didDoc"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "handle": {
+            "type": "string",
+            "description": "The validated handle of the account; or 'handle.invalid' if the handle did not bi-directionally match the DID document.",
+            "format": "handle"
+          },
+          "didDoc": {}
         }
       },
       "com.atproto.label.defs.label": {
