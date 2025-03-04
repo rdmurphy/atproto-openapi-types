@@ -26717,7 +26717,7 @@
           "video": {
             "type": "string",
             "format": "binary",
-            "maxLength": 50000000
+            "maxLength": 100000000
           },
           "captions": {
             "type": "array",
