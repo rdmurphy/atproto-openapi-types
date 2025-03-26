@@ -8233,6 +8233,132 @@
         }
       }
     },
+    "/chat.bsky.convo.addReaction": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Adds an emoji reaction to a message. Requires authentication. It is idempotent, so multiple calls from the same user with the same emoji result in a single reaction.",
+        "operationId": "chat.bsky.convo.addReaction",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "convoId",
+                  "messageId",
+                  "value"
+                ],
+                "properties": {
+                  "convoId": {
+                    "type": "string"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/chat.bsky.convo.defs.messageView"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "ReactionMessageDeleted"
+                        },
+                        {
+                          "const": "ReactionLimitReached"
+                        },
+                        {
+                          "const": "ReactionInvalidValue"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/chat.bsky.convo.deleteMessageForSelf": {
       "post": {
         "tags": [
@@ -8692,10 +8818,25 @@
                             "$ref": "#/components/schemas/chat.bsky.convo.defs.logLeaveConvo"
                           },
                           {
+                            "$ref": "#/components/schemas/chat.bsky.convo.defs.logMuteConvo"
+                          },
+                          {
+                            "$ref": "#/components/schemas/chat.bsky.convo.defs.logUnmuteConvo"
+                          },
+                          {
                             "$ref": "#/components/schemas/chat.bsky.convo.defs.logCreateMessage"
                           },
                           {
                             "$ref": "#/components/schemas/chat.bsky.convo.defs.logDeleteMessage"
+                          },
+                          {
+                            "$ref": "#/components/schemas/chat.bsky.convo.defs.logReadMessage"
+                          },
+                          {
+                            "$ref": "#/components/schemas/chat.bsky.convo.defs.logAddReaction"
+                          },
+                          {
+                            "$ref": "#/components/schemas/chat.bsky.convo.defs.logRemoveReaction"
                           }
                         ]
                       }
@@ -9211,6 +9352,129 @@
                         },
                         {
                           "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.removeReaction": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Removes an emoji reaction from a message. Requires authentication. It is idempotent, so multiple calls from the same user with the same emoji result in that reaction not being present, even if it already wasn't.",
+        "operationId": "chat.bsky.convo.removeReaction",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "convoId",
+                  "messageId",
+                  "value"
+                ],
+                "properties": {
+                  "convoId": {
+                    "type": "string"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/chat.bsky.convo.defs.messageView"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "ReactionMessageDeleted"
+                        },
+                        {
+                          "const": "ReactionInvalidValue"
                         }
                       ]
                     },
@@ -28788,6 +29052,12 @@
               }
             ]
           },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionView"
+            }
+          },
           "sender": {
             "$ref": "#/components/schemas/chat.bsky.convo.defs.messageViewSender"
           },
@@ -28833,6 +29103,53 @@
           }
         }
       },
+      "chat.bsky.convo.defs.reactionView": {
+        "type": "object",
+        "required": [
+          "value",
+          "sender",
+          "createdAt"
+        ],
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionViewSender"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "chat.bsky.convo.defs.reactionViewSender": {
+        "type": "object",
+        "required": [
+          "did"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          }
+        }
+      },
+      "chat.bsky.convo.defs.messageAndReactionView": {
+        "type": "object",
+        "required": [
+          "message",
+          "reaction"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.messageView"
+          },
+          "reaction": {
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionView"
+          }
+        }
+      },
       "chat.bsky.convo.defs.convoView": {
         "type": "object",
         "required": [
@@ -28862,6 +29179,9 @@
               },
               {
                 "$ref": "#/components/schemas/chat.bsky.convo.defs.deletedMessageView"
+              },
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.messageAndReactionView"
               }
             ]
           },
@@ -29030,6 +29350,66 @@
                 "$ref": "#/components/schemas/chat.bsky.convo.defs.deletedMessageView"
               }
             ]
+          }
+        }
+      },
+      "chat.bsky.convo.defs.logAddReaction": {
+        "type": "object",
+        "required": [
+          "rev",
+          "convoId",
+          "message",
+          "reaction"
+        ],
+        "properties": {
+          "rev": {
+            "type": "string"
+          },
+          "convoId": {
+            "type": "string"
+          },
+          "message": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.messageView"
+              },
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.deletedMessageView"
+              }
+            ]
+          },
+          "reaction": {
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionView"
+          }
+        }
+      },
+      "chat.bsky.convo.defs.logRemoveReaction": {
+        "type": "object",
+        "required": [
+          "rev",
+          "convoId",
+          "message",
+          "reaction"
+        ],
+        "properties": {
+          "rev": {
+            "type": "string"
+          },
+          "convoId": {
+            "type": "string"
+          },
+          "message": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.messageView"
+              },
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.deletedMessageView"
+              }
+            ]
+          },
+          "reaction": {
+            "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionView"
           }
         }
       },
