@@ -22977,6 +22977,112 @@
         }
       }
     },
+    "/tools.ozone.moderation.getSubjects": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get details about subjects.",
+        "operationId": "tools.ozone.moderation.getSubjects",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subjects",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subjects"
+                  ],
+                  "properties": {
+                    "subjects": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.subjectView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.queryEvents": {
       "get": {
         "tags": [
@@ -30862,6 +30968,34 @@
           },
           "recordsStats": {
             "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordsStats"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.subjectView": {
+        "type": "object",
+        "description": "Detailed view of a subject. For record subjects, the author's repo and profile will be returned.",
+        "required": [
+          "type",
+          "subject"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/com.atproto.moderation.defs.subjectType"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.subjectStatusView"
+          },
+          "repo": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.repoViewDetail"
+          },
+          "profile": {
+            "oneOf": []
+          },
+          "record": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordViewDetail"
           }
         }
       },
