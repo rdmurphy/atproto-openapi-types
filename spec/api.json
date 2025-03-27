@@ -29213,8 +29213,7 @@
         "type": "object",
         "required": [
           "value",
-          "sender",
-          "createdAt"
+          "sender"
         ],
         "properties": {
           "value": {
@@ -29222,10 +29221,6 @@
           },
           "sender": {
             "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionViewSender"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
