@@ -29213,7 +29213,8 @@
         "type": "object",
         "required": [
           "value",
-          "sender"
+          "sender",
+          "createdAt"
         ],
         "properties": {
           "value": {
@@ -29221,6 +29222,10 @@
           },
           "sender": {
             "$ref": "#/components/schemas/chat.bsky.convo.defs.reactionViewSender"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -29280,7 +29285,11 @@
               },
               {
                 "$ref": "#/components/schemas/chat.bsky.convo.defs.deletedMessageView"
-              },
+              }
+            ]
+          },
+          "lastReaction": {
+            "oneOf": [
               {
                 "$ref": "#/components/schemas/chat.bsky.convo.defs.messageAndReactionView"
               }
