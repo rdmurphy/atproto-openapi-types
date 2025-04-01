@@ -6689,7 +6689,7 @@
                     "starterPacks": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackViewBasic"
+                        "$ref": "#/components/schemas/app.bsky.graph.defs.starterPackView"
                       }
                     }
                   }
