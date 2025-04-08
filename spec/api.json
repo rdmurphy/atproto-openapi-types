@@ -7143,7 +7143,7 @@
                     "actors": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
+                        "$ref": "#/components/schemas/app.bsky.actor.defs.profileView"
                       }
                     }
                   }
