@@ -29826,6 +29826,36 @@
           }
         }
       },
+      "app.bsky.graph.verification": {
+        "type": "object",
+        "required": [
+          "subject",
+          "handle",
+          "displayName",
+          "createdAt"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "DID of the subject the verification applies to.",
+            "format": "did"
+          },
+          "handle": {
+            "type": "string",
+            "description": "Handle of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current handle matches the one at the time of verifying.",
+            "format": "handle"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current displayName matches the one at the time of verifying."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of when the verification was created.",
+            "format": "date-time"
+          }
+        }
+      },
       "app.bsky.labeler.defs.labelerView": {
         "type": "object",
         "required": [
