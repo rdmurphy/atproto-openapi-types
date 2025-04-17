@@ -30509,6 +30509,9 @@
           "chatDisabled": {
             "type": "boolean",
             "description": "Set to true when the actor cannot actively participate in converations"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
           }
         }
       },
