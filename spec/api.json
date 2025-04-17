@@ -27254,6 +27254,9 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
           }
         }
       },
@@ -27303,6 +27306,9 @@
             "items": {
               "$ref": "#/components/schemas/com.atproto.label.defs.label"
             }
+          },
+          "verification": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
           }
         }
       },
@@ -27371,6 +27377,9 @@
           },
           "pinnedPost": {
             "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
           }
         }
       },
@@ -27460,6 +27469,72 @@
               "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
             },
             "maxItems": 5
+          }
+        }
+      },
+      "app.bsky.actor.defs.verificationState": {
+        "type": "object",
+        "description": "Represents the verification information about the user this object is attached to.",
+        "required": [
+          "verifications",
+          "verifiedStatus",
+          "trustedVerifierStatus"
+        ],
+        "properties": {
+          "verifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.verificationView"
+            }
+          },
+          "verifiedStatus": {
+            "type": "string",
+            "description": "The user's status as a verified account.",
+            "enum": [
+              "valid",
+              "invalid",
+              "none"
+            ]
+          },
+          "trustedVerifierStatus": {
+            "type": "string",
+            "description": "The user's status as a trusted verifier.",
+            "enum": [
+              "valid",
+              "invalid",
+              "none"
+            ]
+          }
+        }
+      },
+      "app.bsky.actor.defs.verificationView": {
+        "type": "object",
+        "description": "An individual verification for an associated subject.",
+        "required": [
+          "issuer",
+          "uri",
+          "isValid",
+          "createdAt"
+        ],
+        "properties": {
+          "issuer": {
+            "type": "string",
+            "description": "The user who issued this verification.",
+            "format": "did"
+          },
+          "uri": {
+            "type": "string",
+            "description": "The AT-URI of the verification record.",
+            "format": "at-uri"
+          },
+          "isValid": {
+            "type": "boolean",
+            "description": "True if the verification passes validation, otherwise false."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp when the verification was created.",
+            "format": "date-time"
           }
         }
       },
