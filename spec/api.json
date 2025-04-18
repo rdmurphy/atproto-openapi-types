@@ -30117,6 +30117,10 @@
           }
         }
       },
+      "app.bsky.notification.defs.recordDeleted": {
+        "type": "object",
+        "properties": {}
+      },
       "app.bsky.notification.listNotifications.notification": {
         "type": "object",
         "required": [
@@ -30142,7 +30146,7 @@
           },
           "reason": {
             "type": "string",
-            "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', and 'starterpack-joined'.",
+            "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', 'starterpack-joined', 'verified', and 'unverified'.",
             "enum": [
               "like",
               "repost",
@@ -30150,7 +30154,9 @@
               "mention",
               "reply",
               "quote",
-              "starterpack-joined"
+              "starterpack-joined",
+              "verified",
+              "unverified"
             ]
           },
           "reasonSubject": {
