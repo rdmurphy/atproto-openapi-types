@@ -27580,6 +27580,9 @@
             },
             {
               "$ref": "#/components/schemas/app.bsky.actor.defs.postInteractionSettingsPref"
+            },
+            {
+              "$ref": "#/components/schemas/app.bsky.actor.defs.verificationPrefs"
             }
           ]
         }
@@ -27929,6 +27932,17 @@
             "type": "string",
             "description": "The date and time at which the NUX will expire and should be considered completed.",
             "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.actor.defs.verificationPrefs": {
+        "type": "object",
+        "description": "Preferences for how verified accounts appear in the app.",
+        "required": [],
+        "properties": {
+          "hideBadges": {
+            "type": "boolean",
+            "description": "Hide the blue check badges for verified accounts and trusted verifiers."
           }
         }
       },
