@@ -25396,6 +25396,11 @@
                     },
                     "viewer": {
                       "$ref": "#/components/schemas/tools.ozone.server.getConfig.viewerConfig"
+                    },
+                    "verifierDid": {
+                      "type": "string",
+                      "description": "The did of the verifier used for verification.",
+                      "format": "did"
                     }
                   }
                 }
@@ -26445,6 +26450,7 @@
                     "enum": [
                       "tools.ozone.team.defs#roleModerator",
                       "tools.ozone.team.defs#roleTriage",
+                      "tools.ozone.team.defs#roleVerifier",
                       "tools.ozone.team.defs#roleAdmin"
                     ]
                   }
@@ -26920,6 +26926,7 @@
                     "enum": [
                       "tools.ozone.team.defs#roleAdmin",
                       "tools.ozone.team.defs#roleModerator",
+                      "tools.ozone.team.defs#roleVerifier",
                       "tools.ozone.team.defs#roleTriage"
                     ]
                   }
@@ -27276,6 +27283,7 @@
                     "enum": [
                       "tools.ozone.team.defs#roleAdmin",
                       "tools.ozone.team.defs#roleModerator",
+                      "tools.ozone.team.defs#roleVerifier",
                       "tools.ozone.team.defs#roleTriage"
                     ]
                   }
@@ -27320,6 +27328,446 @@
                         },
                         {
                           "const": "MemberNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.verification.grantVerifications": {
+      "post": {
+        "tags": [
+          "tools.ozone.verification"
+        ],
+        "summary": "Grant verifications to multiple subjects. Allows batch processing of up to 100 verifications at once.",
+        "operationId": "tools.ozone.verification.grantVerifications",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "verifications"
+                ],
+                "properties": {
+                  "verifications": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/tools.ozone.verification.grantVerifications.verificationInput"
+                    },
+                    "maxItems": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "verifications",
+                    "failedVerifications"
+                  ],
+                  "properties": {
+                    "verifications": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.verification.defs.verificationView"
+                      }
+                    },
+                    "failedVerifications": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.verification.grantVerifications.grantError"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.verification.listVerifications": {
+      "get": {
+        "tags": [
+          "tools.ozone.verification"
+        ],
+        "summary": "List verifications",
+        "operationId": "tools.ozone.verification.listVerifications",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Pagination cursor",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Pagination cursor"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "Filter to verifications created after this timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter to verifications created after this timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "Filter to verifications created before this timestamp",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter to verifications created before this timestamp",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "issuers",
+            "in": "query",
+            "description": "Filter to verifications from specific issuers",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "did"
+              },
+              "maxItems": 100
+            }
+          },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Filter to specific verified DIDs",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "did"
+              },
+              "maxItems": 100
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction for creation date",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Sort direction for creation date",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "isRevoked",
+            "in": "query",
+            "description": "Filter to verifications that are revoked or not. By default, includes both.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Filter to verifications that are revoked or not. By default, includes both."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "verifications"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "verifications": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.verification.defs.verificationView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.verification.revokeVerifications": {
+      "post": {
+        "tags": [
+          "tools.ozone.verification"
+        ],
+        "summary": "Revoke previously granted verifications in batches of up to 100.",
+        "operationId": "tools.ozone.verification.revokeVerifications",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "uris"
+                ],
+                "properties": {
+                  "uris": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "The AT-URI of the verification record to revoke.",
+                      "format": "at-uri"
+                    },
+                    "maxItems": 100
+                  },
+                  "revokeReason": {
+                    "type": "string",
+                    "description": "Reason for revoking the verification. This is optional and can be omitted if not needed.",
+                    "maxLength": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "revokedVerifications",
+                    "failedRevocations"
+                  ],
+                  "properties": {
+                    "revokedVerifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "at-uri"
+                      }
+                    },
+                    "failedRevocations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.verification.revokeVerifications.revokeError"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
                         }
                       ]
                     },
@@ -33576,7 +34024,8 @@
             "enum": [
               "tools.ozone.team.defs#roleAdmin",
               "tools.ozone.team.defs#roleModerator",
-              "tools.ozone.team.defs#roleTriage"
+              "tools.ozone.team.defs#roleTriage",
+              "tools.ozone.team.defs#roleVerifier"
             ]
           }
         }
@@ -33666,7 +34115,8 @@
             "enum": [
               "tools.ozone.team.defs#roleModerator",
               "tools.ozone.team.defs#roleTriage",
-              "tools.ozone.team.defs#roleAdmin"
+              "tools.ozone.team.defs#roleAdmin",
+              "tools.ozone.team.defs#roleVerifier"
             ]
           },
           "scope": {
@@ -33751,7 +34201,8 @@
             "enum": [
               "#roleAdmin",
               "#roleModerator",
-              "#roleTriage"
+              "#roleTriage",
+              "#roleVerifier"
             ]
           }
         }
@@ -33770,6 +34221,160 @@
         "type": "string",
         "format": "token",
         "description": "Triage role. Mostly intended for monitoring and escalating issues."
+      },
+      "tools.ozone.team.defs.roleVerifier": {
+        "type": "string",
+        "format": "token",
+        "description": "Verifier role. Only allowed to issue verifications."
+      },
+      "tools.ozone.verification.defs.verificationView": {
+        "type": "object",
+        "description": "Verification data for the associated subject.",
+        "required": [
+          "issuer",
+          "uri",
+          "subject",
+          "handle",
+          "displayName",
+          "createdAt"
+        ],
+        "properties": {
+          "issuer": {
+            "type": "string",
+            "description": "The user who issued this verification.",
+            "format": "did"
+          },
+          "uri": {
+            "type": "string",
+            "description": "The AT-URI of the verification record.",
+            "format": "at-uri"
+          },
+          "subject": {
+            "type": "string",
+            "description": "The subject of the verification.",
+            "format": "did"
+          },
+          "handle": {
+            "type": "string",
+            "description": "Handle of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current handle matches the one at the time of verifying.",
+            "format": "handle"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the subject the verification applies to at the moment of verifying, which might not be the same at the time of viewing. The verification is only valid if the current displayName matches the one at the time of verifying."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp when the verification was created.",
+            "format": "date-time"
+          },
+          "revokeReason": {
+            "type": "string",
+            "description": "Describes the reason for revocation, also indicating that the verification is no longer valid."
+          },
+          "revokedAt": {
+            "type": "string",
+            "description": "Timestamp when the verification was revoked.",
+            "format": "date-time"
+          },
+          "revokedBy": {
+            "type": "string",
+            "description": "The user who revoked this verification.",
+            "format": "did"
+          },
+          "subjectProfile": {
+            "oneOf": []
+          },
+          "issuerProfile": {
+            "oneOf": []
+          },
+          "subjectRepo": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.repoViewDetail"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.repoViewNotFound"
+              }
+            ]
+          },
+          "issuerRepo": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.repoViewDetail"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.repoViewNotFound"
+              }
+            ]
+          }
+        }
+      },
+      "tools.ozone.verification.grantVerifications.verificationInput": {
+        "type": "object",
+        "required": [
+          "subject",
+          "handle",
+          "displayName"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "The did of the subject being verified",
+            "format": "did"
+          },
+          "handle": {
+            "type": "string",
+            "description": "Handle of the subject the verification applies to at the moment of verifying.",
+            "format": "handle"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the subject the verification applies to at the moment of verifying."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp for verification record. Defaults to current time when not specified."
+          }
+        }
+      },
+      "tools.ozone.verification.grantVerifications.grantError": {
+        "type": "object",
+        "description": "Error object for failed verifications.",
+        "required": [
+          "error",
+          "subject"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing the reason for failure."
+          },
+          "subject": {
+            "type": "string",
+            "description": "The did of the subject being verified",
+            "format": "did"
+          }
+        }
+      },
+      "tools.ozone.verification.revokeVerifications.revokeError": {
+        "type": "object",
+        "description": "Error object for failed revocations",
+        "required": [
+          "uri",
+          "error"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "description": "The AT-URI of the verification record that failed to revoke.",
+            "format": "at-uri"
+          },
+          "error": {
+            "type": "string",
+            "description": "Description of the error that occurred during revocation."
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -33866,6 +34471,9 @@
     },
     {
       "name": "tools.ozone.team"
+    },
+    {
+      "name": "tools.ozone.verification"
     }
   ]
 }
