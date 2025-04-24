@@ -23407,6 +23407,149 @@
         }
       }
     },
+    "/tools.ozone.hosting.getAccountHistory": {
+      "get": {
+        "tags": [
+          "tools.ozone.hosting"
+        ],
+        "summary": "Get account history, e.g. log of updated email addresses or other identity information.",
+        "operationId": "tools.ozone.hosting.getAccountHistory",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          {
+            "name": "events",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "accountCreated",
+                  "emailUpdated",
+                  "emailConfirmed",
+                  "passwordUpdated",
+                  "handleUpdated"
+                ]
+              }
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "events"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.emitEvent": {
       "post": {
         "tags": [
@@ -32129,6 +32272,94 @@
           }
         }
       },
+      "tools.ozone.hosting.getAccountHistory.event": {
+        "type": "object",
+        "required": [
+          "details",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "details": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.accountCreated"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.emailUpdated"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.emailConfirmed"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.passwordUpdated"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.hosting.getAccountHistory.handleUpdated"
+              }
+            ]
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "tools.ozone.hosting.getAccountHistory.accountCreated": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "handle": {
+            "type": "string",
+            "format": "handle"
+          }
+        }
+      },
+      "tools.ozone.hosting.getAccountHistory.emailUpdated": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "tools.ozone.hosting.getAccountHistory.emailConfirmed": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "tools.ozone.hosting.getAccountHistory.passwordUpdated": {
+        "type": "object",
+        "required": [],
+        "properties": {}
+      },
+      "tools.ozone.hosting.getAccountHistory.handleUpdated": {
+        "type": "object",
+        "required": [
+          "handle"
+        ],
+        "properties": {
+          "handle": {
+            "type": "string",
+            "format": "handle"
+          }
+        }
+      },
       "tools.ozone.moderation.defs.modEventView": {
         "type": "object",
         "required": [
@@ -33614,6 +33845,9 @@
     },
     {
       "name": "tools.ozone.communication"
+    },
+    {
+      "name": "tools.ozone.hosting"
     },
     {
       "name": "tools.ozone.moderation"
