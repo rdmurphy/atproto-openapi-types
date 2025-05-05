@@ -27848,6 +27848,9 @@
           },
           "verification": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
+          },
+          "status": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
           }
         }
       },
@@ -27900,6 +27903,9 @@
           },
           "verification": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
+          },
+          "status": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
           }
         }
       },
@@ -27971,6 +27977,9 @@
           },
           "verification": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.verificationState"
+          },
+          "status": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
           }
         }
       },
@@ -28575,6 +28584,39 @@
           }
         }
       },
+      "app.bsky.actor.defs.statusView": {
+        "type": "object",
+        "required": [
+          "status",
+          "record"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "The status for the account.",
+            "enum": [
+              "app.bsky.actor.status#live"
+            ]
+          },
+          "record": {},
+          "embed": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/app.bsky.embed.external.view"
+              }
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "The date when this status will expire. The application might choose to no longer return the status after expiration.",
+            "format": "date-time"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "True if the status is not expired, false if it is expired. Only present if expiration was set."
+          }
+        }
+      },
       "app.bsky.actor.profile": {
         "type": "object",
         "properties": {
@@ -28615,6 +28657,42 @@
             "format": "date-time"
           }
         }
+      },
+      "app.bsky.actor.status": {
+        "type": "object",
+        "required": [
+          "status",
+          "createdAt"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "The status for the account.",
+            "enum": [
+              "app.bsky.actor.status#live"
+            ]
+          },
+          "embed": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/app.bsky.embed.external"
+              }
+            ]
+          },
+          "durationMinutes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.actor.status.live": {
+        "type": "string",
+        "format": "token",
+        "description": "Advertises an account as currently offering live content."
       },
       "app.bsky.embed.defs.aspectRatio": {
         "type": "object",
