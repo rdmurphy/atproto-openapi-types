@@ -6338,6 +6338,12 @@
                   "properties": {
                     "checkEmailConfirmed": {
                       "type": "boolean"
+                    },
+                    "liveNow": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.unspecced.getConfig.liveNowConfig"
+                      }
                     }
                   }
                 }
@@ -31076,6 +31082,25 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
+            }
+          }
+        }
+      },
+      "app.bsky.unspecced.getConfig.liveNowConfig": {
+        "type": "object",
+        "required": [
+          "did",
+          "domains"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           }
         }
