@@ -2844,7 +2844,7 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Find posts matching search criteria, returning views of those posts.",
+        "summary": "Find posts matching search criteria, returning views of those posts. Note that this API endpoint may require authentication (eg, not public) for some service providers and implementations.",
         "operationId": "app.bsky.feed.searchPosts",
         "security": [
           {
