@@ -29356,6 +29356,14 @@
           "by": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileViewBasic"
           },
+          "uri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "cid": {
+            "type": "string",
+            "format": "cid"
+          },
           "indexedAt": {
             "type": "string",
             "format": "date-time"
@@ -29851,6 +29859,9 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "via": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
           }
         }
       },
@@ -30039,6 +30050,9 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "via": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
           }
         }
       },
@@ -30836,7 +30850,7 @@
           },
           "reason": {
             "type": "string",
-            "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', 'starterpack-joined', 'verified', and 'unverified'.",
+            "description": "The reason why this notification was delivered - e.g. your post was liked, or you received a new follower.",
             "enum": [
               "like",
               "repost",
@@ -30846,7 +30860,9 @@
               "quote",
               "starterpack-joined",
               "verified",
-              "unverified"
+              "unverified",
+              "like-via-repost",
+              "repost-via-repost"
             ]
           },
           "reasonSubject": {
