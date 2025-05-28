@@ -33580,6 +33580,9 @@
               },
               {
                 "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+              },
+              {
+                "$ref": "#/components/schemas/chat.bsky.convo.defs.messageRef"
               }
             ]
           },
@@ -34869,7 +34872,8 @@
           },
           "createdAt": {
             "type": "string",
-            "description": "Timestamp for verification record. Defaults to current time when not specified."
+            "description": "Timestamp for verification record. Defaults to current time when not specified.",
+            "format": "date-time"
           }
         }
       },
