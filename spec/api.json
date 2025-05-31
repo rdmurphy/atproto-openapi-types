@@ -31406,6 +31406,60 @@
           }
         }
       },
+      "app.bsky.unspecced.defs.threadItemPost": {
+        "type": "object",
+        "required": [
+          "post",
+          "moreParents",
+          "moreReplies",
+          "opThread",
+          "hiddenByThreadgate",
+          "mutedByViewer"
+        ],
+        "properties": {
+          "post": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
+          },
+          "moreParents": {
+            "type": "boolean",
+            "description": "This post has more parents that were not present in the response. This is just a boolean, without the number of parents."
+          },
+          "moreReplies": {
+            "type": "integer"
+          },
+          "opThread": {
+            "type": "boolean",
+            "description": "This post is part of a contiguous thread by the OP from the thread root. Many different OP threads can happen in the same thread."
+          },
+          "hiddenByThreadgate": {
+            "type": "boolean",
+            "description": "The threadgate created by the author indicates this post as a reply to be hidden for everyone consuming the thread."
+          },
+          "mutedByViewer": {
+            "type": "boolean",
+            "description": "This is by an account muted by the viewer requesting it."
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.threadItemNoUnauthenticated": {
+        "type": "object",
+        "properties": {}
+      },
+      "app.bsky.unspecced.defs.threadItemNotFound": {
+        "type": "object",
+        "properties": {}
+      },
+      "app.bsky.unspecced.defs.threadItemBlocked": {
+        "type": "object",
+        "required": [
+          "author"
+        ],
+        "properties": {
+          "author": {
+            "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
+          }
+        }
+      },
       "app.bsky.unspecced.getConfig.liveNowConfig": {
         "type": "object",
         "required": [
@@ -31443,30 +31497,9 @@
           "value": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/app.bsky.unspecced.getPostThreadHiddenV2.threadHiddenItemPost"
+                "$ref": "#/components/schemas/app.bsky.unspecced.defs.threadItemPost"
               }
             ]
-          }
-        }
-      },
-      "app.bsky.unspecced.getPostThreadHiddenV2.threadHiddenItemPost": {
-        "type": "object",
-        "required": [
-          "post",
-          "hiddenByThreadgate",
-          "mutedByViewer"
-        ],
-        "properties": {
-          "post": {
-            "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
-          },
-          "hiddenByThreadgate": {
-            "type": "boolean",
-            "description": "The threadgate created by the author indicates this post as a reply to be hidden for everyone consuming the thread."
-          },
-          "mutedByViewer": {
-            "type": "boolean",
-            "description": "This is by an account muted by the viewer requesting it."
           }
         }
       },
@@ -31488,62 +31521,18 @@
           "value": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/app.bsky.unspecced.getPostThreadV2.threadItemPost"
+                "$ref": "#/components/schemas/app.bsky.unspecced.defs.threadItemPost"
               },
               {
-                "$ref": "#/components/schemas/app.bsky.unspecced.getPostThreadV2.threadItemNoUnauthenticated"
+                "$ref": "#/components/schemas/app.bsky.unspecced.defs.threadItemNoUnauthenticated"
               },
               {
-                "$ref": "#/components/schemas/app.bsky.unspecced.getPostThreadV2.threadItemNotFound"
+                "$ref": "#/components/schemas/app.bsky.unspecced.defs.threadItemNotFound"
               },
               {
-                "$ref": "#/components/schemas/app.bsky.unspecced.getPostThreadV2.threadItemBlocked"
+                "$ref": "#/components/schemas/app.bsky.unspecced.defs.threadItemBlocked"
               }
             ]
-          }
-        }
-      },
-      "app.bsky.unspecced.getPostThreadV2.threadItemPost": {
-        "type": "object",
-        "required": [
-          "post",
-          "moreParents",
-          "moreReplies",
-          "opThread"
-        ],
-        "properties": {
-          "post": {
-            "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
-          },
-          "moreParents": {
-            "type": "boolean",
-            "description": "This post has more parents that were not present in the response. This is just a boolean, without the number of parents."
-          },
-          "moreReplies": {
-            "type": "integer"
-          },
-          "opThread": {
-            "type": "boolean",
-            "description": "This post is part of a contiguous thread by the OP from the thread root. Many different OP threads can happen in the same thread."
-          }
-        }
-      },
-      "app.bsky.unspecced.getPostThreadV2.threadItemNoUnauthenticated": {
-        "type": "object",
-        "properties": {}
-      },
-      "app.bsky.unspecced.getPostThreadV2.threadItemNotFound": {
-        "type": "object",
-        "properties": {}
-      },
-      "app.bsky.unspecced.getPostThreadV2.threadItemBlocked": {
-        "type": "object",
-        "required": [
-          "author"
-        ],
-        "properties": {
-          "author": {
-            "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
           }
         }
       },
