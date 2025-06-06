@@ -5669,6 +5669,95 @@
         }
       }
     },
+    "/app.bsky.notification.getPreferences": {
+      "get": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Get notification-related preferences for an account. Requires auth.",
+        "operationId": "app.bsky.notification.getPreferences",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "preferences"
+                  ],
+                  "properties": {
+                    "preferences": {
+                      "$ref": "#/components/schemas/app.bsky.notification.defs.preferences"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.notification.getUnreadCount": {
       "get": {
         "tags": [
@@ -5963,6 +6052,146 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.putPreferencesV2": {
+      "post": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Set notification-related preferences for an account. Requires auth.",
+        "operationId": "app.bsky.notification.putPreferencesV2",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chat": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.chatPreference"
+                  },
+                  "follow": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "like": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "likeViaRepost": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "mention": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "quote": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "reply": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "repost": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "repostViaRepost": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+                  },
+                  "starterpackJoined": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+                  },
+                  "subscribedPost": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+                  },
+                  "unverified": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+                  },
+                  "verified": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "preferences"
+                  ],
+                  "properties": {
+                    "preferences": {
+                      "$ref": "#/components/schemas/app.bsky.notification.defs.preferences"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -31228,6 +31457,122 @@
       "app.bsky.notification.defs.recordDeleted": {
         "type": "object",
         "properties": {}
+      },
+      "app.bsky.notification.defs.chatPreference": {
+        "type": "object",
+        "required": [
+          "filter",
+          "push"
+        ],
+        "properties": {
+          "filter": {
+            "type": "string",
+            "enum": [
+              "all",
+              "accepted"
+            ]
+          },
+          "push": {
+            "type": "boolean"
+          }
+        }
+      },
+      "app.bsky.notification.defs.filterablePreference": {
+        "type": "object",
+        "required": [
+          "filter",
+          "list",
+          "push"
+        ],
+        "properties": {
+          "filter": {
+            "type": "string",
+            "enum": [
+              "all",
+              "follows"
+            ]
+          },
+          "list": {
+            "type": "boolean"
+          },
+          "push": {
+            "type": "boolean"
+          }
+        }
+      },
+      "app.bsky.notification.defs.preference": {
+        "type": "object",
+        "required": [
+          "list",
+          "push"
+        ],
+        "properties": {
+          "list": {
+            "type": "boolean"
+          },
+          "push": {
+            "type": "boolean"
+          }
+        }
+      },
+      "app.bsky.notification.defs.preferences": {
+        "type": "object",
+        "required": [
+          "chat",
+          "follow",
+          "like",
+          "likeViaRepost",
+          "mention",
+          "quote",
+          "reply",
+          "repost",
+          "repostViaRepost",
+          "starterpackJoined",
+          "subscribedPost",
+          "unverified",
+          "verified"
+        ],
+        "properties": {
+          "chat": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.chatPreference"
+          },
+          "follow": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "like": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "likeViaRepost": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "mention": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "quote": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "reply": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "repost": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "repostViaRepost": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.filterablePreference"
+          },
+          "starterpackJoined": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+          },
+          "subscribedPost": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+          },
+          "unverified": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+          },
+          "verified": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+          }
+        }
       },
       "app.bsky.notification.listNotifications.notification": {
         "type": "object",
