@@ -31461,11 +31461,11 @@
       "app.bsky.notification.defs.chatPreference": {
         "type": "object",
         "required": [
-          "filter",
+          "include",
           "push"
         ],
         "properties": {
-          "filter": {
+          "include": {
             "type": "string",
             "enum": [
               "all",
@@ -31480,12 +31480,12 @@
       "app.bsky.notification.defs.filterablePreference": {
         "type": "object",
         "required": [
-          "filter",
+          "include",
           "list",
           "push"
         ],
         "properties": {
-          "filter": {
+          "include": {
             "type": "string",
             "enum": [
               "all",
