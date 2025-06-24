@@ -5866,6 +5866,122 @@
         }
       }
     },
+    "/app.bsky.notification.listActivitySubscriptions": {
+      "get": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Enumerate all accounts to which the requesting account is subscribed to receive notifications for. Requires auth.",
+        "operationId": "app.bsky.notification.listActivitySubscriptions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subscriptions"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.actor.defs.profileView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.notification.listNotifications": {
       "get": {
         "tags": [
@@ -5955,6 +6071,122 @@
                     "seenAt": {
                       "type": "string",
                       "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.putActivitySubscription": {
+      "post": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Puts an activity subscription entry. The key should be omitted for creation and provided for updates. Requires auth.",
+        "operationId": "app.bsky.notification.putActivitySubscription",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "subject",
+                  "activitySubscription"
+                ],
+                "properties": {
+                  "subject": {
+                    "type": "string",
+                    "format": "did"
+                  },
+                  "activitySubscription": {
+                    "$ref": "#/components/schemas/app.bsky.notification.defs.activitySubscription"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "subject"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "type": "string",
+                      "format": "did"
+                    },
+                    "activitySubscription": {
+                      "$ref": "#/components/schemas/app.bsky.notification.defs.activitySubscription"
                     }
                   }
                 }
@@ -28644,6 +28876,9 @@
           },
           "chat": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociatedChat"
+          },
+          "activitySubscription": {
+            "$ref": "#/components/schemas/app.bsky.actor.defs.profileAssociatedActivitySubscription"
           }
         }
       },
@@ -28659,6 +28894,22 @@
               "all",
               "none",
               "following"
+            ]
+          }
+        }
+      },
+      "app.bsky.actor.defs.profileAssociatedActivitySubscription": {
+        "type": "object",
+        "required": [
+          "allowSubscriptions"
+        ],
+        "properties": {
+          "allowSubscriptions": {
+            "type": "string",
+            "enum": [
+              "followers",
+              "mutuals",
+              "none"
             ]
           }
         }
@@ -28693,6 +28944,9 @@
           },
           "knownFollowers": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.knownFollowers"
+          },
+          "activitySubscription": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.activitySubscription"
           }
         }
       },
@@ -31454,6 +31708,23 @@
           }
         }
       },
+      "app.bsky.notification.declaration": {
+        "type": "object",
+        "required": [
+          "allowSubscriptions"
+        ],
+        "properties": {
+          "allowSubscriptions": {
+            "type": "string",
+            "description": "A declaration of the user's preference for allowing activity subscriptions from other users. Absence of a record implies 'followers'.",
+            "enum": [
+              "followers",
+              "mutuals",
+              "none"
+            ]
+          }
+        }
+      },
       "app.bsky.notification.defs.recordDeleted": {
         "type": "object",
         "properties": {}
@@ -31571,6 +31842,38 @@
           },
           "verified": {
             "$ref": "#/components/schemas/app.bsky.notification.defs.preference"
+          }
+        }
+      },
+      "app.bsky.notification.defs.activitySubscription": {
+        "type": "object",
+        "required": [
+          "post",
+          "reply"
+        ],
+        "properties": {
+          "post": {
+            "type": "boolean"
+          },
+          "reply": {
+            "type": "boolean"
+          }
+        }
+      },
+      "app.bsky.notification.defs.subjectActivitySubscription": {
+        "type": "object",
+        "description": "Object used to store activity subscription data in stash.",
+        "required": [
+          "subject",
+          "activitySubscription"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "did"
+          },
+          "activitySubscription": {
+            "$ref": "#/components/schemas/app.bsky.notification.defs.activitySubscription"
           }
         }
       },
