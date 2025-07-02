@@ -26238,6 +26238,662 @@
         }
       }
     },
+    "/tools.ozone.safelink.addRule": {
+      "post": {
+        "tags": [
+          "tools.ozone.safelink"
+        ],
+        "summary": "Add a new URL safety rule",
+        "operationId": "tools.ozone.safelink.addRule",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "pattern",
+                  "action",
+                  "reason"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL or domain to apply the rule to"
+                  },
+                  "pattern": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.patternType"
+                  },
+                  "action": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.actionType"
+                  },
+                  "reason": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.reasonType"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional comment about the decision"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "description": "Author DID. Only respected when using admin auth",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools.ozone.safelink.defs.event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "InvalidUrl"
+                        },
+                        {
+                          "const": "RuleAlreadyExists"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.safelink.queryEvents": {
+      "post": {
+        "tags": [
+          "tools.ozone.safelink"
+        ],
+        "summary": "Query URL safety audit events",
+        "operationId": "tools.ozone.safelink.queryEvents",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cursor": {
+                    "type": "string",
+                    "description": "Cursor for pagination"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 50
+                  },
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "patternType": {
+                    "type": "string",
+                    "description": "Filter by pattern type"
+                  },
+                  "sortDirection": {
+                    "type": "string",
+                    "description": "Sort direction",
+                    "default": "desc",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "events"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string",
+                      "description": "Next cursor for pagination. Only present if there are more results."
+                    },
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.safelink.defs.event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.safelink.queryRules": {
+      "post": {
+        "tags": [
+          "tools.ozone.safelink"
+        ],
+        "summary": "Query URL safety rules",
+        "operationId": "tools.ozone.safelink.queryRules",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cursor": {
+                    "type": "string",
+                    "description": "Cursor for pagination"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 50
+                  },
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "patternType": {
+                    "type": "string",
+                    "description": "Filter by pattern type"
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "Filter by reason type"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "description": "Filter by rule creator",
+                    "format": "did"
+                  },
+                  "sortDirection": {
+                    "type": "string",
+                    "description": "Sort direction",
+                    "default": "desc",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "rules"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string",
+                      "description": "Next cursor for pagination. Only present if there are more results."
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.safelink.defs.urlRule"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.safelink.removeRule": {
+      "post": {
+        "tags": [
+          "tools.ozone.safelink"
+        ],
+        "summary": "Remove an existing URL safety rule",
+        "operationId": "tools.ozone.safelink.removeRule",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "pattern"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL or domain to remove the rule for"
+                  },
+                  "pattern": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.patternType"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional comment about why the rule is being removed"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "description": "Optional DID of the user. Only respected when using admin auth.",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools.ozone.safelink.defs.event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RuleNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.safelink.updateRule": {
+      "post": {
+        "tags": [
+          "tools.ozone.safelink"
+        ],
+        "summary": "Update an existing URL safety rule",
+        "operationId": "tools.ozone.safelink.updateRule",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "pattern",
+                  "action",
+                  "reason"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL or domain to update the rule for"
+                  },
+                  "pattern": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.patternType"
+                  },
+                  "action": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.actionType"
+                  },
+                  "reason": {
+                    "$ref": "#/components/schemas/tools.ozone.safelink.defs.reasonType"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional comment about the update"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "description": "Optional DID to credit as the creator. Only respected for admin_token authentication.",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools.ozone.safelink.defs.event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RuleNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.server.getConfig": {
       "get": {
         "tags": [
@@ -35332,6 +35988,133 @@
           }
         }
       },
+      "tools.ozone.safelink.defs.event": {
+        "type": "object",
+        "description": "An event for URL safety decisions",
+        "required": [
+          "id",
+          "eventType",
+          "url",
+          "pattern",
+          "action",
+          "reason",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "eventType": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.eventType"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL that this rule applies to"
+          },
+          "pattern": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.patternType"
+          },
+          "action": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.actionType"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.reasonType"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "DID of the user who created this rule",
+            "format": "did"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Optional comment about the decision"
+          }
+        }
+      },
+      "tools.ozone.safelink.defs.eventType": {
+        "type": "string",
+        "enum": [
+          "addRule",
+          "updateRule",
+          "removeRule"
+        ]
+      },
+      "tools.ozone.safelink.defs.patternType": {
+        "type": "string",
+        "enum": [
+          "domain",
+          "url"
+        ]
+      },
+      "tools.ozone.safelink.defs.actionType": {
+        "type": "string",
+        "enum": [
+          "block",
+          "warn",
+          "whitelist"
+        ]
+      },
+      "tools.ozone.safelink.defs.reasonType": {
+        "type": "string",
+        "enum": [
+          "csam",
+          "spam",
+          "phishing",
+          "none"
+        ]
+      },
+      "tools.ozone.safelink.defs.urlRule": {
+        "type": "object",
+        "description": "Input for creating a URL safety rule",
+        "required": [
+          "url",
+          "pattern",
+          "action",
+          "reason",
+          "createdBy",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL or domain to apply the rule to"
+          },
+          "pattern": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.patternType"
+          },
+          "action": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.actionType"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/tools.ozone.safelink.defs.reasonType"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Optional comment about the decision"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "DID of the user added the rule.",
+            "format": "did"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp when the rule was created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Timestamp when the rule was last updated",
+            "format": "date-time"
+          }
+        }
+      },
       "tools.ozone.server.getConfig.serviceConfig": {
         "type": "object",
         "properties": {
@@ -35782,6 +36565,9 @@
     },
     {
       "name": "tools.ozone.moderation"
+    },
+    {
+      "name": "tools.ozone.safelink"
     },
     {
       "name": "tools.ozone.server"
