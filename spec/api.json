@@ -24515,6 +24515,12 @@
                       },
                       {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceEvent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
                       }
                     ]
                   },
@@ -25579,6 +25585,23 @@
             }
           },
           {
+            "name": "ageAssuranceState",
+            "in": "query",
+            "description": "If specified, only events where the age assurance state matches the given value are returned",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "If specified, only events where the age assurance state matches the given value are returned",
+              "enum": [
+                "pending",
+                "assured",
+                "unknown",
+                "reset",
+                "blocked"
+              ]
+            }
+          },
+          {
             "name": "cursor",
             "in": "query",
             "required": false,
@@ -26040,6 +26063,23 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 100
+            }
+          },
+          {
+            "name": "ageAssuranceState",
+            "in": "query",
+            "description": "If specified, only subjects with the given age assurance state will be returned.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "If specified, only subjects with the given age assurance state will be returned.",
+              "enum": [
+                "pending",
+                "assured",
+                "unknown",
+                "reset",
+                "blocked"
+              ]
             }
           }
         ],
@@ -34894,6 +34934,12 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
               }
             ]
           },
@@ -35007,6 +35053,12 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.modEventPriorityScore"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
               }
             ]
           },
@@ -35160,6 +35212,25 @@
           },
           "recordsStats": {
             "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordsStats"
+          },
+          "ageAssuranceState": {
+            "type": "string",
+            "description": "Current age assurance state of the subject.",
+            "enum": [
+              "pending",
+              "assured",
+              "unknown",
+              "reset",
+              "blocked"
+            ]
+          },
+          "ageAssuranceUpdatedBy": {
+            "type": "string",
+            "description": "Whether or not the last successful update to age assurance was made by the user or admin.",
+            "enum": [
+              "admin",
+              "user"
+            ]
           }
         }
       },
@@ -35388,6 +35459,74 @@
             "type": "integer",
             "minimum": 0,
             "maximum": 100
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.ageAssuranceEvent": {
+        "type": "object",
+        "description": "Age assurance info coming directly from users. Only works on DID subjects.",
+        "required": [
+          "createdAt",
+          "status",
+          "attemptId"
+        ],
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of this write operation.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the age assurance process.",
+            "enum": [
+              "unknown",
+              "pending",
+              "assured"
+            ]
+          },
+          "attemptId": {
+            "type": "string",
+            "description": "The unique identifier for this instance of the age assurance flow, in UUID format."
+          },
+          "initIp": {
+            "type": "string",
+            "description": "The IP address used when initiating the AA flow."
+          },
+          "initUa": {
+            "type": "string",
+            "description": "The user agent used when initiating the AA flow."
+          },
+          "completeIp": {
+            "type": "string",
+            "description": "The IP address used when completing the AA flow."
+          },
+          "completeUa": {
+            "type": "string",
+            "description": "The user agent used when completing the AA flow."
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.ageAssuranceOverrideEvent": {
+        "type": "object",
+        "description": "Age assurance status override by moderators. Only works on DID subjects.",
+        "required": [
+          "comment",
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "The status to be set for the user decided by a moderator, overriding whatever value the user had previously. Use reset to default to original state.",
+            "enum": [
+              "assured",
+              "reset",
+              "blocked"
+            ]
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment describing the reason for the override."
           }
         }
       },
