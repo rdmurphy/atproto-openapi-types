@@ -6785,6 +6785,87 @@
         }
       }
     },
+    "/app.bsky.unspecced.getAgeAssuranceState": {
+      "get": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Returns the current state of the age assurance process for an account. This is used to check if the user has completed age assurance or if further action is required.",
+        "operationId": "app.bsky.unspecced.getAgeAssuranceState",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app.bsky.unspecced.defs.ageAssuranceState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.unspecced.getConfig": {
       "get": {
         "tags": [
@@ -8855,6 +8936,116 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.unspecced.initAgeAssurance": {
+      "post": {
+        "tags": [
+          "app.bsky.unspecced"
+        ],
+        "summary": "Initiate age assurance for an account. This is a one-time action that will start the process of verifying the user's age.",
+        "operationId": "app.bsky.unspecced.initAgeAssurance",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "language",
+                  "countryCode"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The user's email address to receive assurance instructions."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "The user's preferred language for communication during the assurance process."
+                  },
+                  "countryCode": {
+                    "type": "string",
+                    "description": "An ISO 3166-1 alpha-2 code of the user's location."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app.bsky.unspecced.defs.ageAssuranceState"
                 }
               }
             }
@@ -32939,6 +33130,79 @@
         "properties": {
           "author": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.blockedAuthor"
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.ageAssuranceState": {
+        "type": "object",
+        "description": "The computed state of the age assurance process, returned to the user in question on certain authenticated requests.",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "lastInitiatedAt": {
+            "type": "string",
+            "description": "The timestamp when this state was last updated.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the age assurance process.",
+            "enum": [
+              "unknown",
+              "pending",
+              "assured",
+              "blocked"
+            ]
+          }
+        }
+      },
+      "app.bsky.unspecced.defs.ageAssuranceEvent": {
+        "type": "object",
+        "description": "Object used to store age assurance data in stash.",
+        "required": [
+          "createdAt",
+          "status",
+          "attemptId"
+        ],
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of this write operation.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the age assurance process.",
+            "enum": [
+              "unknown",
+              "pending",
+              "assured"
+            ]
+          },
+          "attemptId": {
+            "type": "string",
+            "description": "The unique identifier for this instance of the age assurance flow, in UUID format."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email used for AA."
+          },
+          "initIp": {
+            "type": "string",
+            "description": "The IP address used when initiating the AA flow."
+          },
+          "initUa": {
+            "type": "string",
+            "description": "The user agent used when initiating the AA flow."
+          },
+          "completeIp": {
+            "type": "string",
+            "description": "The IP address used when completing the AA flow."
+          },
+          "completeUa": {
+            "type": "string",
+            "description": "The user agent used when completing the AA flow."
           }
         }
       },
