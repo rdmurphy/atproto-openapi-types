@@ -24848,6 +24848,10 @@
                   },
                   "modTool": {
                     "$ref": "#/components/schemas/tools.ozone.moderation.defs.modTool"
+                  },
+                  "externalId": {
+                    "type": "string",
+                    "description": "An optional external ID for the event, used to deduplicate events from external systems. Fails when an event of same type with the same external ID exists for the same subject."
                   }
                 }
               }
@@ -24890,6 +24894,9 @@
                         },
                         {
                           "const": "SubjectHasAction"
+                        },
+                        {
+                          "const": "DuplicateExternalId"
                         }
                       ]
                     },
