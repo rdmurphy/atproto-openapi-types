@@ -9182,6 +9182,12 @@
                         },
                         {
                           "const": "InvalidToken"
+                        },
+                        {
+                          "const": "InvalidEmail"
+                        },
+                        {
+                          "const": "DidTooLong"
                         }
                       ]
                     },
