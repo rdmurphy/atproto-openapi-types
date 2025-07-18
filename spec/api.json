@@ -9327,6 +9327,9 @@
                         },
                         {
                           "const": "DidTooLong"
+                        },
+                        {
+                          "const": "InvalidInitiation"
                         }
                       ]
                     },
