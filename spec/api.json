@@ -23628,6 +23628,145 @@
         }
       }
     },
+    "/com.atproto.temp.checkHandleAvailability": {
+      "get": {
+        "tags": [
+          "com.atproto.temp"
+        ],
+        "summary": "Checks whether the provided handle is available. If the handle is not available, available suggestions will be returned. Optional inputs will be used to generate suggestions.",
+        "operationId": "com.atproto.temp.checkHandleAvailability",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "handle",
+            "in": "query",
+            "description": "Tentative handle. Will be checked for availability or used to build handle suggestions.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Tentative handle. Will be checked for availability or used to build handle suggestions.",
+              "format": "handle"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "User-provided email. Might be used to build handle suggestions.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "User-provided email. Might be used to build handle suggestions."
+            }
+          },
+          {
+            "name": "birthDate",
+            "in": "query",
+            "description": "User-provided birth date. Might be used to build handle suggestions.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "User-provided birth date. Might be used to build handle suggestions.",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "handle",
+                    "result"
+                  ],
+                  "properties": {
+                    "handle": {
+                      "type": "string",
+                      "description": "Echo of the input handle.",
+                      "format": "handle"
+                    },
+                    "result": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/com.atproto.temp.checkHandleAvailability.resultAvailable"
+                        },
+                        {
+                          "$ref": "#/components/schemas/com.atproto.temp.checkHandleAvailability.resultUnavailable"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "InvalidEmail"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.temp.checkSignupQueue": {
       "get": {
         "tags": [
@@ -35287,6 +35426,43 @@
           "prev": {
             "type": "string",
             "format": "cid-link"
+          }
+        }
+      },
+      "com.atproto.temp.checkHandleAvailability.resultAvailable": {
+        "type": "object",
+        "description": "Indicates the provided handle is available.",
+        "properties": {}
+      },
+      "com.atproto.temp.checkHandleAvailability.resultUnavailable": {
+        "type": "object",
+        "description": "Indicates the provided handle is unavailable and gives suggestions of available handles.",
+        "required": [
+          "suggestions"
+        ],
+        "properties": {
+          "suggestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.atproto.temp.checkHandleAvailability.suggestion"
+            }
+          }
+        }
+      },
+      "com.atproto.temp.checkHandleAvailability.suggestion": {
+        "type": "object",
+        "required": [
+          "handle",
+          "method"
+        ],
+        "properties": {
+          "handle": {
+            "type": "string",
+            "format": "handle"
+          },
+          "method": {
+            "type": "string",
+            "description": "Method used to build this suggestion. Should be considered opaque to clients. Can be used for metrics."
           }
         }
       },
