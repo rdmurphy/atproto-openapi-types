@@ -25187,6 +25187,112 @@
         }
       }
     },
+    "/tools.ozone.moderation.getAccountTimeline": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get timeline of all available events of an account. This includes moderation events, account history and did history.",
+        "operationId": "tools.ozone.moderation.getAccountTimeline",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "did"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "timeline"
+                  ],
+                  "properties": {
+                    "timeline": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.getAccountTimeline.timelineItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "RepoNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.getEvent": {
       "get": {
         "tags": [
@@ -36890,6 +36996,93 @@
             "description": "Name/identifier of the source (e.g., 'automod', 'ozone/workspace')"
           },
           "meta": {}
+        }
+      },
+      "tools.ozone.moderation.defs.timelineEventPlcCreate": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderation event timeline event for a PLC create operation"
+      },
+      "tools.ozone.moderation.defs.timelineEventPlcOperation": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderation event timeline event for generic PLC operation"
+      },
+      "tools.ozone.moderation.defs.timelineEventPlcTombstone": {
+        "type": "string",
+        "format": "token",
+        "description": "Moderation event timeline event for a PLC tombstone operation"
+      },
+      "tools.ozone.moderation.getAccountTimeline.timelineItem": {
+        "type": "object",
+        "required": [
+          "day",
+          "summary"
+        ],
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tools.ozone.moderation.getAccountTimeline.timelineItemSummary"
+            }
+          }
+        }
+      },
+      "tools.ozone.moderation.getAccountTimeline.timelineItemSummary": {
+        "type": "object",
+        "required": [
+          "eventSubjectType",
+          "eventType",
+          "count"
+        ],
+        "properties": {
+          "eventSubjectType": {
+            "type": "string",
+            "enum": [
+              "account",
+              "record",
+              "chat"
+            ]
+          },
+          "eventType": {
+            "type": "string",
+            "enum": [
+              "tools.ozone.moderation.defs#modEventTakedown",
+              "tools.ozone.moderation.defs#modEventReverseTakedown",
+              "tools.ozone.moderation.defs#modEventComment",
+              "tools.ozone.moderation.defs#modEventReport",
+              "tools.ozone.moderation.defs#modEventLabel",
+              "tools.ozone.moderation.defs#modEventAcknowledge",
+              "tools.ozone.moderation.defs#modEventEscalate",
+              "tools.ozone.moderation.defs#modEventMute",
+              "tools.ozone.moderation.defs#modEventUnmute",
+              "tools.ozone.moderation.defs#modEventMuteReporter",
+              "tools.ozone.moderation.defs#modEventUnmuteReporter",
+              "tools.ozone.moderation.defs#modEventEmail",
+              "tools.ozone.moderation.defs#modEventResolveAppeal",
+              "tools.ozone.moderation.defs#modEventDivert",
+              "tools.ozone.moderation.defs#modEventTag",
+              "tools.ozone.moderation.defs#accountEvent",
+              "tools.ozone.moderation.defs#identityEvent",
+              "tools.ozone.moderation.defs#recordEvent",
+              "tools.ozone.moderation.defs#modEventPriorityScore",
+              "tools.ozone.moderation.defs#ageAssuranceEvent",
+              "tools.ozone.moderation.defs#ageAssuranceOverrideEvent",
+              "tools.ozone.moderation.defs#timelineEventPlcCreate",
+              "tools.ozone.moderation.defs#timelineEventPlcOperation",
+              "tools.ozone.moderation.defs#timelineEventPlcTombstone",
+              "tools.ozone.hosting.getAccountHistory#accountCreated",
+              "tools.ozone.hosting.getAccountHistory#emailConfirmed",
+              "tools.ozone.hosting.getAccountHistory#passwordUpdated",
+              "tools.ozone.hosting.getAccountHistory#handleUpdated"
+            ]
+          },
+          "count": {
+            "type": "integer"
+          }
         }
       },
       "tools.ozone.safelink.defs.event": {
