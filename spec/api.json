@@ -26539,6 +26539,16 @@
             }
           },
           {
+            "name": "batchId",
+            "in": "query",
+            "description": "If specified, only events where the batchId matches the given value are returned",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "If specified, only events where the batchId matches the given value are returned"
+            }
+          },
+          {
             "name": "ageAssuranceState",
             "in": "query",
             "description": "If specified, only events where the age assurance state matches the given value are returned",
