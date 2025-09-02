@@ -782,6 +782,319 @@
         }
       }
     },
+    "/app.bsky.bookmark.createBookmark": {
+      "post": {
+        "tags": [
+          "app.bsky.bookmark"
+        ],
+        "summary": "Creates a private bookmark for the specified record. Currently, only `app.bsky.feed.post` records are supported. Requires authentication.",
+        "operationId": "app.bsky.bookmark.createBookmark",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "uri",
+                  "cid"
+                ],
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "format": "at-uri"
+                  },
+                  "cid": {
+                    "type": "string",
+                    "format": "cid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "UnsupportedCollection"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.bookmark.deleteBookmark": {
+      "post": {
+        "tags": [
+          "app.bsky.bookmark"
+        ],
+        "summary": "Deletes a private bookmark for the specified record. Currently, only `app.bsky.feed.post` records are supported. Requires authentication.",
+        "operationId": "app.bsky.bookmark.deleteBookmark",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "uri"
+                ],
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "format": "at-uri"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "UnsupportedCollection"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.bookmark.getBookmarks": {
+      "get": {
+        "tags": [
+          "app.bsky.bookmark"
+        ],
+        "summary": "Gets views of records bookmarked by the authenticated user. Requires authentication.",
+        "operationId": "app.bsky.bookmark.getBookmarks",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "bookmarks"
+                  ],
+                  "properties": {
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "bookmarks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/app.bsky.bookmark.defs.bookmarkView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.feed.describeFeedGenerator": {
       "get": {
         "tags": [
@@ -31367,6 +31680,47 @@
         "format": "token",
         "description": "Advertises an account as currently offering live content."
       },
+      "app.bsky.bookmark.defs.bookmark": {
+        "type": "object",
+        "description": "Object used to store bookmark data in stash.",
+        "required": [
+          "subject"
+        ],
+        "properties": {
+          "subject": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+          }
+        }
+      },
+      "app.bsky.bookmark.defs.bookmarkView": {
+        "type": "object",
+        "required": [
+          "subject",
+          "item"
+        ],
+        "properties": {
+          "subject": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "item": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/app.bsky.feed.defs.blockedPost"
+              },
+              {
+                "$ref": "#/components/schemas/app.bsky.feed.defs.notFoundPost"
+              },
+              {
+                "$ref": "#/components/schemas/app.bsky.feed.defs.postView"
+              }
+            ]
+          }
+        }
+      },
       "app.bsky.embed.defs.aspectRatio": {
         "type": "object",
         "description": "width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.",
@@ -31870,6 +32224,9 @@
               }
             ]
           },
+          "bookmarkCount": {
+            "type": "integer"
+          },
           "replyCount": {
             "type": "integer"
           },
@@ -31911,6 +32268,9 @@
           "like": {
             "type": "string",
             "format": "at-uri"
+          },
+          "bookmarked": {
+            "type": "boolean"
           },
           "threadMuted": {
             "type": "boolean"
@@ -38012,6 +38372,9 @@
   "tags": [
     {
       "name": "app.bsky.actor"
+    },
+    {
+      "name": "app.bsky.bookmark"
     },
     {
       "name": "app.bsky.embed"
