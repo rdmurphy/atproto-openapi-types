@@ -25873,6 +25873,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
                       }
                     ]
                   },
@@ -36774,6 +36777,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
               }
             ]
           },
@@ -36893,6 +36899,9 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.ageAssuranceOverrideEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
               }
             ]
           },
@@ -37361,6 +37370,19 @@
           "comment": {
             "type": "string",
             "description": "Comment describing the reason for the override."
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.revokeAccountCredentialsEvent": {
+        "type": "object",
+        "description": "Account credentials revocation by moderators. Only works on DID subjects.",
+        "required": [
+          "comment"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Comment describing the reason for the revocation."
           }
         }
       },
@@ -38088,6 +38110,7 @@
               "tools.ozone.moderation.defs#identityEvent",
               "tools.ozone.moderation.defs#recordEvent",
               "tools.ozone.moderation.defs#modEventPriorityScore",
+              "tools.ozone.moderation.defs#revokeAccountCredentialsEvent",
               "tools.ozone.moderation.defs#ageAssuranceEvent",
               "tools.ozone.moderation.defs#ageAssuranceOverrideEvent",
               "tools.ozone.moderation.defs#timelineEventPlcCreate",
