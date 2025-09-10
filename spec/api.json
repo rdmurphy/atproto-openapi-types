@@ -24435,11 +24435,6 @@
         ],
         "summary": "Allows finding the oauth permission scope from a reference",
         "operationId": "com.atproto.temp.dereferenceScope",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "parameters": [
           {
             "name": "scope",
@@ -24490,37 +24485,9 @@
                           "const": "InvalidRequest"
                         },
                         {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
-                        },
-                        {
                           "const": "InvalidScopeReference"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
