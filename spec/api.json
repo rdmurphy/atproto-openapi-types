@@ -30971,6 +30971,13 @@
             "type": "string",
             "maxLength": 2560
           },
+          "pronouns": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri"
+          },
           "avatar": {
             "type": "string",
             "format": "uri"
@@ -31689,6 +31696,15 @@
             "type": "string",
             "description": "Free-form profile description text.",
             "maxLength": 2560
+          },
+          "pronouns": {
+            "type": "string",
+            "description": "Free-form pronouns text.",
+            "maxLength": 200
+          },
+          "website": {
+            "type": "string",
+            "format": "uri"
           },
           "avatar": {
             "type": "string",
