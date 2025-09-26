@@ -31087,6 +31087,9 @@
             "type": "string",
             "maxLength": 640
           },
+          "pronouns": {
+            "type": "string"
+          },
           "avatar": {
             "type": "string",
             "format": "uri"
@@ -31133,6 +31136,9 @@
           "displayName": {
             "type": "string",
             "maxLength": 640
+          },
+          "pronouns": {
+            "type": "string"
           },
           "description": {
             "type": "string",
