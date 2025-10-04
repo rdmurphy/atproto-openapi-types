@@ -25974,6 +25974,114 @@
         }
       }
     },
+    "/tools.ozone.moderation.cancelScheduledActions": {
+      "post": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Cancel all pending scheduled moderation actions for specified subjects",
+        "operationId": "tools.ozone.moderation.cancelScheduledActions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "subjects"
+                ],
+                "properties": {
+                  "subjects": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "did"
+                    },
+                    "maxItems": 100
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional comment describing the reason for cancellation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools.ozone.moderation.cancelScheduledActions.cancellationResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.emitEvent": {
       "post": {
         "tags": [
@@ -26065,6 +26173,12 @@
                       },
                       {
                         "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.scheduleTakedownEvent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.cancelScheduledTakedownEvent"
                       }
                     ]
                   },
@@ -27013,6 +27127,157 @@
         }
       }
     },
+    "/tools.ozone.moderation.listScheduledActions": {
+      "post": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "List scheduled moderation actions with optional filtering",
+        "operationId": "tools.ozone.moderation.listScheduledActions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "statuses"
+                ],
+                "properties": {
+                  "startsAfter": {
+                    "type": "string",
+                    "description": "Filter actions scheduled to execute after this time",
+                    "format": "date-time"
+                  },
+                  "endsBefore": {
+                    "type": "string",
+                    "description": "Filter actions scheduled to execute before this time",
+                    "format": "date-time"
+                  },
+                  "subjects": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "did"
+                    },
+                    "maxItems": 100
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "executed",
+                        "cancelled",
+                        "failed"
+                      ]
+                    }
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 50
+                  },
+                  "cursor": {
+                    "type": "string",
+                    "description": "Cursor for pagination"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "actions"
+                  ],
+                  "properties": {
+                    "actions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.defs.scheduledActionView"
+                      }
+                    },
+                    "cursor": {
+                      "type": "string",
+                      "description": "Cursor for next page of results"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tools.ozone.moderation.queryEvents": {
       "get": {
         "tags": [
@@ -27771,6 +28036,130 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools.ozone.moderation.scheduleAction": {
+      "post": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Schedule a moderation action to be executed at a future time",
+        "operationId": "tools.ozone.moderation.scheduleAction",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "action",
+                  "subjects",
+                  "createdBy",
+                  "scheduling"
+                ],
+                "properties": {
+                  "action": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/tools.ozone.moderation.scheduleAction.takedown"
+                      }
+                    ]
+                  },
+                  "subjects": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "did"
+                    },
+                    "maxItems": 100
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "format": "did"
+                  },
+                  "scheduling": {
+                    "$ref": "#/components/schemas/tools.ozone.moderation.scheduleAction.schedulingConfig"
+                  },
+                  "modTool": {
+                    "$ref": "#/components/schemas/tools.ozone.moderation.defs.modTool"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools.ozone.moderation.scheduleAction.scheduledActionResults"
                 }
               }
             }
@@ -36910,6 +37299,47 @@
           }
         }
       },
+      "tools.ozone.moderation.cancelScheduledActions.cancellationResults": {
+        "type": "object",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "properties": {
+          "succeeded": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          "failed": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tools.ozone.moderation.cancelScheduledActions.failedCancellation"
+            }
+          }
+        }
+      },
+      "tools.ozone.moderation.cancelScheduledActions.failedCancellation": {
+        "type": "object",
+        "required": [
+          "did",
+          "error"
+        ],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did"
+          },
+          "error": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
+          }
+        }
+      },
       "tools.ozone.moderation.defs.modEventView": {
         "type": "object",
         "required": [
@@ -36991,6 +37421,12 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.scheduleTakedownEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.cancelScheduledTakedownEvent"
               }
             ]
           },
@@ -37113,6 +37549,12 @@
               },
               {
                 "$ref": "#/components/schemas/tools.ozone.moderation.defs.revokeAccountCredentialsEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.scheduleTakedownEvent"
+              },
+              {
+                "$ref": "#/components/schemas/tools.ozone.moderation.defs.cancelScheduledTakedownEvent"
               }
             ]
           },
@@ -37808,6 +38250,36 @@
           }
         }
       },
+      "tools.ozone.moderation.defs.scheduleTakedownEvent": {
+        "type": "object",
+        "description": "Logs a scheduled takedown action for an account.",
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "executeAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "executeAfter": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "executeUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "tools.ozone.moderation.defs.cancelScheduledTakedownEvent": {
+        "type": "object",
+        "description": "Logs cancellation of a scheduled takedown action for an account.",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
       "tools.ozone.moderation.defs.repoView": {
         "type": "object",
         "required": [
@@ -38265,6 +38737,92 @@
         "format": "token",
         "description": "Moderation event timeline event for a PLC tombstone operation"
       },
+      "tools.ozone.moderation.defs.scheduledActionView": {
+        "type": "object",
+        "description": "View of a scheduled moderation action",
+        "required": [
+          "id",
+          "action",
+          "did",
+          "createdBy",
+          "createdAt",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "action": {
+            "type": "string",
+            "description": "Type of action to be executed",
+            "enum": [
+              "takedown"
+            ]
+          },
+          "eventData": {},
+          "did": {
+            "type": "string",
+            "description": "Subject DID for the action",
+            "format": "did"
+          },
+          "executeAt": {
+            "type": "string",
+            "description": "Exact time to execute the action",
+            "format": "date-time"
+          },
+          "executeAfter": {
+            "type": "string",
+            "description": "Earliest time to execute the action (for randomized scheduling)",
+            "format": "date-time"
+          },
+          "executeUntil": {
+            "type": "string",
+            "description": "Latest time to execute the action (for randomized scheduling)",
+            "format": "date-time"
+          },
+          "randomizeExecution": {
+            "type": "boolean",
+            "description": "Whether execution time should be randomized within the specified range"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "DID of the user who created this scheduled action",
+            "format": "did"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "When the scheduled action was created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "When the scheduled action was last updated",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the scheduled action",
+            "enum": [
+              "pending",
+              "executed",
+              "cancelled",
+              "failed"
+            ]
+          },
+          "lastExecutedAt": {
+            "type": "string",
+            "description": "When the action was last attempted to be executed",
+            "format": "date-time"
+          },
+          "lastFailureReason": {
+            "type": "string",
+            "description": "Reason for the last execution failure"
+          },
+          "executionEventId": {
+            "type": "integer"
+          }
+        }
+      },
       "tools.ozone.moderation.getAccountTimeline.timelineItem": {
         "type": "object",
         "required": [
@@ -38330,11 +38888,98 @@
               "tools.ozone.hosting.getAccountHistory#accountCreated",
               "tools.ozone.hosting.getAccountHistory#emailConfirmed",
               "tools.ozone.hosting.getAccountHistory#passwordUpdated",
-              "tools.ozone.hosting.getAccountHistory#handleUpdated"
+              "tools.ozone.hosting.getAccountHistory#handleUpdated",
+              "tools.ozone.moderation.defs#scheduleTakedownEvent",
+              "tools.ozone.moderation.defs#cancelScheduledTakedownEvent"
             ]
           },
           "count": {
             "type": "integer"
+          }
+        }
+      },
+      "tools.ozone.moderation.scheduleAction.takedown": {
+        "type": "object",
+        "description": "Schedule a takedown action",
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "durationInHours": {
+            "type": "integer"
+          },
+          "acknowledgeAccountSubjects": {
+            "type": "boolean",
+            "description": "If true, all other reports on content authored by this account will be resolved (acknowledged)."
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5
+          }
+        }
+      },
+      "tools.ozone.moderation.scheduleAction.schedulingConfig": {
+        "type": "object",
+        "description": "Configuration for when the action should be executed",
+        "properties": {
+          "executeAt": {
+            "type": "string",
+            "description": "Exact time to execute the action",
+            "format": "date-time"
+          },
+          "executeAfter": {
+            "type": "string",
+            "description": "Earliest time to execute the action (for randomized scheduling)",
+            "format": "date-time"
+          },
+          "executeUntil": {
+            "type": "string",
+            "description": "Latest time to execute the action (for randomized scheduling)",
+            "format": "date-time"
+          }
+        }
+      },
+      "tools.ozone.moderation.scheduleAction.scheduledActionResults": {
+        "type": "object",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "properties": {
+          "succeeded": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          "failed": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tools.ozone.moderation.scheduleAction.failedScheduling"
+            }
+          }
+        }
+      },
+      "tools.ozone.moderation.scheduleAction.failedScheduling": {
+        "type": "object",
+        "required": [
+          "subject",
+          "error"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "did"
+          },
+          "error": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
           }
         }
       },
