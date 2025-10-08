@@ -36320,16 +36320,16 @@
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonAppeal"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceAnimalWelfare"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonOther"
+          },
+          {
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceAnimal"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceThreats"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceGraphicContent"
-          },
-          {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceSelfHarm"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonViolenceGlorification"
@@ -36350,9 +36350,6 @@
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSexualNCII"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSexualSextortion"
-          },
-          {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSexualDeepfake"
           },
           {
@@ -36371,16 +36368,10 @@
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyGroom"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyMinorPrivacy"
-          },
-          {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyEndangerment"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyPrivacy"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyHarassment"
-          },
-          {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyPromotion"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonChildSafetyOther"
@@ -36413,19 +36404,13 @@
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonMisleadingScam"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonMisleadingSyntheticContent"
-          },
-          {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonMisleadingMisinformation"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonMisleadingElections"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonMisleadingOther"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonRuleSiteSecurity"
-          },
-          {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonRuleStolenContent"
           },
           {
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonRuleProhibitedSales"
@@ -36437,19 +36422,19 @@
             "$ref": "#/components/schemas/tools.ozone.report.defs.reasonRuleOther"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonCivicElectoralProcess"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSelfHarmContent"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonCivicDisclosure"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSelfHarmED"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonCivicInterference"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSelfHarmStunts"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonCivicMisinformation"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSelfHarmSubstances"
           },
           {
-            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonCivicImpersonation"
+            "$ref": "#/components/schemas/tools.ozone.report.defs.reasonSelfHarmOther"
           }
         ]
       },
@@ -36481,7 +36466,7 @@
       "com.atproto.moderation.defs.reasonOther": {
         "type": "string",
         "format": "token",
-        "description": "Reports not falling under another report category. Prefer new lexicon definition `tools.ozone.report.defs#reasonRuleOther`."
+        "description": "Reports not falling under another report category. Prefer new lexicon definition `tools.ozone.report.defs#reasonOther`."
       },
       "com.atproto.moderation.defs.reasonAppeal": {
         "type": "string",
@@ -38987,27 +38972,24 @@
         "type": "string",
         "enum": [
           "tools.ozone.report.defs#reasonAppeal",
-          "tools.ozone.report.defs#reasonViolenceAnimalWelfare",
+          "tools.ozone.report.defs#reasonOther",
+          "tools.ozone.report.defs#reasonViolenceAnimal",
           "tools.ozone.report.defs#reasonViolenceThreats",
           "tools.ozone.report.defs#reasonViolenceGraphicContent",
-          "tools.ozone.report.defs#reasonViolenceSelfHarm",
           "tools.ozone.report.defs#reasonViolenceGlorification",
           "tools.ozone.report.defs#reasonViolenceExtremistContent",
           "tools.ozone.report.defs#reasonViolenceTrafficking",
           "tools.ozone.report.defs#reasonViolenceOther",
           "tools.ozone.report.defs#reasonSexualAbuseContent",
           "tools.ozone.report.defs#reasonSexualNCII",
-          "tools.ozone.report.defs#reasonSexualSextortion",
           "tools.ozone.report.defs#reasonSexualDeepfake",
           "tools.ozone.report.defs#reasonSexualAnimal",
           "tools.ozone.report.defs#reasonSexualUnlabeled",
           "tools.ozone.report.defs#reasonSexualOther",
           "tools.ozone.report.defs#reasonChildSafetyCSAM",
           "tools.ozone.report.defs#reasonChildSafetyGroom",
-          "tools.ozone.report.defs#reasonChildSafetyMinorPrivacy",
-          "tools.ozone.report.defs#reasonChildSafetyEndangerment",
+          "tools.ozone.report.defs#reasonChildSafetyPrivacy",
           "tools.ozone.report.defs#reasonChildSafetyHarassment",
-          "tools.ozone.report.defs#reasonChildSafetyPromotion",
           "tools.ozone.report.defs#reasonChildSafetyOther",
           "tools.ozone.report.defs#reasonHarassmentTroll",
           "tools.ozone.report.defs#reasonHarassmentTargeted",
@@ -39018,19 +39000,17 @@
           "tools.ozone.report.defs#reasonMisleadingImpersonation",
           "tools.ozone.report.defs#reasonMisleadingSpam",
           "tools.ozone.report.defs#reasonMisleadingScam",
-          "tools.ozone.report.defs#reasonMisleadingSyntheticContent",
-          "tools.ozone.report.defs#reasonMisleadingMisinformation",
+          "tools.ozone.report.defs#reasonMisleadingElections",
           "tools.ozone.report.defs#reasonMisleadingOther",
           "tools.ozone.report.defs#reasonRuleSiteSecurity",
-          "tools.ozone.report.defs#reasonRuleStolenContent",
           "tools.ozone.report.defs#reasonRuleProhibitedSales",
           "tools.ozone.report.defs#reasonRuleBanEvasion",
           "tools.ozone.report.defs#reasonRuleOther",
-          "tools.ozone.report.defs#reasonCivicElectoralProcess",
-          "tools.ozone.report.defs#reasonCivicDisclosure",
-          "tools.ozone.report.defs#reasonCivicInterference",
-          "tools.ozone.report.defs#reasonCivicMisinformation",
-          "tools.ozone.report.defs#reasonCivicImpersonation"
+          "tools.ozone.report.defs#reasonSelfHarmContent",
+          "tools.ozone.report.defs#reasonSelfHarmED",
+          "tools.ozone.report.defs#reasonSelfHarmStunts",
+          "tools.ozone.report.defs#reasonSelfHarmSubstances",
+          "tools.ozone.report.defs#reasonSelfHarmOther"
         ]
       },
       "tools.ozone.report.defs.reasonAppeal": {
@@ -39038,7 +39018,12 @@
         "format": "token",
         "description": "Appeal a previously taken moderation action"
       },
-      "tools.ozone.report.defs.reasonViolenceAnimalWelfare": {
+      "tools.ozone.report.defs.reasonOther": {
+        "type": "string",
+        "format": "token",
+        "description": "An issue not included in these options"
+      },
+      "tools.ozone.report.defs.reasonViolenceAnimal": {
         "type": "string",
         "format": "token",
         "description": "Animal welfare violations"
@@ -39052,11 +39037,6 @@
         "type": "string",
         "format": "token",
         "description": "Graphic violent content"
-      },
-      "tools.ozone.report.defs.reasonViolenceSelfHarm": {
-        "type": "string",
-        "format": "token",
-        "description": "Self harm"
       },
       "tools.ozone.report.defs.reasonViolenceGlorification": {
         "type": "string",
@@ -39088,11 +39068,6 @@
         "format": "token",
         "description": "Non-consensual intimate imagery"
       },
-      "tools.ozone.report.defs.reasonSexualSextortion": {
-        "type": "string",
-        "format": "token",
-        "description": "Sextortion"
-      },
       "tools.ozone.report.defs.reasonSexualDeepfake": {
         "type": "string",
         "format": "token",
@@ -39123,25 +39098,15 @@
         "format": "token",
         "description": "Grooming or predatory behavior. These reports will be sent only be sent to the application's Moderation Authority."
       },
-      "tools.ozone.report.defs.reasonChildSafetyMinorPrivacy": {
+      "tools.ozone.report.defs.reasonChildSafetyPrivacy": {
         "type": "string",
         "format": "token",
         "description": "Privacy violation involving a minor"
-      },
-      "tools.ozone.report.defs.reasonChildSafetyEndangerment": {
-        "type": "string",
-        "format": "token",
-        "description": "Child endangerment. These reports will be sent only be sent to the application's Moderation Authority."
       },
       "tools.ozone.report.defs.reasonChildSafetyHarassment": {
         "type": "string",
         "format": "token",
         "description": "Harassment or bullying of minors"
-      },
-      "tools.ozone.report.defs.reasonChildSafetyPromotion": {
-        "type": "string",
-        "format": "token",
-        "description": "Promotion of child exploitation. These reports will be sent only be sent to the application's Moderation Authority."
       },
       "tools.ozone.report.defs.reasonChildSafetyOther": {
         "type": "string",
@@ -39193,15 +39158,10 @@
         "format": "token",
         "description": "Scam"
       },
-      "tools.ozone.report.defs.reasonMisleadingSyntheticContent": {
+      "tools.ozone.report.defs.reasonMisleadingElections": {
         "type": "string",
         "format": "token",
-        "description": "Unlabelled gen-AI or synthetic content"
-      },
-      "tools.ozone.report.defs.reasonMisleadingMisinformation": {
-        "type": "string",
-        "format": "token",
-        "description": "Harmful false claims"
+        "description": "False information about elections"
       },
       "tools.ozone.report.defs.reasonMisleadingOther": {
         "type": "string",
@@ -39212,11 +39172,6 @@
         "type": "string",
         "format": "token",
         "description": "Hacking or system attacks"
-      },
-      "tools.ozone.report.defs.reasonRuleStolenContent": {
-        "type": "string",
-        "format": "token",
-        "description": "Stolen content"
       },
       "tools.ozone.report.defs.reasonRuleProhibitedSales": {
         "type": "string",
@@ -39233,30 +39188,30 @@
         "format": "token",
         "description": "Other"
       },
-      "tools.ozone.report.defs.reasonCivicElectoralProcess": {
+      "tools.ozone.report.defs.reasonSelfHarmContent": {
         "type": "string",
         "format": "token",
-        "description": "Electoral process violations"
+        "description": "Content promoting or depicting self-harm"
       },
-      "tools.ozone.report.defs.reasonCivicDisclosure": {
+      "tools.ozone.report.defs.reasonSelfHarmED": {
         "type": "string",
         "format": "token",
-        "description": "Disclosure & transparency violations"
+        "description": "Eating disorders"
       },
-      "tools.ozone.report.defs.reasonCivicInterference": {
+      "tools.ozone.report.defs.reasonSelfHarmStunts": {
         "type": "string",
         "format": "token",
-        "description": "Voter intimidation or interference"
+        "description": "Dangerous challenges or activities"
       },
-      "tools.ozone.report.defs.reasonCivicMisinformation": {
+      "tools.ozone.report.defs.reasonSelfHarmSubstances": {
         "type": "string",
         "format": "token",
-        "description": "Election misinformation"
+        "description": "Dangerous substances or drug abuse"
       },
-      "tools.ozone.report.defs.reasonCivicImpersonation": {
+      "tools.ozone.report.defs.reasonSelfHarmOther": {
         "type": "string",
         "format": "token",
-        "description": "Impersonation of electoral officials/entities"
+        "description": "Other dangerous content"
       },
       "tools.ozone.safelink.defs.event": {
         "type": "object",
