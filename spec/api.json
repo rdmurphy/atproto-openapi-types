@@ -33828,7 +33828,7 @@
               "type": "string",
               "format": "at-uri"
             },
-            "maxItems": 50
+            "maxItems": 300
           }
         }
       },
