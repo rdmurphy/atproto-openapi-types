@@ -27534,6 +27534,16 @@
             }
           },
           {
+            "name": "withStrike",
+            "in": "query",
+            "description": "If specified, only events where strikeCount value is set are returned.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "If specified, only events where strikeCount value is set are returned."
+            }
+          },
+          {
             "name": "cursor",
             "in": "query",
             "required": false,
@@ -27995,6 +28005,16 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 100
+            }
+          },
+          {
+            "name": "minStrikeCount",
+            "in": "query",
+            "description": "If specified, only subjects that belong to an account that has at least this many active strikes will be returned.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
             }
           },
           {
@@ -37694,6 +37714,9 @@
           "recordsStats": {
             "$ref": "#/components/schemas/tools.ozone.moderation.defs.recordsStats"
           },
+          "accountStrike": {
+            "$ref": "#/components/schemas/tools.ozone.moderation.defs.accountStrike"
+          },
           "ageAssuranceState": {
             "type": "string",
             "description": "Current age assurance state of the subject.",
@@ -37794,6 +37817,28 @@
           }
         }
       },
+      "tools.ozone.moderation.defs.accountStrike": {
+        "type": "object",
+        "description": "Strike information for an account",
+        "properties": {
+          "activeStrikeCount": {
+            "type": "integer"
+          },
+          "totalStrikeCount": {
+            "type": "integer"
+          },
+          "firstStrikeAt": {
+            "type": "string",
+            "description": "Timestamp of the first strike received",
+            "format": "date-time"
+          },
+          "lastStrikeAt": {
+            "type": "string",
+            "description": "Timestamp of the most recent strike received",
+            "format": "date-time"
+          }
+        }
+      },
       "tools.ozone.moderation.defs.subjectReviewState": {
         "type": "string",
         "enum": [
@@ -37843,6 +37888,18 @@
               "type": "string"
             },
             "maxItems": 5
+          },
+          "severityLevel": {
+            "type": "string",
+            "description": "Severity level of the violation (e.g., 'sev-0', 'sev-1', 'sev-2', etc.)."
+          },
+          "strikeCount": {
+            "type": "integer"
+          },
+          "strikeExpiresAt": {
+            "type": "string",
+            "description": "When the strike should expire. If not provided, the strike never expires.",
+            "format": "date-time"
           }
         }
       },
@@ -37853,6 +37910,20 @@
           "comment": {
             "type": "string",
             "description": "Describe reasoning behind the reversal."
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5
+          },
+          "severityLevel": {
+            "type": "string",
+            "description": "Severity level of the violation. Usually set from the last policy infraction's severity."
+          },
+          "strikeCount": {
+            "type": "integer"
           }
         }
       },
@@ -38109,6 +38180,25 @@
           "comment": {
             "type": "string",
             "description": "Additional comment about the outgoing comm."
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5
+          },
+          "severityLevel": {
+            "type": "string",
+            "description": "Severity level of the violation. Normally 'sev-1' that adds strike on repeat offense"
+          },
+          "strikeCount": {
+            "type": "integer"
+          },
+          "strikeExpiresAt": {
+            "type": "string",
+            "description": "When the strike should expire. If not provided, the strike never expires.",
+            "format": "date-time"
           }
         }
       },
