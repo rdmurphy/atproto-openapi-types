@@ -31524,7 +31524,8 @@
           },
           "status": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
-          }
+          },
+          "debug": {}
         }
       },
       "app.bsky.actor.defs.profileView": {
@@ -31582,7 +31583,8 @@
           },
           "status": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
-          }
+          },
+          "debug": {}
         }
       },
       "app.bsky.actor.defs.profileViewDetailed": {
@@ -31663,7 +31665,8 @@
           },
           "status": {
             "$ref": "#/components/schemas/app.bsky.actor.defs.statusView"
-          }
+          },
+          "debug": {}
         }
       },
       "app.bsky.actor.defs.profileAssociated": {
@@ -32982,7 +32985,8 @@
           },
           "threadgate": {
             "$ref": "#/components/schemas/app.bsky.feed.defs.threadgateView"
-          }
+          },
+          "debug": {}
         }
       },
       "app.bsky.feed.defs.viewerState": {
