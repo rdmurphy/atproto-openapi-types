@@ -34229,6 +34229,9 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "via": {
+            "$ref": "#/components/schemas/com.atproto.repo.strongRef"
           }
         }
       },
