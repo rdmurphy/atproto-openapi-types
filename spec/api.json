@@ -13569,11 +13569,6 @@
         ],
         "summary": "Delete a user account as an administrator.",
         "operationId": "com.atproto.admin.deleteAccount",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -13613,36 +13608,8 @@
                       "oneOf": [
                         {
                           "const": "InvalidRequest"
-                        },
-                        {
-                          "const": "ExpiredToken"
-                        },
-                        {
-                          "const": "InvalidToken"
                         }
                       ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "error": {
-                      "const": "AuthMissing"
                     },
                     "message": {
                       "type": "string"
