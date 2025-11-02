@@ -18561,6 +18561,123 @@
         }
       }
     },
+    "/com.atproto.lexicon.resolveLexicon": {
+      "get": {
+        "tags": [
+          "com.atproto.lexicon"
+        ],
+        "summary": "Resolves an atproto lexicon (NSID) to a schema.",
+        "operationId": "com.atproto.lexicon.resolveLexicon",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "nsid",
+            "in": "query",
+            "description": "The lexicon NSID to resolve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The lexicon NSID to resolve.",
+              "format": "nsid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "uri",
+                    "cid",
+                    "schema"
+                  ],
+                  "properties": {
+                    "cid": {
+                      "type": "string",
+                      "description": "The CID of the lexicon schema record.",
+                      "format": "cid"
+                    },
+                    "schema": {
+                      "$ref": "#/components/schemas/com.atproto.lexicon.schema.main"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "description": "The AT-URI of the lexicon schema record.",
+                      "format": "at-uri"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "LexiconNotFound"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.moderation.createReport": {
       "post": {
         "tags": [
