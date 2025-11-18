@@ -37960,6 +37960,16 @@
             "type": "string",
             "description": "Severity level of the violation (e.g., 'sev-0', 'sev-1', 'sev-2', etc.)."
           },
+          "targetServices": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "appview",
+                "pds"
+              ]
+            }
+          },
           "strikeCount": {
             "type": "integer"
           },
