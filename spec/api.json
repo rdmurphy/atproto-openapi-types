@@ -38276,6 +38276,10 @@
             "type": "string",
             "description": "When the strike should expire. If not provided, the strike never expires.",
             "format": "date-time"
+          },
+          "isDelivered": {
+            "type": "boolean",
+            "description": "Indicates whether the email was successfully delivered to the user's inbox."
           }
         }
       },
@@ -39070,6 +39074,26 @@
               "type": "string"
             },
             "maxItems": 5
+          },
+          "severityLevel": {
+            "type": "string",
+            "description": "Severity level of the violation (e.g., 'sev-0', 'sev-1', 'sev-2', etc.)."
+          },
+          "strikeCount": {
+            "type": "integer"
+          },
+          "strikeExpiresAt": {
+            "type": "string",
+            "description": "When the strike should expire. If not provided, the strike never expires.",
+            "format": "date-time"
+          },
+          "emailContent": {
+            "type": "string",
+            "description": "Email content to be sent to the user upon takedown."
+          },
+          "emailSubject": {
+            "type": "string",
+            "description": "Subject of the email to be sent to the user upon takedown."
           }
         }
       },
