@@ -27898,7 +27898,13 @@
             "required": false,
             "schema": {
               "type": "string",
-              "description": "Specify when fetching subjects in a certain state"
+              "description": "Specify when fetching subjects in a certain state",
+              "enum": [
+                "tools.ozone.moderation.defs#reviewOpen",
+                "tools.ozone.moderation.defs#reviewClosed",
+                "tools.ozone.moderation.defs#reviewEscalated",
+                "tools.ozone.moderation.defs#reviewNone"
+              ]
             }
           },
           {
