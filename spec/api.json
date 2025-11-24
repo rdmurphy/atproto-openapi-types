@@ -782,6 +782,324 @@
         }
       }
     },
+    "/app.bsky.ageassurance.begin": {
+      "post": {
+        "tags": [
+          "app.bsky.ageassurance"
+        ],
+        "summary": "Initiate Age Assurance for an account.",
+        "operationId": "app.bsky.ageassurance.begin",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "language",
+                  "countryCode"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The user's email address to receive Age Assurance instructions."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "The user's preferred language for communication during the Age Assurance process."
+                  },
+                  "countryCode": {
+                    "type": "string",
+                    "description": "An ISO 3166-1 alpha-2 code of the user's location."
+                  },
+                  "regionCode": {
+                    "type": "string",
+                    "description": "An optional ISO 3166-2 code of the user's region or state within the country."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.state"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        },
+                        {
+                          "const": "InvalidEmail"
+                        },
+                        {
+                          "const": "DidTooLong"
+                        },
+                        {
+                          "const": "InvalidInitiation"
+                        },
+                        {
+                          "const": "RegionNotSupported"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.ageassurance.getConfig": {
+      "get": {
+        "tags": [
+          "app.bsky.ageassurance"
+        ],
+        "summary": "Returns Age Assurance configuration for use on the client.",
+        "operationId": "app.bsky.ageassurance.getConfig",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.config"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.ageassurance.getState": {
+      "get": {
+        "tags": [
+          "app.bsky.ageassurance"
+        ],
+        "summary": "Returns server-computed Age Assurance state, if available, and any additional metadata needed to compute Age Assurance state client-side.",
+        "operationId": "app.bsky.ageassurance.getState",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "regionCode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "metadata"
+                  ],
+                  "properties": {
+                    "state": {
+                      "$ref": "#/components/schemas/app.bsky.ageassurance.defs.state"
+                    },
+                    "metadata": {
+                      "$ref": "#/components/schemas/app.bsky.ageassurance.defs.stateMetadata"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.bookmark.createBookmark": {
       "post": {
         "tags": [
@@ -32477,6 +32795,301 @@
         "format": "token",
         "description": "Advertises an account as currently offering live content."
       },
+      "app.bsky.ageassurance.defs.access": {
+        "type": "string",
+        "description": "The access level granted based on Age Assurance data we've processed.",
+        "enum": [
+          "unknown",
+          "none",
+          "safe",
+          "full"
+        ]
+      },
+      "app.bsky.ageassurance.defs.status": {
+        "type": "string",
+        "description": "The status of the Age Assurance process.",
+        "enum": [
+          "unknown",
+          "pending",
+          "assured",
+          "blocked"
+        ]
+      },
+      "app.bsky.ageassurance.defs.state": {
+        "type": "object",
+        "description": "The user's computed Age Assurance state.",
+        "required": [
+          "status",
+          "access"
+        ],
+        "properties": {
+          "lastInitiatedAt": {
+            "type": "string",
+            "description": "The timestamp when this state was last updated.",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.status"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.stateMetadata": {
+        "type": "object",
+        "description": "Additional metadata needed to compute Age Assurance state client-side.",
+        "required": [],
+        "properties": {
+          "accountCreatedAt": {
+            "type": "string",
+            "description": "The account creation timestamp.",
+            "format": "date-time"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.config": {
+        "type": "object",
+        "required": [
+          "regions"
+        ],
+        "properties": {
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegion"
+            }
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegion": {
+        "type": "object",
+        "description": "The Age Assurance configuration for a specific region.",
+        "required": [
+          "countryCode",
+          "rules"
+        ],
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "description": "The ISO 3166-1 alpha-2 country code this configuration applies to."
+          },
+          "regionCode": {
+            "type": "string",
+            "description": "The ISO 3166-2 region code this configuration applies to. If omitted, the configuration applies to the entire country."
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleDefault"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfDeclaredOverAge"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfDeclaredUnderAge"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfAssuredOverAge"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfAssuredUnderAge"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfAccountNewerThan"
+                },
+                {
+                  "$ref": "#/components/schemas/app.bsky.ageassurance.defs.configRegionRuleIfAccountOlderThan"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleDefault": {
+        "type": "object",
+        "description": "Age Assurance rule that applies by default.",
+        "required": [
+          "access"
+        ],
+        "properties": {
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfDeclaredOverAge": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the user has declared themselves equal-to or over a certain age.",
+        "required": [
+          "age",
+          "access"
+        ],
+        "properties": {
+          "age": {
+            "type": "integer"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfDeclaredUnderAge": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the user has declared themselves under a certain age.",
+        "required": [
+          "age",
+          "access"
+        ],
+        "properties": {
+          "age": {
+            "type": "integer"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfAssuredOverAge": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the user has been assured to be equal-to or over a certain age.",
+        "required": [
+          "age",
+          "access"
+        ],
+        "properties": {
+          "age": {
+            "type": "integer"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfAssuredUnderAge": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the user has been assured to be under a certain age.",
+        "required": [
+          "age",
+          "access"
+        ],
+        "properties": {
+          "age": {
+            "type": "integer"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfAccountNewerThan": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the account is equal-to or newer than a certain date.",
+        "required": [
+          "date",
+          "access"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The date threshold as a datetime string.",
+            "format": "date-time"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.configRegionRuleIfAccountOlderThan": {
+        "type": "object",
+        "description": "Age Assurance rule that applies if the account is older than a certain date.",
+        "required": [
+          "date",
+          "access"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The date threshold as a datetime string.",
+            "format": "date-time"
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          }
+        }
+      },
+      "app.bsky.ageassurance.defs.event": {
+        "type": "object",
+        "description": "Object used to store Age Assurance data in stash.",
+        "required": [
+          "createdAt",
+          "status",
+          "access",
+          "attemptId",
+          "countryCode"
+        ],
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of this write operation.",
+            "format": "date-time"
+          },
+          "attemptId": {
+            "type": "string",
+            "description": "The unique identifier for this instance of the Age Assurance flow, in UUID format."
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the Age Assurance process.",
+            "enum": [
+              "unknown",
+              "pending",
+              "assured",
+              "blocked"
+            ]
+          },
+          "access": {
+            "type": "string",
+            "description": "The access level granted based on Age Assurance data we've processed.",
+            "enum": [
+              "unknown",
+              "none",
+              "safe",
+              "full"
+            ]
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "The ISO 3166-1 alpha-2 country code provided when beginning the Age Assurance flow."
+          },
+          "regionCode": {
+            "type": "string",
+            "description": "The ISO 3166-2 region code provided when beginning the Age Assurance flow."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email used for Age Assurance."
+          },
+          "initIp": {
+            "type": "string",
+            "description": "The IP address used when initiating the Age Assurance flow."
+          },
+          "initUa": {
+            "type": "string",
+            "description": "The user agent used when initiating the Age Assurance flow."
+          },
+          "completeIp": {
+            "type": "string",
+            "description": "The IP address used when completing the Age Assurance flow."
+          },
+          "completeUa": {
+            "type": "string",
+            "description": "The user agent used when completing the Age Assurance flow."
+          }
+        }
+      },
       "app.bsky.bookmark.defs.bookmark": {
         "type": "object",
         "description": "Object used to store bookmark data in stash.",
@@ -38111,18 +38724,29 @@
             "description": "The date and time of this write operation.",
             "format": "date-time"
           },
+          "attemptId": {
+            "type": "string",
+            "description": "The unique identifier for this instance of the age assurance flow, in UUID format."
+          },
           "status": {
             "type": "string",
-            "description": "The status of the age assurance process.",
+            "description": "The status of the Age Assurance process.",
             "enum": [
               "unknown",
               "pending",
               "assured"
             ]
           },
-          "attemptId": {
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
+          },
+          "countryCode": {
             "type": "string",
-            "description": "The unique identifier for this instance of the age assurance flow, in UUID format."
+            "description": "The ISO 3166-1 alpha-2 country code provided when beginning the Age Assurance flow."
+          },
+          "regionCode": {
+            "type": "string",
+            "description": "The ISO 3166-2 region code provided when beginning the Age Assurance flow."
           },
           "initIp": {
             "type": "string",
@@ -38158,6 +38782,9 @@
               "reset",
               "blocked"
             ]
+          },
+          "access": {
+            "$ref": "#/components/schemas/app.bsky.ageassurance.defs.access"
           },
           "comment": {
             "type": "string",
@@ -39918,6 +40545,9 @@
   "tags": [
     {
       "name": "app.bsky.actor"
+    },
+    {
+      "name": "app.bsky.ageassurance"
     },
     {
       "name": "app.bsky.bookmark"
