@@ -38528,10 +38528,10 @@
       "tools.ozone.moderation.defs.subjectReviewState": {
         "type": "string",
         "enum": [
-          "#reviewOpen",
-          "#reviewEscalated",
-          "#reviewClosed",
-          "#reviewNone"
+          "tools.ozone.moderation.defs#reviewOpen",
+          "tools.ozone.moderation.defs#reviewEscalated",
+          "tools.ozone.moderation.defs#reviewClosed",
+          "tools.ozone.moderation.defs#reviewNone"
         ]
       },
       "tools.ozone.moderation.defs.reviewOpen": {
@@ -40356,10 +40356,10 @@
           "role": {
             "type": "string",
             "enum": [
-              "#roleAdmin",
-              "#roleModerator",
-              "#roleTriage",
-              "#roleVerifier"
+              "tools.ozone.team.defs#roleAdmin",
+              "tools.ozone.team.defs#roleModerator",
+              "tools.ozone.team.defs#roleTriage",
+              "tools.ozone.team.defs#roleVerifier"
             ]
           }
         }
