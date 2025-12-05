@@ -38808,7 +38808,8 @@
           },
           "comment": {
             "type": "string",
-            "description": "Comment describing the reason for the override."
+            "description": "Comment describing the reason for the override.",
+            "minLength": 1
           }
         }
       },
@@ -38821,7 +38822,8 @@
         "properties": {
           "comment": {
             "type": "string",
-            "description": "Comment describing the reason for the revocation."
+            "description": "Comment describing the reason for the revocation.",
+            "minLength": 1
           }
         }
       },
