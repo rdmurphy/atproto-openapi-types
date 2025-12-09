@@ -1944,6 +1944,114 @@
         }
       }
     },
+    "/app.bsky.contact.sendNotification": {
+      "post": {
+        "tags": [
+          "app.bsky.contact"
+        ],
+        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. System endpoint to send notifications related to contact imports. Requires role authentication.",
+        "operationId": "app.bsky.contact.sendNotification",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "description": "The DID of who this notification comes from.",
+                    "format": "did"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "The DID of who this notification should go to.",
+                    "format": "did"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "oneOf": [
+                        {
+                          "const": "InvalidRequest"
+                        },
+                        {
+                          "const": "ExpiredToken"
+                        },
+                        {
+                          "const": "InvalidToken"
+                        }
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "error": {
+                      "const": "AuthMissing"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.contact.startPhoneVerification": {
       "post": {
         "tags": [
@@ -33916,6 +34024,26 @@
           "matchesCount": {
             "type": "integer",
             "minimum": 0
+          }
+        }
+      },
+      "app.bsky.contact.defs.notification": {
+        "type": "object",
+        "description": "A stash object to be sent via bsync representing a notification to be created.",
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "The DID of who this notification comes from.",
+            "format": "did"
+          },
+          "to": {
+            "type": "string",
+            "description": "The DID of who this notification should go to.",
+            "format": "did"
           }
         }
       },
