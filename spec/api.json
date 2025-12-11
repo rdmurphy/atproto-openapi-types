@@ -1481,7 +1481,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -1600,7 +1603,16 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INVALID_LIMIT"
+                        },
+                        {
+                          "const": "INVALID_CURSOR"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -1689,7 +1701,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -1811,7 +1826,19 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INVALID_CONTACTS"
+                        },
+                        {
+                          "const": "TOO_MANY_CONTACTS"
+                        },
+                        {
+                          "const": "INVALID_TOKEN"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -1907,7 +1934,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -2119,7 +2149,16 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "RATE_LIMIT_EXCEEDED"
+                        },
+                        {
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INVALID_PHONE"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
@@ -2236,7 +2275,19 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "TODO"
+                          "const": "RATE_LIMIT_EXCEEDED"
+                        },
+                        {
+                          "const": "INVALID_DID"
+                        },
+                        {
+                          "const": "INVALID_PHONE"
+                        },
+                        {
+                          "const": "INVALID_CODE"
+                        },
+                        {
+                          "const": "INTERNAL_ERROR"
                         }
                       ]
                     },
