@@ -1481,10 +1481,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -1603,16 +1603,16 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INVALID_LIMIT"
+                          "const": "InvalidLimit"
                         },
                         {
-                          "const": "INVALID_CURSOR"
+                          "const": "InvalidCursor"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -1701,10 +1701,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -1826,19 +1826,19 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INVALID_CONTACTS"
+                          "const": "InvalidContacts"
                         },
                         {
-                          "const": "TOO_MANY_CONTACTS"
+                          "const": "TooManyContacts"
                         },
                         {
-                          "const": "INVALID_TOKEN"
+                          "const": "InvalidToken"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -1934,10 +1934,10 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -2149,16 +2149,16 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "RATE_LIMIT_EXCEEDED"
+                          "const": "RateLimitExceeded"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INVALID_PHONE"
+                          "const": "InvalidPhone"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
@@ -2275,19 +2275,19 @@
                           "const": "InvalidToken"
                         },
                         {
-                          "const": "RATE_LIMIT_EXCEEDED"
+                          "const": "RateLimitExceeded"
                         },
                         {
-                          "const": "INVALID_DID"
+                          "const": "InvalidDid"
                         },
                         {
-                          "const": "INVALID_PHONE"
+                          "const": "InvalidPhone"
                         },
                         {
-                          "const": "INVALID_CODE"
+                          "const": "InvalidCode"
                         },
                         {
-                          "const": "INTERNAL_ERROR"
+                          "const": "InternalError"
                         }
                       ]
                     },
