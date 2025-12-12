@@ -1418,7 +1418,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Removes a match that was found via contact import. It shouldn't appear again if the same contact is re-imported. Requires authentication.",
+        "summary": "Removes a match that was found via contact import. It shouldn't appear again if the same contact is re-imported. Requires authentication.",
         "operationId": "app.bsky.contact.dismissMatch",
         "security": [
           {
@@ -1526,7 +1526,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Returns the matched contacts (contacts that were mutually imported). Excludes dismissed matches. Requires authentication.",
+        "summary": "Returns the matched contacts (contacts that were mutually imported). Excludes dismissed matches. Requires authentication.",
         "operationId": "app.bsky.contact.getMatches",
         "security": [
           {
@@ -1654,7 +1654,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Gets the user's current contact import status. Requires authentication.",
+        "summary": "Gets the user's current contact import status. Requires authentication.",
         "operationId": "app.bsky.contact.getSyncStatus",
         "security": [
           {
@@ -1746,7 +1746,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Import contacts for securely matching with other users. This follows the protocol explained in https://docs.bsky.app/blog/contact-import-rfc. Requires authentication.",
+        "summary": "Import contacts for securely matching with other users. This follows the protocol explained in https://docs.bsky.app/blog/contact-import-rfc. Requires authentication.",
         "operationId": "app.bsky.contact.importContacts",
         "security": [
           {
@@ -1880,7 +1880,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Removes all stored hashes used for contact matching, existing matches, and sync status. Requires authentication.",
+        "summary": "Removes all stored hashes used for contact matching, existing matches, and sync status. Requires authentication.",
         "operationId": "app.bsky.contact.removeData",
         "security": [
           {
@@ -1979,7 +1979,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. System endpoint to send notifications related to contact imports. Requires role authentication.",
+        "summary": "System endpoint to send notifications related to contact imports. Requires role authentication.",
         "operationId": "app.bsky.contact.sendNotification",
         "security": [
           {
@@ -2087,7 +2087,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Starts a phone verification flow. The phone passed will receive a code via SMS that should be passed to `app.bsky.contact.verifyPhone`. Requires authentication.",
+        "summary": "Starts a phone verification flow. The phone passed will receive a code via SMS that should be passed to `app.bsky.contact.verifyPhone`. Requires authentication.",
         "operationId": "app.bsky.contact.startPhoneVerification",
         "security": [
           {
@@ -2200,7 +2200,7 @@
         "tags": [
           "app.bsky.contact"
         ],
-        "summary": "WARNING: This is unstable and under active development, don't use it while this warning is here. Verifies control over a phone number with a code received via SMS and starts a contact import session. Requires authentication.",
+        "summary": "Verifies control over a phone number with a code received via SMS and starts a contact import session. Requires authentication.",
         "operationId": "app.bsky.contact.verifyPhone",
         "security": [
           {
